@@ -7,7 +7,8 @@ package Business;
 
 /**
  *
- * @author sandhya 
+ * @author sandhya  goswami 
+ * //test test test
  */
 public class Patient {
     
