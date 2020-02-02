@@ -88,7 +88,7 @@ public class TestCases {
        {
            vitalSigns.setGroupType("Newborn");
       vitalSigns.setAge(0); // In months
-      vitalSigns.setRespiratoryRate(40);
+      vitalSigns.setRespiratoryRate(400);
       vitalSigns.setHeartRate(130);
       vitalSigns.setBloodPressure(60);
       vitalSigns.setWeightInKgs(3);
@@ -98,7 +98,7 @@ public class TestCases {
        {
            vitalSigns.setGroupType("Infant");
       vitalSigns.setAge(3); // In Months
-      vitalSigns.setRespiratoryRate(25);
+      vitalSigns.setRespiratoryRate(205);
       vitalSigns.setHeartRate(90);
       vitalSigns.setBloodPressure(80);
       vitalSigns.setWeightInKgs(6);
@@ -109,9 +109,9 @@ public class TestCases {
            vitalSigns.setGroupType("Toddler");
       vitalSigns.setAge(14); // In months 
       vitalSigns.setRespiratoryRate(25);
-      vitalSigns.setHeartRate(80);
-      vitalSigns.setBloodPressure(110);
-      vitalSigns.setWeightInKgs(10);
+      vitalSigns.setHeartRate(800);
+      vitalSigns.setBloodPressure(190);
+      vitalSigns.setWeightInKgs(100);
       vitalSigns.setWeightInPnds(31);
        }
        if(GroupType=="Preschooler")
@@ -120,7 +120,7 @@ public class TestCases {
       vitalSigns.setAge(48);// In months 
       vitalSigns.setRespiratoryRate(30);
       vitalSigns.setHeartRate(120);
-      vitalSigns.setBloodPressure(110);
+      vitalSigns.setBloodPressure(210);
       vitalSigns.setWeightInKgs(18);
       vitalSigns.setWeightInPnds(40);
        }
@@ -128,7 +128,7 @@ public class TestCases {
        {
            vitalSigns.setGroupType("School Age");
       vitalSigns.setAge(144);// In months 
-      vitalSigns.setRespiratoryRate(20);
+      vitalSigns.setRespiratoryRate(10);
       vitalSigns.setHeartRate(70);
       vitalSigns.setBloodPressure(80);
       vitalSigns.setWeightInKgs(20);
@@ -139,7 +139,7 @@ public class TestCases {
            vitalSigns.setGroupType("Adolescent");
       vitalSigns.setAge(168);// In months 
       vitalSigns.setRespiratoryRate(20);
-      vitalSigns.setHeartRate(105);
+      vitalSigns.setHeartRate(195);
       vitalSigns.setBloodPressure(120);
       vitalSigns.setWeightInKgs(51);
       vitalSigns.setWeightInPnds(111);
