@@ -22,16 +22,46 @@ public class ViewAbNormalVitalJPanel extends javax.swing.JPanel {
      */
      
     private VitalSignHistory vsh;
+private VitalSignHistory vshab;
+private double MaxBp=0;
+private double MinBp=0;
 
-    public ViewAbNormalVitalJPanel(double MaxBp, double MinBp, VitalSignHistory vsh) {
+    public ViewAbNormalVitalJPanel(double MaxBp, double MinBp , VitalSignHistory vsh) {
         initComponents();
         this.vsh = vsh;
+        vshab = new VitalSignHistory();
+        this.MaxBp=MaxBp;
+        this.MinBp= MinBp;
        // populateTable(MaxBp,MinBp);
-        vsh.getAbnormalList(MaxBp,MinBp);
+      // vshab = new VitalSignHistory();
+      // vshab.= 
+               populateTable(MaxBp, MinBp);
+//       populateTable(MaxBP,MinBP);
         tempTextField.setEnabled(false);
         bloodTextField.setEnabled(false);
         pulseTextField.setEnabled(false);
         dateTextField.setEnabled(false);
+        
+    }
+     private void populateTable(double max, double min) {
+        DefaultTableModel dtm = (DefaultTableModel) vitalSignsTable.getModel();
+        dtm.setRowCount(0);
+        vshab.setVitalSignHistory(getAbnormalList(max,min));
+        for (VitalSigns vs : vshab.getVitalSignHistory()) {
+            Object row[] = new Object[2];
+            row[0] = vs;
+            row[1] = vs.getBloodPressure();
+            dtm.addRow(row);
+        }
+    }
+    public ArrayList<VitalSigns> getAbnormalList(double max, double min) {
+        ArrayList<VitalSigns> list = new ArrayList<VitalSigns>();
+        for (VitalSigns vs : vsh.getVitalSignHistory()) {
+            if (vs.getBloodPressure() >= min && vs.getBloodPressure() <= max) {
+                list.add(vs);
+            }
+        }
+        return list;
     }
 
     /**
@@ -239,6 +269,7 @@ public class ViewAbNormalVitalJPanel extends javax.swing.JPanel {
         if (selectedRow >= 0) {
             VitalSigns vs = (VitalSigns) vitalSignsTable.getValueAt(selectedRow, 0);
             vsh.deleteVital(vs);
+            populateTable(MaxBp, MinBp);
             JOptionPane.showMessageDialog(null, "Vital Sign deleted.");
 //            populateTable();
         } else {
@@ -250,16 +281,7 @@ public class ViewAbNormalVitalJPanel extends javax.swing.JPanel {
         dateTextField.setText("");
     }//GEN-LAST:event_deleteButtonActionPerformed
 
-    private void populateTable(double MaxBP, double MinBP) {
-        DefaultTableModel dtm = (DefaultTableModel) vitalSignsTable.getModel();
-        dtm.setRowCount(0);
-        for (VitalSigns vs : vsh.getVitalSignHistory()) {
-            Object row[] = new Object[2];
-            row[0] = vs;
-            row[1] = vs.getBloodPressure();
-            dtm.addRow(row);
-        }
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField bloodTextField;

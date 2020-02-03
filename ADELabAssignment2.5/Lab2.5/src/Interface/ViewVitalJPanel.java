@@ -280,6 +280,17 @@ public class ViewVitalJPanel extends javax.swing.JPanel {
         int srow=   vitalSignsTable.getSelectedRow();
         if(srow>=0)
         {
+            int selectedRow = vitalSignsTable.getSelectedRow();
+
+        if (selectedRow >= 0) {
+            VitalSigns vs = (VitalSigns) vitalSignsTable.getValueAt(selectedRow, 0);
+            tempTextField.setText(vs.getTemperature() + "");
+            bloodTextField.setText(vs.getBloodPressure() + "");
+            pulseTextField.setText(vs.getPulse() + "");
+            dateTextField.setText(vs.getDate());
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a row.");
+        }
          tempTextField.setEnabled(true);
         bloodTextField.setEnabled(true);
         pulseTextField.setEnabled(true);

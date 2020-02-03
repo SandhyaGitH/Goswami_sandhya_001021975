@@ -47,7 +47,7 @@ public class VitalSignHistory {
     public ArrayList<VitalSigns> getAbnormalList(double max, double min) {
         ArrayList<VitalSigns> list = new ArrayList<VitalSigns>();
         for (VitalSigns vs : this.getVitalSignHistory()) {
-            if (vs.getBloodPressure() < min || vs.getBloodPressure() > max) {
+            if (vs.getBloodPressure() >= min && vs.getBloodPressure() <= max) {
                 list.add(vs);
             }
         }
