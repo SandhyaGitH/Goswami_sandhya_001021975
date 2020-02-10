@@ -5,6 +5,7 @@
  */
 package Interface;
 import Business.ProductDirectory;
+import java.awt.CardLayout;
 /**
  *
  * @author info
@@ -85,8 +86,11 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnProdManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdManagerActionPerformed
         // TODO add your handling code here:
-        ProdManagementPanel amPanel = new ProdManagementPanel(accDir);
-        rightSplitPane.setRightComponent(amPanel);
+        ProdManagementPanel amPanel = new ProdManagementPanel(accDir, this.rightPanel);
+        this.rightPanel.add("prodManagementPanel", amPanel);
+        
+        CardLayout layout =(CardLayout) this.rightPanel.getLayout();
+        layout.next(rightPanel);
     }//GEN-LAST:event_btnProdManagerActionPerformed
 
     /**
