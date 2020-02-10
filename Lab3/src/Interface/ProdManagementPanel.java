@@ -5,6 +5,8 @@
  */
 package Interface;
 import Business.ProductDirectory;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
 /**
  *
  * @author info
@@ -14,11 +16,14 @@ public class ProdManagementPanel extends javax.swing.JPanel {
     /**
      * Creates new form AccountManagementPanel
      */
+   //  private ProductDirectory accDir;
+    private JPanel panel;
     private ProductDirectory accDir;
     
-    public ProdManagementPanel(ProductDirectory accDir) {
+    public ProdManagementPanel(ProductDirectory accDir, JPanel panel) {
         initComponents();
         this.accDir = accDir;
+         this.panel=panel;
     }
 
     /**
@@ -73,12 +78,19 @@ public class ProdManagementPanel extends javax.swing.JPanel {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
+        CreateProductJPanel createJPanel = new CreateProductJPanel( accDir, this.panel);
+        this.panel.add("createProductJPanel", createJPanel);
+        CardLayout layout = (CardLayout) this.panel.getLayout();
+        layout.next(panel);
         
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnManageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageActionPerformed
         // TODO add your handling code here:
-        
+         ManageProdPanel manageProdJPanel = new ManageProdPanel( accDir, this.panel);
+        this.panel.add("manageProductJPanel", manageProdJPanel);
+        CardLayout layout = (CardLayout) this.panel.getLayout();
+        layout.next(panel);
     }//GEN-LAST:event_btnManageActionPerformed
 
 

@@ -7,7 +7,12 @@ package Interface;
 
 import Business.Product;
 import javax.swing.JOptionPane;
+import javax.swing.JOptionPane;
 import Business.ProductDirectory;
+import javax.swing.JPanel;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.util.ArrayList;
 /**
  *
  * @author info
@@ -19,14 +24,17 @@ public class ViewPanel extends javax.swing.JPanel {
      */
     private ProductDirectory prodDir;
     private Product product;
-    ViewPanel(Product prod, ProductDirectory accDir) {
+    private JPanel panel;
+    ViewPanel( ProductDirectory accDir , JPanel panel,Product prod) {
         initComponents();
         this.product=prod;
+         this.prodDir = accDir;
+        this.panel = panel;
         txtAvailablity.setText(String.valueOf(prod.getAvailNum()));
         txtPrice.setText(String.valueOf(prod.getPrice()));
         txtProdName.setText(prod.getName());
         txtDesc.setText(prod.getDescription());
-        this.prodDir = accDir;
+        //this.prodDir = accDir;
     }
 
     /**
@@ -49,6 +57,7 @@ public class ViewPanel extends javax.swing.JPanel {
         btnSave = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtDesc = new javax.swing.JTextField();
+        btnBack = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(153, 153, 255));
 
@@ -84,17 +93,21 @@ public class ViewPanel extends javax.swing.JPanel {
 
         jLabel1.setText("Description");
 
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(67, 67, 67)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(lblHead))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(lblRoutingNo)
@@ -108,14 +121,23 @@ public class ViewPanel extends javax.swing.JPanel {
                             .addComponent(txtAvailablity)
                             .addComponent(txtPrice)
                             .addComponent(txtProdName)
-                            .addComponent(txtDesc))))
+                            .addComponent(txtDesc)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnBack)
+                        .addGap(39, 39, 39)
+                        .addComponent(lblHead)))
                 .addContainerGap(158, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(lblHead)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblHead)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnBack)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblRoutingNo)
                     .addComponent(txtProdName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -159,17 +181,93 @@ public class ViewPanel extends javax.swing.JPanel {
             btnSave.setEnabled(false);
             btnUpdate.setEnabled(true);
         
+            if(txtProdName.getText()=="")
+                {
+                    JOptionPane.showMessageDialog(null, "Please Enter Valid Product Name");
+                }
+            else
+            {
             product.setName(txtProdName.getText());
+            }
+            
+            if(txtProdName.getText().equals(""))
+                { 
+                    JOptionPane.showMessageDialog(null, "Please Enter Valid Product Name");
+                    return;
+                }
+                else 
+                {
+                    ArrayList<Product> pp = new ArrayList<Product>();
+                 pp=   prodDir.getProductDirectory();
+                    Product prod ;
+                    int times=0;
+                    for(int i=0;i<prodDir.getProductDirectory().size();i++)
+                    {
+                        prod=pp.get(i);
+                        if(prod.getName().equals(txtProdName.getText()))
+                        {  
+                           times++;
+                           if(times>1)
+                           {
+                            JOptionPane.showMessageDialog(null, "This Product Name Already Exists");
+                            return;
+                           }
+                        }
+                       // if(pp[i].get)
+                    }
+                    product.setName(txtProdName.getText());
+                }
+            
+        try
+        {
             product.setPrice(Double.parseDouble(txtPrice.getText()));
+        }catch(NumberFormatException e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Please Enter Valid Price");
+            return;
+        }
+        
+        try
+        {
             product.setAvailNum(Integer.parseInt(txtAvailablity.getText()));
+        }catch(NumberFormatException e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Please Enter Availability in Numbers Only");
+            return;
+        }
+            
+            
             product.setDescription(txtDesc.getText());
         
-            JOptionPane.showMessageDialog(null, "Account updated successfully");        
+            JOptionPane.showMessageDialog(null, "Account updated successfully");  
+            txtAvailablity.setEditable(false);
+            txtPrice.setEditable(false);
+            txtProdName.setEditable(false);
+            txtDesc.setEnabled(false);
+            btnSave.setEnabled(false);
+            btnUpdate.setEnabled(true);
         
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        this.panel.remove(this);
+        CardLayout layout =(CardLayout) this.panel.getLayout();
+        
+        Component [] comps = this.panel.getComponents();
+        for (Component comp : comps){
+            if (comp instanceof ManageProdPanel){
+               ManageProdPanel manageP = (ManageProdPanel) comp;
+               manageP.populate();
+            }
+        }
+    
+        layout.previous(panel);     
+    }//GEN-LAST:event_btnBackActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
