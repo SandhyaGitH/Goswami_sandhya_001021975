@@ -5,6 +5,8 @@
  */
 package UserInterface;
 
+import Business.CustomerDirectory;
+import Business.SupplierDirectory;
 import Business.Users.Admin;
 import Business.Users.Customer;
 import Business.Users.Supplier;
@@ -12,6 +14,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import static java.util.Collections.list;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -143,7 +146,37 @@ public class AdminCreateScreen extends javax.swing.JPanel {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
-        
+      // User user = new User();
+      if(radioSupplier.isSelected())
+      {
+          Supplier Supl = new Supplier(txtPword.getText(), txtUser.getText());
+          SupplierDirectory sd = new SupplierDirectory();
+       //   list<Supplier> LSupl = sd.getSupplierList();
+       if(Supl.confirmPassword(txtPword.getText(),txtRePword.getText())==true)
+       {sd.AddSupplier(Supl);
+       JOptionPane.showMessageDialog(null, "Saved Successfully");
+       }
+       else
+       {
+           JOptionPane.showMessageDialog(null, "Password Mismatch");
+         //  return;
+       }
+      }
+      else if (radioCustomer.isSelected())
+      {
+          Customer cust = new Customer(txtPword.getText(), txtUser.getText(),"Custmer");
+           CustomerDirectory sd = new CustomerDirectory();
+       //   list<Supplier> LSupl = sd.getSupplierList();
+       if(cust.confirmPassword(txtPword.getText(),txtRePword.getText())==true)
+       {sd.AddCustomer(cust);
+       JOptionPane.showMessageDialog(null, "Saved Successfully");
+       }
+       else
+       {
+           JOptionPane.showMessageDialog(null, "Password Mismatch");
+         //  return;
+       }
+      }
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void radioCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCustomerActionPerformed

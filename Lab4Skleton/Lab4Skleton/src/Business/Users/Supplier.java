@@ -45,4 +45,10 @@ public class Supplier extends User implements Comparable<Supplier>{
         return false;
     }
     
+    public boolean confirmPassword(String password1, String password2){
+        if(password1.equals(password2))
+            return true;
+        return false;
+    }
+    
 }

@@ -7,6 +7,7 @@ package Business;
 
 import Business.Abstract.User;
 import Business.Users.Customer;
+import Business.Users.Supplier;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,5 +30,7 @@ public class CustomerDirectory {
     public void setCustomerList(List<User> supplierList) {
         this.customerList = supplierList;
     }
-    
+     public void AddCustomer(Customer cust) {
+        this.customerList.add(cust);
+    }
 }

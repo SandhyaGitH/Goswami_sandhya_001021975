@@ -6,10 +6,15 @@
 package UserInterface;
 
 import Business.Abstract.User;
+import Business.SupplierDirectory;
 import Business.Users.Customer;
 import Business.Users.Supplier;
+//import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import java.awt.CardLayout;
+import static java.util.Collections.list;
 import java.util.List;
+import java.util.Vector;
+import javax.swing.ComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -24,10 +29,21 @@ public class LoginScreen extends javax.swing.JPanel {
      */
     List<User> list;
     JPanel panelRight;
-    public LoginScreen(JPanel panelRight, List<User> list) {
+    String CallingScreen ;
+    public LoginScreen(JPanel panelRight, List<User> list, String CalledFrom ) {
         initComponents();
         this.list = list;
         this.panelRight = panelRight;
+        this.CallingScreen=CalledFrom;
+        if(CallingScreen=="Sup")
+        {
+            SupplierDirectory sd = new SupplierDirectory();
+           // sd.getSupplierList());
+           Vector model = new Vector();
+           model.addAll(sd.getSupplierList());
+           comboUser.setModel((ComboBoxModel<Object>) model);
+        }
+        else if (CallingScreen=="Cus")
         initialize();
     }
 
@@ -99,7 +115,7 @@ public class LoginScreen extends javax.swing.JPanel {
     private void initialize(){
         //text should either be "Supplier Login Screen" OR "Customer Login Screen"
         //Based on the selection
-        txtTitle.setText("****** Login Screen");
+        txtTitle.setText(CallingScreen +" Login Screen");
         comboUser.removeAllItems();
         //only customer or suppliers should be listed based on the selection
     }
