@@ -12,17 +12,17 @@ import java.util.Date;
  *
  * @author AEDSpring2019
  */
-public class Customer extends User implements Comparable<Supplier>{
+public class Customer extends User implements Comparable<Customer>{
 
     String CreatedDate ;
     public Customer(String password, String userName, String role) {
         super(password, userName, role);
     }
-    
      @Override
-    public int compareTo(Supplier o) {
-        return o.getUserName().compareTo(this.getUserName());
+    public int compareTo(Customer o) {
+       return o.getUserName().compareTo(this.getUserName());
     }
+    
 
     public String getCreatedDate() {
         return CreatedDate;
@@ -48,6 +48,8 @@ public class Customer extends User implements Comparable<Supplier>{
             return true;
         return false;
     }
+
+   
     
     
 }

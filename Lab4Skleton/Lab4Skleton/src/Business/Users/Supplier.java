@@ -13,7 +13,7 @@ import Business.ProductDirectory;
  *
  * @author AEDSpring2019
  */
-public class Supplier extends User implements Comparable<Supplier>{
+public class Supplier extends User implements Comparable<Customer>{
     
     private ProductDirectory directory;
     
@@ -30,10 +30,11 @@ public class Supplier extends User implements Comparable<Supplier>{
         this.directory = directory;
     }
 
-    @Override
+/*    @Override
     public int compareTo(Supplier o) {
         return o.getUserName().compareTo(this.getUserName());
     }
+*/
 
     @Override
     public String toString() {
@@ -50,6 +51,11 @@ public class Supplier extends User implements Comparable<Supplier>{
         if(password1.equals(password2))
             return true;
         return false;
+    }
+
+    @Override
+    public int compareTo(Customer t) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
