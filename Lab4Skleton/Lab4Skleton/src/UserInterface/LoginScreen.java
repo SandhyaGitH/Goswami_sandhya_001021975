@@ -37,30 +37,33 @@ public class LoginScreen extends javax.swing.JPanel {
         this.list = list;
         this.panelRight = panelRight;
         this.CallingScreen=CalledFrom;
+        initialize();
         if(CallingScreen.equals("Supplier"))
         {
-           // list.
-           // SupplierDirectory sd = new SupplierDirectory();
-           // sd.getSupplierList());
-         //  Vector model = new Vector();
-         //  model.addAll(sd.getSupplierList());
-         //  comboUser.setModel((ComboBoxModel<Object>) model);
             DefaultComboBoxModel mdl = (DefaultComboBoxModel)comboUser.getModel();
            // comboUser.removeAllItems();
-          for(User u : list)
+          for(User u : this.list)
           {
               mdl.addElement(u);
-              comboUser.setModel(mdl);
-              //comboUser.addItem(u);
+              
           }
+          comboUser.setModel(mdl);
            
             
         }
-        else if (CallingScreen=="Custmer")
+        else if (CallingScreen.equals("Customer"))
         {
             CustomerDirectory cd = new CustomerDirectory();
+            DefaultComboBoxModel mdl = (DefaultComboBoxModel)comboUser.getModel();
+           // comboUser.removeAllItems();
+          for(User u : this.list)
+          {
+              mdl.addElement(u);
+              
+          }
+          comboUser.setModel(mdl);
         }
-        initialize();
+        
     }
 
     /**
@@ -125,9 +128,30 @@ public class LoginScreen extends javax.swing.JPanel {
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         // TODO add your handling code here:
        // if(comboUser.getSelectedItem().)
-        AuthenticateUser(comboUser.getSelectedItem().toString(),txtPword.getText());
+       User u ;
+      // JOptionPane.showMessageDialog(null, comboUser.getSelectedItem().toString());
+       u=AuthenticateUser2(comboUser.getSelectedItem().toString(),txtPword.getText());
+     if( u.getUserName()!="")
+      {
+          PopulateSuccess(u);
+      }
+      else 
+      {
+          JOptionPane.showMessageDialog(null, "Inavlid Credentials!");
+          return;
+      }
+
     }//GEN-LAST:event_btnSubmitActionPerformed
 
+     private void PopulateSuccess(User u)
+    {
+        SuccessScreen Sc = new SuccessScreen(panelRight, u);
+        CardLayout layout = (CardLayout)panelRight.getLayout();
+        panelRight.add(Sc);
+        layout.next(panelRight);
+                
+    }
+    
     public boolean AuthenticateUser( String UserName , String Password )
     {        
     boolean result =false;
@@ -137,10 +161,29 @@ public class LoginScreen extends javax.swing.JPanel {
         }
        
                     
-     }
+     }   
+     
      return result;
     }
-     
+    
+    public User AuthenticateUser2( String UserName , String Password )
+    {     
+      User  CurrUser = new Customer("","","");
+        if(CallingScreen=="Supplier")
+        {
+     CurrUser = new Supplier("","");
+        }
+       
+     for(User p : this.list ){
+        if (p.getUserName().equals(UserName) && p.getPassword().equals(Password) ) {
+           CurrUser= p;
+        }
+       
+                    
+     }
+     return CurrUser;
+    }
+    
     
     private void initialize(){
         //text should either be "Supplier Login Screen" OR "Customer Login Screen"

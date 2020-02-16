@@ -240,6 +240,10 @@ public class AdminCreateScreen extends javax.swing.JPanel {
          //  return;
        }
       }
+      else {
+           JOptionPane.showMessageDialog(null, "Customer or Supplier!");
+           return;
+      }
       }
       catch(Exception e)
       {
@@ -262,14 +266,7 @@ public class AdminCreateScreen extends javax.swing.JPanel {
         Ams.populate();
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void PopulateSuccess(User u)
-    {
-        SuccessScreen Sc = new SuccessScreen(panelRight, u);
-        CardLayout layout = (CardLayout)panelRight.getLayout();
-        panelRight.add(Sc);
-        layout.next(panelRight);
-                
-    }
+   
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
