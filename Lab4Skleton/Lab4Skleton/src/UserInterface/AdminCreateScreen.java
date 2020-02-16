@@ -209,10 +209,19 @@ public class AdminCreateScreen extends javax.swing.JPanel {
           SupplierDirectory sd = admin.getSuppDir();
        //   list<Supplier> LSupl = sd.getSupplierList();
        if(Supl.confirmPassword(txtPword.getText(),txtRePword.getText())==true)
-       {sd.AddSupplier(Supl);
-       admin.setSuppDir(sd);
-      // PopulateSuccess(Supl);
-       JOptionPane.showMessageDialog(null, "Saved Successfully");
+       {
+           boolean flag = CheckIfExist(sd,txtUser.getText());
+           if(flag)
+           {
+               JOptionPane.showMessageDialog(null, "Already Exist");
+           }
+           else 
+           {
+           
+           sd.AddSupplier(Supl);
+          admin.setSuppDir(sd);
+          JOptionPane.showMessageDialog(null, "Saved Successfully");
+           }
        }
        else
        {
@@ -222,7 +231,7 @@ public class AdminCreateScreen extends javax.swing.JPanel {
       }
       else if (radioCustomer.isSelected())
       {
-                     Date dt = new Date();
+           Date dt = new Date();
 
           Customer cust = new Customer(txtPword.getText(), txtUser.getText(),"Custmer");
           CustomerDirectory cd = admin.getCustDir();
@@ -230,9 +239,20 @@ public class AdminCreateScreen extends javax.swing.JPanel {
           // JOptionPane.showMessageDialog(null, cust.getCreatedDate());
                
        if(cust.confirmPassword(txtPword.getText(),txtRePword.getText())==true)
-       {cd.AddCustomer(cust);
-       admin.setCustDir(cd);
-       JOptionPane.showMessageDialog(null, "Saved Successfully");
+       {
+            boolean flag = CheckIfCustExist(cd, txtUser.getText());
+                    if(flag)
+                    {
+                        JOptionPane.showMessageDialog(null, "Already Exist");
+                    }
+                    else
+                    { 
+                     cd.AddCustomer(cust);
+                      admin.setCustDir(cd);
+                      JOptionPane.showMessageDialog(null, "Saved Successfully");
+                    
+                    }
+          
        }
        else
        {
@@ -251,6 +271,34 @@ public class AdminCreateScreen extends javax.swing.JPanel {
       }
     }//GEN-LAST:event_btnCreateActionPerformed
 
+    private boolean CheckIfExist(SupplierDirectory supd , String UserName)
+    {
+       // List<Supplier> listSup= supd.getSupplierList();
+        boolean flag = false;
+        for(int i=0; i<supd.getSupplierList().size();i++)
+        {
+            if(UserName.equals(supd.getSupplierList().get(i).getUserName()))
+            {
+                flag=true;
+            }
+        }
+        return flag;
+    }
+    
+    private boolean CheckIfCustExist(CustomerDirectory CustD , String UserName)
+    {
+       // List<Supplier> listSup= supd.getSupplierList();
+        boolean flag = false;
+        for(int i=0; i<CustD.getCustomerList().size();i++)
+        {
+            if(UserName.equals(CustD.getCustomerList().get(i).getUserName()))
+            {
+                flag=true;
+            }
+        }
+        return flag;
+    }
+    
     private void radioCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCustomerActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_radioCustomerActionPerformed
