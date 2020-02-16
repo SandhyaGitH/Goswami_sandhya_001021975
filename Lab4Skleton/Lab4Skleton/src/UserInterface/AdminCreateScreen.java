@@ -5,6 +5,7 @@
  */
 package UserInterface;
 
+import Business.Abstract.User;
 import Business.CustomerDirectory;
 import Business.SupplierDirectory;
 import Business.Users.Admin;
@@ -12,14 +13,17 @@ import Business.Users.Customer;
 import Business.Users.Supplier;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.util.Collections.list;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -40,6 +44,25 @@ public class AdminCreateScreen extends javax.swing.JPanel {
         this.admin = admin;
     }
 
+    private boolean ValidateUserName()
+    {
+        Pattern P = Pattern.compile("^[a-zA-Z0-9]+_[a-zA-Z0-9]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+$"  );
+        Matcher m = P.matcher(txtUser.getText());
+        boolean result = m.matches();
+        return result;
+    }
+    
+    
+    
+     private boolean ValidatePassword()
+    {
+       // Pattern P = Pattern.compile("^((?=.*[a-z])(?=.*d)(?=.*[@#$%])(?=.*[A-Z]).{6})+$"  );
+         Pattern P = Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20}$");
+        Matcher m = P.matcher(txtPword.getText());
+        boolean result = m.matches();
+        return result;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,6 +72,9 @@ public class AdminCreateScreen extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup3 = new javax.swing.ButtonGroup();
         btnCreate = new javax.swing.JButton();
         txtUser = new javax.swing.JTextField();
         txtPword = new javax.swing.JTextField();
@@ -73,6 +99,7 @@ public class AdminCreateScreen extends javax.swing.JPanel {
 
         jLabel3.setText("re-enter password :");
 
+        buttonGroup1.add(radioCustomer);
         radioCustomer.setText("Customer");
         radioCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,6 +107,7 @@ public class AdminCreateScreen extends javax.swing.JPanel {
             }
         });
 
+        buttonGroup1.add(radioSupplier);
         radioSupplier.setText("Supplier");
 
         btnBack.setText("< BACK");
@@ -107,11 +135,8 @@ public class AdminCreateScreen extends javax.swing.JPanel {
                             .addComponent(txtPword, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtRePword, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(radioSupplier)
-                                    .addComponent(radioCustomer)))))
+                            .addComponent(radioCustomer)
+                            .addComponent(radioSupplier)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addComponent(btnBack)))
@@ -147,13 +172,46 @@ public class AdminCreateScreen extends javax.swing.JPanel {
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
       // User user = new User();
-      if(radioSupplier.isSelected())
+      Border border = BorderFactory.createLineBorder(Color.WHITE, 5); 
+              txtPword.setBorder(border);
+              txtUser.setBorder(border);
+      try{
+          if(txtUser.getText().equalsIgnoreCase(""))
+          {
+              JOptionPane.showMessageDialog(null, "UserName can not be Empty.");
+              return;
+          }
+           else  if(ValidateUserName()!=true)
+          {
+             
+                border = BorderFactory.createLineBorder(Color.RED, 5); 
+              txtUser.setBorder(border);
+               JOptionPane.showMessageDialog(null, "Invalid UserName. should be in XX_XX@XX.XX format only");
+              return;
+          }
+        else  if(txtPword.getText().equals(""))
+          {
+              JOptionPane.showMessageDialog(null, "Pasword can not be Empty.");
+              return;
+          }
+       
+          else if (ValidatePassword()!=true)
+          {
+              
+                border = BorderFactory.createLineBorder(Color.RED, 5); 
+              txtPword.setBorder(border);
+               JOptionPane.showMessageDialog(null, "Invalid Password. should be in proper format");
+              return;
+          }
+     else if(radioSupplier.isSelected())
       {
           Supplier Supl = new Supplier(txtPword.getText(), txtUser.getText());
-          SupplierDirectory sd = new SupplierDirectory();
+          SupplierDirectory sd = admin.getSuppDir();
        //   list<Supplier> LSupl = sd.getSupplierList();
        if(Supl.confirmPassword(txtPword.getText(),txtRePword.getText())==true)
        {sd.AddSupplier(Supl);
+       admin.setSuppDir(sd);
+      // PopulateSuccess(Supl);
        JOptionPane.showMessageDialog(null, "Saved Successfully");
        }
        else
@@ -164,11 +222,16 @@ public class AdminCreateScreen extends javax.swing.JPanel {
       }
       else if (radioCustomer.isSelected())
       {
+                     Date dt = new Date();
+
           Customer cust = new Customer(txtPword.getText(), txtUser.getText(),"Custmer");
-           CustomerDirectory sd = new CustomerDirectory();
-       //   list<Supplier> LSupl = sd.getSupplierList();
+          CustomerDirectory cd = admin.getCustDir();
+          cust.setCreatedDate(dt.toString());
+          // JOptionPane.showMessageDialog(null, cust.getCreatedDate());
+               
        if(cust.confirmPassword(txtPword.getText(),txtRePword.getText())==true)
-       {sd.AddCustomer(cust);
+       {cd.AddCustomer(cust);
+       admin.setCustDir(cd);
        JOptionPane.showMessageDialog(null, "Saved Successfully");
        }
        else
@@ -176,6 +239,11 @@ public class AdminCreateScreen extends javax.swing.JPanel {
            JOptionPane.showMessageDialog(null, "Password Mismatch");
          //  return;
        }
+      }
+      }
+      catch(Exception e)
+      {
+           JOptionPane.showMessageDialog(null, e);
       }
     }//GEN-LAST:event_btnCreateActionPerformed
 
@@ -188,13 +256,27 @@ public class AdminCreateScreen extends javax.swing.JPanel {
         CardLayout layout = (CardLayout)panelRight.getLayout();
         panelRight.remove(this);
         layout.previous(panelRight);
+        Component[] componentArray = panelRight.getComponents();
+        Component compo = componentArray[componentArray.length-1];
+        AdminMainScreen Ams = (AdminMainScreen) compo;
+        Ams.populate();
     }//GEN-LAST:event_btnBackActionPerformed
 
-    
+    private void PopulateSuccess(User u)
+    {
+        SuccessScreen Sc = new SuccessScreen(panelRight, u);
+        CardLayout layout = (CardLayout)panelRight.getLayout();
+        panelRight.add(Sc);
+        layout.next(panelRight);
+                
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCreate;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

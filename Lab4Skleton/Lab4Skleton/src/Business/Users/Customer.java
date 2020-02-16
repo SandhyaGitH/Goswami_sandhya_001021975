@@ -14,6 +14,7 @@ import java.util.Date;
  */
 public class Customer extends User implements Comparable<Supplier>{
 
+    String CreatedDate ;
     public Customer(String password, String userName, String role) {
         super(password, userName, role);
     }
@@ -21,6 +22,14 @@ public class Customer extends User implements Comparable<Supplier>{
      @Override
     public int compareTo(Supplier o) {
         return o.getUserName().compareTo(this.getUserName());
+    }
+
+    public String getCreatedDate() {
+        return CreatedDate;
+    }
+
+    public void setCreatedDate(String CreatedDate) {
+        this.CreatedDate = CreatedDate;
     }
 
     @Override
@@ -39,4 +48,6 @@ public class Customer extends User implements Comparable<Supplier>{
             return true;
         return false;
     }
+    
+    
 }

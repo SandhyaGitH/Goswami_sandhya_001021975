@@ -6,6 +6,7 @@
 package Business.Users;
 
 import Business.Abstract.User;
+import Business.Product;
 import Business.ProductDirectory;
 
 /**
@@ -50,5 +51,7 @@ public class Supplier extends User implements Comparable<Supplier>{
             return true;
         return false;
     }
+    
+    
     
 }

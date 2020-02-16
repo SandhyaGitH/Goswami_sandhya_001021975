@@ -6,6 +6,7 @@
 package UserInterface;
 
 import Business.Abstract.User;
+import javax.swing.JPanel;
 
 /**
  *
@@ -19,6 +20,12 @@ public class SuccessScreen extends javax.swing.JPanel {
     private User user; 
     public SuccessScreen(User user) {
         initComponents();
+        this.user = user;
+        initialize();
+    }
+
+    SuccessScreen(JPanel panelRight, User u) {
+         initComponents();
         this.user = user;
         initialize();
     }
