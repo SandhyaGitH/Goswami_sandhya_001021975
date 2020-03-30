@@ -44,7 +44,7 @@ public class ManageRestaurantAdminJPanel extends javax.swing.JPanel {
         model.setRowCount(0);
         for (Location network : system.getNetworkList()) {
             for (Restaurant restaurant : network.getRestaurantDirectory().getRestaurantList()) {
-                for (UserAccount userAccount : system.getUserAccountDirectory().getUserAccountList()) {
+                for (UserAccount userAccount : restaurant.getUserAccountDirectory().getUserAccountList()) {
                     if(userAccount.getRole().getClass().equals(Business.Role.AdminRole.class))
                     {
                     Object[] row = new Object[3];
@@ -290,14 +290,7 @@ public class ManageRestaurantAdminJPanel extends javax.swing.JPanel {
              
          }
                 
-         for (UserAccount acco : system.getUserAccountDirectory().getUserAccountList()){
-            if(acco.getUsername().equals(username))
-            {
-               JOptionPane.showMessageDialog(null,"Duplicate Username"); 
-               return;
-            }
-             
-         }
+        
         
         Employee employee = restaurant.getEmployeeDirectory().createEmployee(name);
         

@@ -22,7 +22,9 @@ public class Menu {
      this.description=description;
      this.price=price;
      this.Isavailable=isAvailable;
+     
      }
+    
     
     public Location getNetwork() {
         return Network;
