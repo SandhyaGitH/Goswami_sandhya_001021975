@@ -14,7 +14,7 @@ import Business.Role.Role;
 import Business.Role.SystemAdminRole;
 import java.util.ArrayList;
 import Business.Network.Location;
-import Business.Network.Network;
+//import Business.Network.Network;
 import static Business.Organization.Type.Customer;
 import Business.Restaurant.Restaurant;
 import javax.swing.JOptionPane;
