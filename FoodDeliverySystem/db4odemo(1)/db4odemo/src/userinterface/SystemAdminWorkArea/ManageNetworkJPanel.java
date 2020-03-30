@@ -5,7 +5,7 @@
 package userinterface.SystemAdminWorkArea;
 
 import Business.EcoSystem;
-import Business.Network.Network;
+import Business.Network.Location;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JPanel;
