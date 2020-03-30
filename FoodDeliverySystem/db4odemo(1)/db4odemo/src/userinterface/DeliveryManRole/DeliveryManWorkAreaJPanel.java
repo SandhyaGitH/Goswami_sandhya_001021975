@@ -10,6 +10,7 @@ import Business.UserAccount.UserAccount;
 import Business.WorkQueue.LabTestWorkRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -36,6 +37,7 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
       
         
         populateTable();
+        assignJButton.setVisible(false);
     }
     
     public void populateTable(){
@@ -126,7 +128,7 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
                 processJButtonActionPerformed(evt);
             }
         });
-        add(processJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(446, 215, -1, -1));
+        add(processJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 190, -1, -1));
 
         refreshJButton.setText("Refresh");
         refreshJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -161,7 +163,9 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
         }
         
         LabTestWorkRequest request = (LabTestWorkRequest)workRequestJTable.getValueAt(selectedRow, 0);
-     
+     if(request.getStatus().equals("Completed")){  JOptionPane.showMessageDialog(null,"Already compelted");
+     return;
+             }
         request.setStatus("Processing");
         
         ProcessWorkRequestJPanel processWorkRequestJPanel = new ProcessWorkRequestJPanel(userProcessContainer, request);

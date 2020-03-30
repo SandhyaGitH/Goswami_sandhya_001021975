@@ -15,6 +15,7 @@ import Business.WorkQueue.LabTestWorkRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import java.awt.Component;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -44,6 +45,7 @@ public class ManageOrderWorkAreaJPanel extends javax.swing.JPanel {
             
         populateTable();
         populateComboBox();
+        processJButton.setVisible(false);
     }
     
    private void populateComboBox() {
@@ -95,6 +97,7 @@ UserAccountDirectory ud = restaurant.getUserAccountDirectory();
             //row[2] = "";//((LabTestWorkRequest) request).getPatient().getSex();
             row[2] = request.getMessage();
             row[3] = request.getStatus();
+            row[4]=request.getReceiver();
            // row[4] = request.getSender().getUsername();
            // row[4] = "";//request.getReceiver() == null ? null : request.getReceiver().getEmployee().getName();
             
@@ -254,7 +257,8 @@ UserAccountDirectory ud = restaurant.getUserAccountDirectory();
         }
         
         WorkRequest request = (WorkRequest)workRequestJTable.getValueAt(selectedRow, 0);
-        request.setReceiver(userAccount);
+        
+        request.setReceiver((UserAccount)UserAccountsjComboBox1.getSelectedItem());
         request.setStatus("Pending");
         populateTable();
     }//GEN-LAST:event_assignJButton1ActionPerformed
@@ -266,7 +270,9 @@ UserAccountDirectory ud = restaurant.getUserAccountDirectory();
             return;
         }
         LabTestWorkRequest request = (LabTestWorkRequest)workRequestJTable.getValueAt(selectedRow, 0);
-     
+        if(request.getStatus().equals("Completed"))
+        {   JOptionPane.showMessageDialog(null, "Already completed");
+            return;}
         request.setStatus("Accepted");
         populateTable();
     }//GEN-LAST:event_AcceptJButtonActionPerformed
@@ -278,9 +284,12 @@ UserAccountDirectory ud = restaurant.getUserAccountDirectory();
             return;
         }
         LabTestWorkRequest request = (LabTestWorkRequest)workRequestJTable.getValueAt(selectedRow, 0);
-        
-        request.setStatus("Rejected");
+         if(request.getStatus().equals("Completed"))
+        {   JOptionPane.showMessageDialog(null, "Cannot Reject once Delivered");
+            }
+         else {request.setStatus("Rejected");
         populateTable();
+         }
     }//GEN-LAST:event_RejectActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

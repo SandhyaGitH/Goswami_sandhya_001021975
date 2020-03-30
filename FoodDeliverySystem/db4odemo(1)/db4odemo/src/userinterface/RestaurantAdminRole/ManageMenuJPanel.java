@@ -19,6 +19,9 @@ import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,31 +34,50 @@ public class ManageMenuJPanel extends javax.swing.JPanel {
     private JPanel userProcessContainer;
     private EcoSystem system;
     private Restaurant restaurant;
-    
+    private UserAccount userAccount;
+    private Location InNetwork;
 
     /**
      * Creates new form ManageEnterpriseJPanel
      */
-    public ManageMenuJPanel(JPanel userProcessContainer, Restaurant restaurant, EcoSystem system) {
+    public ManageMenuJPanel(JPanel userProcessContainer, Restaurant restaurant, EcoSystem system,UserAccount account) {
         initComponents();
 
         this.userProcessContainer = userProcessContainer;
         this.system = system;
         this.restaurant=restaurant;
-
-        populateTable(restaurant);
-        populateNetworkComboBox();
+        this.userAccount=account;
         
+//       populateNetworkComboBox();
+        
+       
+        populateTable();
+        networkJComboBox.setVisible(false);
+        enterpriseJComboBox.setVisible(false);
+        getInNetwork();
+        populateTable(restaurant);
+        
+    }
+    private void getInNetwork()
+    {
+         for(Location network :system.getNetworkList())
+         {
+             for (Restaurant rest : network.getRestaurantDirectory().getRestaurantList())
+             { 
+                 if(rest.equals(restaurant))
+                 {     InNetwork =network; break;}
+             }
+         }
     }
    private void populateTable(Restaurant restaurant) {
         DefaultTableModel model = (DefaultTableModel) menuListJTable.getModel();
 
         
         model.setRowCount(0);
-        for (Location network : system.getNetworkList()) {
+        
+          //  { InNetwork.getRestaurantDirectory().}
             MenuDirectory mD  = restaurant.getMenuDirectory();
-                if(mD==null)  {   break;}
-                else
+                if(mD!=null)
                 {
                for(Menu menu : mD.getMenuItemList()) {
                    if(menu!=null)
@@ -70,10 +92,10 @@ public class ManageMenuJPanel extends javax.swing.JPanel {
 
                     model.addRow(row);
                    }
-                }
                 
-            }
-        } 
+               }}
+            
+                 
     
        
         
@@ -88,8 +110,8 @@ public class ManageMenuJPanel extends javax.swing.JPanel {
         
         model.setRowCount(0);
         for (Location network : system.getNetworkList()) {
-            for (Restaurant restaurant : network.getRestaurantDirectory().getRestaurantList()) {
-                MenuDirectory mD  = restaurant.getMenuDirectory();
+            for (Restaurant restaur : network.getRestaurantDirectory().getRestaurantList()) {
+                MenuDirectory mD  = restaur.getMenuDirectory();
                 if(mD==null)
                 {  
                     break;
@@ -113,28 +135,24 @@ public class ManageMenuJPanel extends javax.swing.JPanel {
                 }
                 }
             }
-        } 
-    
-       
-        
+        }   
       
     }
 
-    private void populateNetworkComboBox(){
+  /*  private void populateNetworkComboBox(){
         networkJComboBox.removeAllItems();
         for (Location network : system.getNetworkList()){
             networkJComboBox.addItem(network);
         }
-    }
+    } */
     
-    private void populateEnterpriseComboBox(Location network){
+  /*  private void populateEnterpriseComboBox(Location network){
         enterpriseJComboBox.removeAllItems();
          enterpriseJComboBox.addItem(restaurant);
-       /* for (Restaurant restaurant : network.getRestaurantDirectory().getRestaurantList()){
-            enterpriseJComboBox.addItem(restaurant);
-        }*/
         
-    }
+        
+    } 
+*/
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -149,7 +167,6 @@ public class ManageMenuJPanel extends javax.swing.JPanel {
         menuListJTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         usernameJTextField = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         enterpriseJComboBox = new javax.swing.JComboBox();
         submitJButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -158,7 +175,6 @@ public class ManageMenuJPanel extends javax.swing.JPanel {
         jLabel12 = new javax.swing.JLabel();
         enterpriseJComboBox1 = new javax.swing.JComboBox();
         txtPrice = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         networkJComboBox = new javax.swing.JComboBox();
         txtDesc1 = new javax.swing.JTextField();
 
@@ -176,8 +192,6 @@ public class ManageMenuJPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(menuListJTable);
 
         jLabel2.setText("Menu Item");
-
-        jLabel3.setText("Restaurant");
 
         enterpriseJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -208,8 +222,6 @@ public class ManageMenuJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel5.setText("Network");
-
         networkJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         networkJComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -235,13 +247,10 @@ public class ManageMenuJPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
+                                .addGap(58, 58, 58)
                                 .addComponent(networkJComboBox, 0, 110, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(enterpriseJComboBox1, 0, 110, Short.MAX_VALUE)
@@ -265,13 +274,11 @@ public class ManageMenuJPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
                     .addComponent(networkJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(usernameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
                     .addComponent(enterpriseJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(txtDesc1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -291,24 +298,80 @@ public class ManageMenuJPanel extends javax.swing.JPanel {
 
     private void submitJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitJButtonActionPerformed
         
-        Location network = (Location) networkJComboBox.getSelectedItem();
-        Restaurant Srestaurant = (Restaurant) enterpriseJComboBox.getSelectedItem();
+//        Location network = (Location) networkJComboBox.getSelectedItem();
+      //  Restaurant Srestaurant = (Restaurant) enterpriseJComboBox.getSelectedItem();
+        String loc=restaurant.getLocation();
         
+        
+        
+          boolean flag = true;
+        
+        if (usernameJTextField.getText().equals("")){  //User have not entered anything. 
+        JOptionPane.showMessageDialog(null,"MenuTem Can't be empty");
+        usernameJTextField.requestFocusInWindow();
+        usernameJTextField.setText("");
+        flag = false;
+        }
+        if (txtDesc1.getText().equals("")){  //User have not entered anything. 
+        JOptionPane.showMessageDialog(null,"Desription Can't be empty");
+        txtDesc1.requestFocusInWindow();
+        txtDesc1.setText("");
+        flag = false;
+        }
+        if (txtPrice.getText().equals("")){  //User have not entered anything. 
+        JOptionPane.showMessageDialog(null,"Price Can't be empty");
+        txtPrice.requestFocusInWindow();
+        txtPrice.setText("");
+        flag = false;
+        }
+            String regex_Pattern_For_Number = "^[0-9]*";
+            Pattern pattern = Pattern.compile(regex_Pattern_For_Number);
+            //Pattern pattern = Pattern.compile(regex_Pattern_For_Letter);
+            Matcher matcher = pattern.matcher(txtPrice.getText());
+            if (!matcher.matches()) {
+                 flag = false;
+                JOptionPane.showMessageDialog(null,"Enter Valid Integer Only for No of Flights");
+                txtPrice.requestFocusInWindow();
+                txtPrice.setText("");
+               flag = false;
+                   }
+        
+        
+        
+        //Employee employee = restaurant.getEmployeeDirectory().createEmployee(name);
+         //UserAccount account = system.getUserAccountDirectory().createUserAccount(username, password, null, new CustomerRole());
+         if(flag)
+         {
+           
         String menuItem = usernameJTextField.getText();
-        String description = String.valueOf(txtPrice.getText());
+        String description = String.valueOf(txtDesc1.getText());
         String price = txtPrice.getText();
         String available = "Y";//networkJComboBox.getSelectedItem();
         
+        
+                
+         for (Menu menu : restaurant.getMenuDirectory().getMenuItemList()){
+            
+            if( menu.getMenuItem().equals(menuItem))
+            {
+               JOptionPane.showMessageDialog(null,"Duplicate Username"); 
+               return;
+            }
+             
+         }
+         
 //        Employee employee = restaurant.getEmployeeDirectory().createEmployee(name);
-        Menu mn = new Menu(network,Srestaurant,menuItem,description,price,available);
+        Menu mn = new Menu(InNetwork,restaurant,menuItem,description,price,available);
        // restaurant==null?restaurant=new Restaurant():restaurant;
         MenuDirectory MD = restaurant.getMenuDirectory();
         if(MD==null)
         {MD = new MenuDirectory();}
         MD.addMenuItem(mn);
-        restaurant.setMenuDirectory(MD);     //   UserAccount account = system.getUserAccountDirectory().createUserAccount(username, password, null, new CustomerRole());
-        populateTable();
-        
+        restaurant.setMenuDirectory(MD);  
+        int index= InNetwork.getRestaurantDirectory().getRestaurantList().indexOf(restaurant);
+        InNetwork.getRestaurantDirectory().getRestaurantList().set(index,restaurant);//   UserAccount account = system.getUserAccountDirectory().createUserAccount(username, password, null, new CustomerRole());
+         }populateTable(restaurant); 
+         
     }//GEN-LAST:event_submitJButtonActionPerformed
 
     private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
@@ -327,10 +390,10 @@ public class ManageMenuJPanel extends javax.swing.JPanel {
 
     private void networkJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_networkJComboBoxActionPerformed
         // TODO add your handling code here:
-         Location network = (Location) networkJComboBox.getSelectedItem();
+      /*  Location network = (Location) networkJComboBox.getSelectedItem();
         if (network != null){
             populateEnterpriseComboBox(network);
-        }
+        } */
     }//GEN-LAST:event_networkJComboBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -340,9 +403,7 @@ public class ManageMenuJPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox enterpriseJComboBox1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable menuListJTable;
     private javax.swing.JComboBox networkJComboBox;
