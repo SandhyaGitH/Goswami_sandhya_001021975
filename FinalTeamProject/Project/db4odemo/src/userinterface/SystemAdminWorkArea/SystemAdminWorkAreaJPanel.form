@@ -89,15 +89,12 @@
                               <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="btnManageNetwork" max="32767" attributes="0"/>
-                                  <Component id="btnManageEnterprise" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="btnManageInsuranceAdmin" alignment="0" min="-2" pref="185" max="-2" attributes="0"/>
+                                  <Component id="btnManageEnterprise" alignment="1" pref="185" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="btnManageBillingAgent" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="btnManageCustomerAgent" alignment="1" pref="185" max="32767" attributes="0"/>
-                                  <Component id="btnManagePoliciIssuer" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="btnManageCustomers" alignment="0" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="btnManageCustomers" min="-2" pref="185" max="-2" attributes="0"/>
+                                  <Component id="btnManageInsuranceAdmin" min="-2" pref="185" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -119,16 +116,11 @@
                           <Component id="btnManageCustomers" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnManageEnterprise" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnManageInsuranceAdmin" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                      <Component id="btnManageCustomerAgent" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnManageBillingAgent" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnManagePoliciIssuer" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="152" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnManageEnterprise" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnManageInsuranceAdmin" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="270" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -152,14 +144,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManageNetworkActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnManageBillingAgent">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Manage Billing Agent"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManageBillingAgentActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JButton" name="btnManageCustomers">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Manage All Customers"/>
@@ -170,26 +154,10 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnManageInsuranceAdmin">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Manage Ins_Comp Admin"/>
+                <Property name="text" type="java.lang.String" value="Manage Enterprise Admin"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManageInsuranceAdminActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnManageCustomerAgent">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Manage Customer Agent"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManageCustomerAgentActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnManagePoliciIssuer">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Manage Policy issuer "/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManagePoliciIssuerActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnManageEnterprise">

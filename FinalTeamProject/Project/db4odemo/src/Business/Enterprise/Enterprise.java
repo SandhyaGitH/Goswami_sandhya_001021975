@@ -25,8 +25,8 @@ public abstract class Enterprise extends Organization {
               
         InsuranceCompany("Insurance Company"),
         InsuranceRegulator("Insurance Regulator"),
-        Hospitals("Hospitals");
-        
+        Hospitals("Hospitals"),
+        InsuranceBroker("Insurance Broker");
         
         private String value;
         

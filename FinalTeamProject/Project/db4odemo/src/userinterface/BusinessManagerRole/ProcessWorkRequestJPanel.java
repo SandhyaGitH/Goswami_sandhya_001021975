@@ -145,6 +145,7 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
 
                         for (Location network : system.getNetworkList()) {
                             for (Enterprise entp : network.getEnterpriseDirectory().getEnterpriseList()) {
+                               // if (entp.getEnterpriseType().getValue().equals(Enterprise.EnterpriseType.InsuranceRegulator.getValue())) {
                                 if (entp.getEnterpriseType().equals(Enterprise.EnterpriseType.InsuranceRegulator)) {
                                     entp.getWorkQueue().getWorkRequestList().add(request);
                                     for (Organization organization : entp.getOrganizaionDirectory().getOrganizationList()) {

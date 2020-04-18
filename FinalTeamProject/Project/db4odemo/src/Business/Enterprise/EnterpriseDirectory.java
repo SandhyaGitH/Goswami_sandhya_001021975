@@ -42,7 +42,11 @@ public class EnterpriseDirectory {
                 enterpriseList.add(enterprise);
                 break;
             case Hospitals:
-                // enterprise = new Hospitals(name);
+                enterprise = new Hospitals(name);
+                enterpriseList.add(enterprise);
+                break;
+                case  InsuranceBroker:
+                  enterprise = new InsuranceBroker(name);
                 enterpriseList.add(enterprise);
                 break;
             default:

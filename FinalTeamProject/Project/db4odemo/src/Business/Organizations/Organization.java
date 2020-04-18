@@ -27,9 +27,13 @@ public abstract class Organization {
     
     public enum Type{
         InsuranceAdmin("Insurance Admin"),
+        
         Customer("Customer"),
+        
         CustomerAgent("Customer Agent"),
+        UnderWriter("Underwriter"),
         BillingAgent("Billing Agent"),
+        PolicyIssuance("Policy Issuance"),
         
         ProductManagement("Product management"),
         BusinessManagement("Business management"),

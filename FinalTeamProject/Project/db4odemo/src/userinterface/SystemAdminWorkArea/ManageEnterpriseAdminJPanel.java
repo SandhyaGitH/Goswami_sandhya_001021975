@@ -9,6 +9,7 @@ import Business.Employee.Employee;
 import Business.Enterprise.Enterprise;
 //import Business.Restaurant.Restaurant;
 import Business.Network.Location;
+import Business.Organizations.Organization;
 import Business.Role.AdminRole;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
@@ -46,37 +47,36 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
         for (Location network : system.getNetworkList()) {
             for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
                 for (UserAccount userAccount : enterprise.getUserAccountDirectory().getUserAccountList()) {
-                    if(userAccount.getRole().getClass().equals(Business.Role.AdminRole.class))
-                    {
-                    Object[] row = new Object[3];
-                    row[0] = enterprise;
-                    row[1] = network;
-                    row[2] = userAccount;
+                    if (userAccount.getRole().getClass().equals(Business.Role.AdminRole.class)) {
+                        Object[] row = new Object[3];
+                        row[0] = enterprise;
+                        row[1] = network;
+                        row[2] = userAccount;
 
-                    model.addRow(row);
+                        model.addRow(row);
                     }
                 }
             }
         }
     }
 
-    private void populateNetworkComboBox(){
+    private void populateNetworkComboBox() {
         networkJComboBox.removeAllItems();
-        
-        for (Location network : system.getNetworkList()){
+
+        for (Location network : system.getNetworkList()) {
             networkJComboBox.addItem(network);
         }
     }
-    
-    private void populateEnterpriseComboBox(Location network){
+
+    private void populateEnterpriseComboBox(Location network) {
         enterpriseJComboBox.removeAllItems();
-        
-        for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()){
+
+        for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
             enterpriseJComboBox.addItem(enterprise);
         }
-        
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -245,76 +245,84 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
     private void networkJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_networkJComboBoxActionPerformed
 
         Location network = (Location) networkJComboBox.getSelectedItem();
-        if (network != null){
+        if (network != null) {
             populateEnterpriseComboBox(network);
         }
-        
-        
+
+
     }//GEN-LAST:event_networkJComboBoxActionPerformed
 
     private void submitJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitJButtonActionPerformed
-        
+
         Enterprise enterprise = (Enterprise) enterpriseJComboBox.getSelectedItem();
-        
-        
-        
-          boolean flag = true;
-        
-        if (nameJTextField.getText().equals("")){  //User have not entered anything. 
-        JOptionPane.showMessageDialog(null,"Name Can't be empty");
-        nameJTextField.requestFocusInWindow();
-        nameJTextField.setText("");
-        flag = false;
+
+        boolean flag = true;
+
+        if (nameJTextField.getText().equals("")) {  //User have not entered anything. 
+            JOptionPane.showMessageDialog(null, "Name Can't be empty");
+            nameJTextField.requestFocusInWindow();
+            nameJTextField.setText("");
+            flag = false;
         }
-        if (usernameJTextField.getText().equals("")){  //User have not entered anything. 
-        JOptionPane.showMessageDialog(null,"Username UserName Can't be empty");
-        usernameJTextField.requestFocusInWindow();
-        usernameJTextField.setText("");
-        flag = false;
+        if (usernameJTextField.getText().equals("")) {  //User have not entered anything. 
+            JOptionPane.showMessageDialog(null, "Username UserName Can't be empty");
+            usernameJTextField.requestFocusInWindow();
+            usernameJTextField.setText("");
+            flag = false;
         }
-         if (String.valueOf(passwordJPasswordField.getPassword()).equals("")){  //User have not entered anything. 
-        JOptionPane.showMessageDialog(null," Password Can't be empty");
-        passwordJPasswordField.requestFocusInWindow();
-        passwordJPasswordField.setText("");
-        flag = false;
+        if (String.valueOf(passwordJPasswordField.getPassword()).equals("")) {  //User have not entered anything. 
+            JOptionPane.showMessageDialog(null, " Password Can't be empty");
+            passwordJPasswordField.requestFocusInWindow();
+            passwordJPasswordField.setText("");
+            flag = false;
         }
-        
+
         //Employee employee = restaurant.getEmployeeDirectory().createEmployee(name);
-         //UserAccount account = system.getUserAccountDirectory().createUserAccount(username, password, null, new CustomerRole());
-         if(flag)
-         {
-             String username = usernameJTextField.getText();
-        String password = String.valueOf(passwordJPasswordField.getPassword());
-        String name = nameJTextField.getText();
-        
-                
-         for (UserAccount acco : enterprise.getUserAccountDirectory().getUserAccountList()){
-            if( acco.getRole().getClass().equals(Business.Role.AdminRole.class))
-            {
-                JOptionPane.showMessageDialog(null,"Morethan one Admin in one Enterprise is not allowed"); 
-               return;
+        //UserAccount account = system.getUserAccountDirectory().createUserAccount(username, password, null, new CustomerRole());
+        if (flag) {
+            String username = usernameJTextField.getText();
+            String password = String.valueOf(passwordJPasswordField.getPassword());
+            String name = nameJTextField.getText();
+
+            for (UserAccount acco : enterprise.getUserAccountDirectory().getUserAccountList()) {
+                if (acco.getRole().getClass().equals(Business.Role.AdminRole.class)) {
+                    JOptionPane.showMessageDialog(null, "Morethan one Admin in one Enterprise is not allowed");
+                    return;
+                }
+
             }
-            if(acco.getUsername().equals(username))
-            {
-               JOptionPane.showMessageDialog(null,"Duplicate Username"); 
-               return;
+
+            if (!system.checkIfUserIsUnique(username)) {
+                JOptionPane.showMessageDialog(null, "Duplicate Username");
+                return;
             }
-             
-         }
-                
-        
-        
-        Employee employee = enterprise.getEmployeeDirectory().createEmployee(name);
-        
-        UserAccount account = enterprise.getUserAccountDirectory().createUserAccount(username, password, employee, new AdminRole());
-       JOptionPane.showMessageDialog(null,"Saved"); 
-         }populateTable();
-         
+            /* for (Location network : system.getNetworkList()) {
+                for (Enterprise entp : network.getEnterpriseDirectory().getEnterpriseList()) {
+
+                    for (Organization org : entp.getOrganizaionDirectory().getOrganizationList()) {
+                        for (UserAccount userAccount : org.getUserAccountDirectory().getUserAccountList()) {
+                            if (userAccount.getUsername().equals(username)) {
+                                JOptionPane.showMessageDialog(null, "Duplicate Username");
+                                return;
+                            }
+
+                        }
+                    }
+                }
+            } */
+
+            Employee employee = enterprise.getEmployeeDirectory().createEmployee(name);
+
+            UserAccount account = enterprise.getUserAccountDirectory().createUserAccount(username, password, employee, new AdminRole());
+            JOptionPane.showMessageDialog(null, "Saved");
+        }
+        populateTable();
+
     }//GEN-LAST:event_submitJButtonActionPerformed
 
     private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
         userProcessContainer.remove(this);
-         Component[] componentArray = userProcessContainer.getComponents();
+        Component[] componentArray = userProcessContainer.getComponents();
         Component component = componentArray[componentArray.length - 1];
         SystemAdminWorkAreaJPanel sysAdminwjp = (SystemAdminWorkAreaJPanel) component;
         sysAdminwjp.populateTree();
@@ -324,22 +332,22 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-         int selectedRow = enterpriseJTable.getSelectedRow();
-        if(selectedRow >= 0){
-             Enterprise enterprise = (Enterprise) enterpriseJTable.getValueAt(selectedRow, 0);
-           
+        int selectedRow = enterpriseJTable.getSelectedRow();
+        if (selectedRow >= 0) {
+            Enterprise enterprise = (Enterprise) enterpriseJTable.getValueAt(selectedRow, 0);
+
             int dialogButton = JOptionPane.YES_NO_OPTION;
             int dialogResult = JOptionPane.showConfirmDialog(null, "Would you like to remove this Admin!", "Warning", dialogButton);
-            if(dialogResult == JOptionPane.YES_OPTION){
-               UserAccount uA =(UserAccount) enterpriseJTable.getValueAt(selectedRow, 2) ;
-                int index= enterprise.getUserAccountDirectory().getUserAccountList().indexOf(uA);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                UserAccount uA = (UserAccount) enterpriseJTable.getValueAt(selectedRow, 2);
+                int index = enterprise.getUserAccountDirectory().getUserAccountList().indexOf(uA);
                 enterprise.getUserAccountDirectory().getUserAccountList().remove(index);
                 populateTable();
-            
+
             }
-        }else{
-            JOptionPane.showMessageDialog(null, "Please select a row from table first.", "Warning",JOptionPane.WARNING_MESSAGE);
-            
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a row from table first.", "Warning", JOptionPane.WARNING_MESSAGE);
+
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
