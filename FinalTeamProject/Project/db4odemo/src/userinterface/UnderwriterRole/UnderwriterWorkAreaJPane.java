@@ -218,7 +218,7 @@ public class UnderwriterWorkAreaJPane extends javax.swing.JPanel {
 
     private void assignJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignJButtonActionPerformed
 
-       int selectedRow = workRequestJTable.getSelectedRow();
+        int selectedRow = workRequestJTable.getSelectedRow();
 
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(null, "Select a row");
@@ -238,29 +238,33 @@ public class UnderwriterWorkAreaJPane extends javax.swing.JPanel {
                     break;
                 case 0:
                     break;
-
-                case 21:
+                case 2:
                     break;
-                case 3:
-                   break;
-                case 31:
+                case 21:
                     request.setReceiver(userAccount);
                     request.setStatus("Pending under" + userAccount);
-                    ((InsuranceProductWorkRequest) request).setApprovalStage("4");
+                    ((InsuranceProductWorkRequest) request).setApprovalStage("3");
                     userAccount.getWorkQueue().getWorkRequestList().add(request);
+                    break;
+                case 3:
+
+                    int dialogButton = JOptionPane.YES_NO_OPTION;
+                    int dialogResult = JOptionPane.showConfirmDialog(null, "Already Pending under a Underwriter. Do you want to reassign it?", "Warning", dialogButton);
+                    if (dialogResult == JOptionPane.YES_OPTION) {
+                        request.setReceiver(userAccount);
+                        request.setStatus("Pending under" + userAccount);
+                        ((InsuranceProductWorkRequest) request).setApprovalStage("3");
+                        userAccount.getWorkQueue().getWorkRequestList().add(request);
+                    }
+                    break;
+                case 31:
+                    JOptionPane.showMessageDialog(null, "Already Approved by underwriter.");
                     break;
                 case 32:
                     JOptionPane.showMessageDialog(null, "Already Underwriter has raised risk");
                     break;
                 case 4:
-                    int dialogButton = JOptionPane.YES_NO_OPTION;
-                    int dialogResult = JOptionPane.showConfirmDialog(null, "Already Pending under a billing agent. Do you want to reassign it?", "Warning", dialogButton);
-                    if (dialogResult == JOptionPane.YES_OPTION) {
-                        request.setReceiver(userAccount);
-                        request.setStatus("Pending under" + userAccount);
-                        ((InsuranceProductWorkRequest) request).setApprovalStage("4");
-                        userAccount.getWorkQueue().getWorkRequestList().add(request);
-                    }
+                    JOptionPane.showMessageDialog(null, "Already pending under a Billing Agent");
                     break;
                 case 41:
                     JOptionPane.showMessageDialog(null, "Billing Done/Poliy Issued.");
@@ -271,13 +275,6 @@ public class UnderwriterWorkAreaJPane extends javax.swing.JPanel {
                     break;
 
             }
-            /* if (request.getReceiver().equals(userAccount)) {
-            JOptionPane.showMessageDialog(null, "Already Assigned");
-            return;
-        } else if (request.getStatus().equals("Completed")) {
-            JOptionPane.showMessageDialog(null, "Already Completed");
-            return;
-        } */
         }
         populateTable();
         populateBMTable();

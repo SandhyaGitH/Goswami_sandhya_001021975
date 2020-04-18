@@ -4,6 +4,7 @@
  */
 package userinterface.BillingAgentRole;
 
+import Business.CustomerPolicy.Policy;
 import userinterface.UnderwriterRole.*;
 import userinterface.BusinessManagerRole.*;
 import Business.EcoSystem;
@@ -129,8 +130,8 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_backJButtonActionPerformed
 
     private void submitJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitJButtonActionPerformed
-       
- if (request.getClass().equals(CustomerProductWorkRequest.class)) {
+
+        if (request.getClass().equals(CustomerProductWorkRequest.class)) {
             if (request.getClass().equals(CustomerProductWorkRequest.class)) {
                 int stage = Integer.parseInt(((CustomerProductWorkRequest) request).getApprovalStage());
                 switch (stage) {
@@ -145,51 +146,21 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                     case 21:
                         break;
                     case 3:
-                         break;
+                        break;
                     case 31:
-                        JOptionPane.showMessageDialog(null, "Already underwriter  has Processed the Application");
+                        JOptionPane.showMessageDialog(null, "Underwriter  has Processed the Application");
                         break;
                     case 32:
                         JOptionPane.showMessageDialog(null, "Underwriter has raised a risk");
                         break;
                     case 4:
-                        Organization org = null;
-
-                        for (Location network : system.getNetworkList()) {
-                            for (Enterprise entp : network.getEnterpriseDirectory().getEnterpriseList()) {
-                                if (entp.getEnterpriseType().getValue().equals(Enterprise.EnterpriseType.InsuranceBroker.getValue())) {
-                                    entp.getWorkQueue().getWorkRequestList().add(request);
-                                    for (Organization organization : entp.getOrganizaionDirectory().getOrganizationList()) {
-                                        if (organization instanceof BillingAgentOrganization) {
-                                            org = organization;
-                                            break;
-                                        }
-
-                                    }
-                                }
-                            }
-                        }
-                        /*
-        enterprise.getWorkQueue().getWorkRequestList().add(request);
-                         */
-                        if (org != null) {
-                            org.getWorkQueue().getWorkRequestList().add(request);
-                            request.setTestResult(resultJTextField.getText());
-                            ((CustomerProductWorkRequest) request).setApprovalStage("31");
-                            JOptionPane.showMessageDialog(null, "Approved by Underwriter");
-                            resultJTextField.setText("");
-                            // userAccount.getWorkQueue().getWorkRequestList().add(request);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "System orb issue");
-                        }
-                        resultJTextField.setText("");
+                        approvePolicy();
                         break;
                     case 41:
-                        
-                        JOptionPane.showMessageDialog(null, "Billing Done/Poliy Issued.");
+                        JOptionPane.showMessageDialog(null, "Already Billing Done/Poliy Issued.");
                         break;
                     case 42:
-                        JOptionPane.showMessageDialog(null, "Cancelled by billing Agent");
+                        JOptionPane.showMessageDialog(null, "Already Cancelled by a billing Agent");
                         break;
                     default:
                         break;
@@ -204,21 +175,62 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
 
     private void rejectJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejectJButtonActionPerformed
         // TODO add your handling code here:
-        if (request.getClass().equals(InsuranceProductWorkRequest.class)) {
-            if (request.getClass().equals(InsuranceProductWorkRequest.class)) {
-                int stage = Integer.parseInt(((InsuranceProductWorkRequest) request).getApprovalStage());
+
+        if (request.getClass().equals(CustomerProductWorkRequest.class)) {
+            if (request.getClass().equals(CustomerProductWorkRequest.class)) {
+                int stage = Integer.parseInt(((CustomerProductWorkRequest) request).getApprovalStage());
                 switch (stage) {
 
-                    case 21:
-                        JOptionPane.showMessageDialog(null, "Already Sent to IRDA");
+                    case 11:
+                        JOptionPane.showMessageDialog(null, "Customer has Cancelled Request");
                         break;
-                    case 22:
-                        JOptionPane.showMessageDialog(null, "Already Internally Rejected by BM");
+                    case 0:
+                        break;
+                    case 2:
+                        JOptionPane.showMessageDialog(null, "Pending under Customer Agent");
+                        break;
+                    case 21:
+                        break;
+                    case 3:
+
+                        break;
+                    case 31:
+                        JOptionPane.showMessageDialog(null, "A Underwriter  has Processed the Application");
+                        break;
+                    case 32:
+                        JOptionPane.showMessageDialog(null, "Underwriter has raised a risk");
+                        break;
+                    case 4:
+                        request.setTestResult(resultJTextField.getText());
+                        request.setStatus("Rejected by Billing Agent.");
+                        ((CustomerProductWorkRequest) request).setApprovalStage("42");
+
+                        Organization org = null;
+
+                        /*  for (Location network : system.getNetworkList()) {
+                            for (Enterprise entp : network.getEnterpriseDirectory().getEnterpriseList()) {
+                                if (entp.getEnterpriseType().equals(Enterprise.EnterpriseType.InsuranceRegulator)) {
+                                    entp.getWorkQueue().getWorkRequestList().add(request);
+                                    for (Organization organization : entp.getOrganizaionDirectory().getOrganizationList()) {
+                                        if (organization instanceof BillingAgentOrganization) {
+                                            org = organization;
+                                            break;
+                                        }
+
+                                    }
+                                }
+                            }
+                        } */
+                        JOptionPane.showMessageDialog(null, "Rejected");
+                        resultJTextField.setText("");
+                        break;
+
+                    case 41:
+                        JOptionPane.showMessageDialog(null, "Billing Done/Poliy Issued.");
+                    case 42:
+                        JOptionPane.showMessageDialog(null, "Cancelled by billing Agent");
                         break;
                     default:
-                        request.setTestResult(resultJTextField.getText());
-                        request.setStatus("Rejected");
-                        ((InsuranceProductWorkRequest) request).setApprovalStage("22");
                         break;
 
                 }
@@ -229,6 +241,53 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_rejectJButtonActionPerformed
 
+    private void approvePolicy() {
+
+        Policy policy = new Policy();
+        policy.setName(request.getProductName());
+        policy.setCustomerName(request.getSender().getUsername());
+        policy.setCustomerMail("");
+        policy.setCustProdWQ((CustomerProductWorkRequest) request);
+        policy.setEnterpriseName(request.getEnterprise().getName());
+        //  Enterprise enterprise = (Enterprise) organizationEmpJComboBox.getSelectedItem();
+        //  String name = nameJTextField.getText();
+
+        // Organization org = null;
+
+        /* for (Location network : system.getNetworkList()) {
+                            for (Enterprise entp : network.getEnterpriseDirectory().getEnterpriseList()) {
+                                if (entp.getEnterpriseType().getValue().equals(Enterprise.EnterpriseType.InsuranceBroker.getValue())) {
+                                    entp.getWorkQueue().getWorkRequestList().add(request);
+                                    for (Organization organization : entp.getOrganizaionDirectory().getOrganizationList()) {
+                                        if (organization instanceof BillingAgentOrganization) {
+                                            org = organization;
+                                            break;
+                                        }
+
+                                    }
+                                }
+                            }
+                        } 
+        if (org != null) {
+            org.getWorkQueue().getWorkRequestList().add(request);
+            request.setTestResult(resultJTextField.getText());
+            ((CustomerProductWorkRequest) request).setApprovalStage("41");
+            request.setStatus("Policy Issued");
+            JOptionPane.showMessageDialog(null, "Billing Done. Policy Issued Successfuly.");
+            resultJTextField.setText("");
+            // userAccount.getWorkQueue().getWorkRequestList().add(request);
+        } else {
+            JOptionPane.showMessageDialog(null, "Something went wrong!!");
+        }
+         */ if (system != null) {
+            system.getCustPolicyDirectory().getPolicyList().add(policy);
+            resultJTextField.setText("");
+            ((CustomerProductWorkRequest) request).setApprovalStage("41");
+            request.setStatus("Policy Issued");
+            JOptionPane.showMessageDialog(null, "Billing Done. Policy Issued Successfuly.");
+            resultJTextField.setText("");
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backJButton;
     private javax.swing.JLabel jLabel1;

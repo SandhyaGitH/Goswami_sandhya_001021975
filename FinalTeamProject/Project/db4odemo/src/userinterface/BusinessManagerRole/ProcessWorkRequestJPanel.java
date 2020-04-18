@@ -203,6 +203,7 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                         request.setTestResult(resultJTextField.getText());
                         request.setStatus("Rejected");
                         ((InsuranceProductWorkRequest) request).setApprovalStage("22");
+                        JOptionPane.showMessageDialog(null, "Rejected.");
                         break;
 
                 }

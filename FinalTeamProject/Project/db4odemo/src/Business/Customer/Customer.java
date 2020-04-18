@@ -16,6 +16,28 @@ public class Customer {
     private String Username;
     private String Address;
     private String customerRating;
+    private String customerEmail;
+    private String phoneNumber;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+     private int customerId;
+     private String customerIdStr;
+    private static int customerCount = 1;
+    
+
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
+    }
 
     public Customer(String Location, String name, String Username, String Address, String customerRating) {
         this.Location = Location;
@@ -25,9 +47,19 @@ public class Customer {
         this.customerRating = customerRating;
     }
 
+    /*public Customer()
+    {} */
+     
     public Customer()
-    {}
-        
+    {
+        customerId = customerCount;
+        customerIdStr=Integer.toString(customerId);
+        customerCount++;
+    }
+    
+    public int getCustomerId() {
+        return customerId;
+    }
     
     public String getLocation() {
         return Location;
@@ -67,5 +99,12 @@ public class Customer {
 
     public void setCustomerRating(String customerRating) {
         this.customerRating = customerRating;
+    }
+    
+    @Override
+    public String toString() {
+        if(customerIdStr==null)
+            return customerIdStr="";
+        else  return customerIdStr;
     }
 }
