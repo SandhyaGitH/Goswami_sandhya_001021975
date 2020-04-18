@@ -230,53 +230,52 @@ public class BillingAgentWorkAreaJPane extends javax.swing.JPanel {
         if (request.getClass().equals(CustomerProductWorkRequest.class)) {
             int stage = Integer.parseInt(((CustomerProductWorkRequest) request).getApprovalStage() == null ? "-1" : ((InsuranceProductWorkRequest) request).getApprovalStage());
             switch (stage) {
+                case 11:
+                    int dialogButton1 = JOptionPane.YES_NO_OPTION;
+                    int dialogResult1 = JOptionPane.showConfirmDialog(null, "Order Cancelled by customer. Cannot process.", "Warning", dialogButton1);
+                    if (dialogResult1 == JOptionPane.YES_OPTION) {
+                        // JOptionPane.showMessageDialog(null, "");
+                    }
+                    break;
                 case 0:
+                    break;
+                case 2:
+                    break;
+                case 21:
+                    JOptionPane.showMessageDialog(null, "Underwriter has Approved");
+                    break;
+                case 3:
+
+                    break;
+                case 31:
                     request.setReceiver(userAccount);
                     request.setStatus("Pending under" + userAccount);
-                    ((CustomerProductWorkRequest) request).setApprovalStage("1");
+                    ((InsuranceProductWorkRequest) request).setApprovalStage("4");
                     userAccount.getWorkQueue().getWorkRequestList().add(request);
                     break;
-                case 1:
+                case 32:
+                    JOptionPane.showMessageDialog(null, "Already Underwriter has raised risk");
+                    break;
+                case 4:
                     int dialogButton = JOptionPane.YES_NO_OPTION;
-                    int dialogResult = JOptionPane.showConfirmDialog(null, "Already Pending under a Business manager. Do you want to reassign it?", "Warning", dialogButton);
+                    int dialogResult = JOptionPane.showConfirmDialog(null, "Already Pending under a Billing Agent. Do you want to reassign it?", "Warning", dialogButton);
                     if (dialogResult == JOptionPane.YES_OPTION) {
                         request.setReceiver(userAccount);
                         request.setStatus("Pending under" + userAccount);
-                        ((CustomerProductWorkRequest) request).setApprovalStage("1");
+                        ((InsuranceProductWorkRequest) request).setApprovalStage("4");
                         userAccount.getWorkQueue().getWorkRequestList().add(request);
                     }
                     break;
-                case 21:
-                    JOptionPane.showMessageDialog(null, "Already Sent to IRDA");
+                case 41:
+                    JOptionPane.showMessageDialog(null, "Billing Done/Poliy Issued.");
                     break;
-                case 22:
-                    JOptionPane.showMessageDialog(null, "Already Internally Rejected by BM");
-                    break;
-                case 3:
-                    JOptionPane.showMessageDialog(null, "Already Pending under a IRDA Policy Manager");
-                    break;
-                case 4:
-                    JOptionPane.showMessageDialog(null, "Already IRDA Policy Manager has Forwarded Request for Further Approvals");
-                    break;
-                case 5:
-                    JOptionPane.showMessageDialog(null, "Pending under Final IRDA approval team.");
-                    break;
-                case 61:
-                    JOptionPane.showMessageDialog(null, "Aproved by IRDA approval team.");
-                case 62:
-                    JOptionPane.showMessageDialog(null, "Rejected by IRDA approval team.");
+                case 42:
+                    JOptionPane.showMessageDialog(null, "Cancelled by billing Agent");
                     break;
                 default:
                     break;
 
             }
-            /* if (request.getReceiver().equals(userAccount)) {
-            JOptionPane.showMessageDialog(null, "Already Assigned");
-            return;
-        } else if (request.getStatus().equals("Completed")) {
-            JOptionPane.showMessageDialog(null, "Already Completed");
-            return;
-        } */
         }
         populateTable();
         populateBMTable();

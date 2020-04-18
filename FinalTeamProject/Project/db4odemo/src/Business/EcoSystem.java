@@ -7,6 +7,8 @@ package Business;
 
 import Business.Customer.Customer;
 import Business.Customer.CustomerDirectory;
+import Business.CustomerPolicy.Policy;
+import Business.CustomerPolicy.PolicyDirectory;
 import Business.DeliveryMan.DeliveryManDirectory;
 import Business.Enterprise.Enterprise;
 import Business.Restaurant.RestaurantDirectory;
@@ -30,12 +32,14 @@ public class EcoSystem extends Organization {
     private RestaurantDirectory restaurantDirectory;
     private CustomerDirectory customerDirectory;
     private DeliveryManDirectory deliveryManDirectory;
+    private PolicyDirectory policyDirectory;
 
-    public EcoSystem(RestaurantDirectory restaurantDirectory, CustomerDirectory customerDirectory, DeliveryManDirectory deliveryManDirectory) {
+    public EcoSystem(RestaurantDirectory restaurantDirectory, CustomerDirectory customerDirectory, DeliveryManDirectory deliveryManDirectory ,PolicyDirectory policyDirectory) {
 
         this.restaurantDirectory = restaurantDirectory;
         this.customerDirectory = customerDirectory;
         this.deliveryManDirectory = deliveryManDirectory;
+        this.policyDirectory = policyDirectory;
     }
 
     private EcoSystem() {
@@ -45,6 +49,7 @@ public class EcoSystem extends Organization {
         this.restaurantDirectory = new RestaurantDirectory();
         this.customerDirectory = new CustomerDirectory();
         this.deliveryManDirectory = new DeliveryManDirectory();
+        this.policyDirectory = new PolicyDirectory();
     }
     private ArrayList<Location> networkList;
 
@@ -83,6 +88,31 @@ public class EcoSystem extends Organization {
         return customer;
     }
 
+    public CustomerDirectory getCustomerDirectory() {
+        if (customerDirectory != null) {
+            return customerDirectory;
+        } else {
+            return customerDirectory = new CustomerDirectory();
+        }
+    }
+    
+    public PolicyDirectory getCustPolicyDirectory() {
+        if (policyDirectory != null) {
+            return policyDirectory;
+        } else {
+            return policyDirectory = new PolicyDirectory();
+        }
+    }
+    
+    public Policy addCustPolicy(Policy policy) {
+        
+         policyDirectory = getCustPolicyDirectory();
+         policyDirectory.getPolicyList().add(policy);
+
+        return policy;
+       
+    } 
+
     @Override
     public ArrayList<Role> getSupportedRole() {
         ArrayList<Role> roleList = new ArrayList<Role>();
@@ -98,14 +128,6 @@ public class EcoSystem extends Organization {
         }
     }
 
-    public CustomerDirectory getCustomerDirectory() {
-        if (customerDirectory != null) {
-            return customerDirectory;
-        } else {
-            return customerDirectory = new CustomerDirectory();
-        }
-    }
-
     /*public RestaurantDirectory getRestaurantList() {
       if(restaurantDirectory!=null)
         return restaurantDirectory;
@@ -116,26 +138,26 @@ public class EcoSystem extends Organization {
     }
 
     public boolean checkIfUserIsUnique(String userName) {
-        boolean isUnique ;
+        boolean isUnique;
         isUnique = this.getUserAccountDirectory().checkIfUsernameIsUnique(userName);
 
         if (isUnique) {
             for (Location network : this.getNetworkList()) {
                 for (Enterprise entp : network.getEnterpriseDirectory().getEnterpriseList()) {
-                      
-                       for (UserAccount userAccount : entp.getUserAccountDirectory().getUserAccountList()) {
-                            if (userAccount.getUsername().equals(userName)) {
-                                //JOptionPane.showMessageDialog(null, "Duplicate Username");
-                                isUnique= false;
 
-                            }
+                    for (UserAccount userAccount : entp.getUserAccountDirectory().getUserAccountList()) {
+                        if (userAccount.getUsername().equals(userName)) {
+                            //JOptionPane.showMessageDialog(null, "Duplicate Username");
+                            isUnique = false;
 
                         }
+
+                    }
                     for (Business.Organizations.Organization org : entp.getOrganizaionDirectory().getOrganizationList()) {
                         for (UserAccount userAccount : org.getUserAccountDirectory().getUserAccountList()) {
                             if (userAccount.getUsername().equals(userName)) {
                                 //JOptionPane.showMessageDialog(null, "Duplicate Username");
-                                isUnique= false;
+                                isUnique = false;
 
                             }
 

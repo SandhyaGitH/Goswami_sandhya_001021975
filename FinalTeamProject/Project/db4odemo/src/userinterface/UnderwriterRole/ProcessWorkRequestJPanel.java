@@ -144,8 +144,7 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                     case 21:
                         break;
                     case 3:
-
-                        Organization org = null;
+                         Organization org = null;
 
                         for (Location network : system.getNetworkList()) {
                             for (Enterprise entp : network.getEnterpriseDirectory().getEnterpriseList()) {
@@ -167,8 +166,9 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                         if (org != null) {
                             org.getWorkQueue().getWorkRequestList().add(request);
                             request.setTestResult(resultJTextField.getText());
+                            request.setStatus("Approved by Underwriter");
                             ((CustomerProductWorkRequest) request).setApprovalStage("31");
-                            JOptionPane.showMessageDialog(null, "Approved by Underwriter");
+                            JOptionPane.showMessageDialog(null, "Approved.Sent to Billing Agent.");
                             resultJTextField.setText("");
                             // userAccount.getWorkQueue().getWorkRequestList().add(request);
                         } else {
@@ -176,10 +176,13 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                         }
                         resultJTextField.setText("");
 
+                        
                         break;
+
                     case 31:
-                        JOptionPane.showMessageDialog(null, "Already underwriter  has Processed the Application");
+                       JOptionPane.showMessageDialog(null, "Already Approved by a Underwriter");
                         break;
+
                     case 32:
                         JOptionPane.showMessageDialog(null, "Underwriter has raised a risk");
                         break;
@@ -234,7 +237,7 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
 
                         Organization org = null;
 
-                        for (Location network : system.getNetworkList()) {
+                      /*  for (Location network : system.getNetworkList()) {
                             for (Enterprise entp : network.getEnterpriseDirectory().getEnterpriseList()) {
                                 if (entp.getEnterpriseType().equals(Enterprise.EnterpriseType.InsuranceRegulator)) {
                                     entp.getWorkQueue().getWorkRequestList().add(request);
@@ -247,19 +250,13 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                                     }
                                 }
                             }
-                        }
-                        /*
-        enterprise.getWorkQueue().getWorkRequestList().add(request);
-                         */
-                        if (org != null) {
-                            org.getWorkQueue().getWorkRequestList().add(request);
-                            // userAccount.getWorkQueue().getWorkRequestList().add(request);
-                        }
+                        } */
+                       
                         JOptionPane.showMessageDialog(null, "Rejected");
                         resultJTextField.setText("");
                         break;
                     case 31:
-                        JOptionPane.showMessageDialog(null, "Already underwriter  has Processed the Application");
+                        JOptionPane.showMessageDialog(null, "A Underwriter  has Processed the Application");
                         break;
                     case 32:
                         JOptionPane.showMessageDialog(null, "Underwriter has raised a risk");
