@@ -224,49 +224,50 @@ public class BusinessManagerWorkAreaJPane extends javax.swing.JPanel {
         }
 
         WorkRequest request = (WorkRequest) workRequestJTable.getValueAt(selectedRow, 4);
-        if(request.getClass().equals(InsuranceProductWorkRequest.class))
-        {
-        int stage = Integer.parseInt(((InsuranceProductWorkRequest) request).getApprovalStage()==null?"-1":((InsuranceProductWorkRequest) request).getApprovalStage());
-        switch (stage) {
-            case 0:
-                request.setReceiver(userAccount);
-                request.setStatus("Pending under" + userAccount);
-                ((InsuranceProductWorkRequest) request).setApprovalStage("1");
-                userAccount.getWorkQueue().getWorkRequestList().add(request);
-                break;
-            case 1:
-                int dialogButton = JOptionPane.YES_NO_OPTION;
-                int dialogResult = JOptionPane.showConfirmDialog(null, "Already Pending under a Business manager. Do you want to reassign it?"  , "Warning", dialogButton);
-                if (dialogResult == JOptionPane.YES_OPTION) {
+        if (request.getClass().equals(InsuranceProductWorkRequest.class)) {
+            int stage = Integer.parseInt(((InsuranceProductWorkRequest) request).getApprovalStage() == null ? "-1" : ((InsuranceProductWorkRequest) request).getApprovalStage());
+            switch (stage) {
+                case 0:
                     request.setReceiver(userAccount);
                     request.setStatus("Pending under" + userAccount);
                     ((InsuranceProductWorkRequest) request).setApprovalStage("1");
                     userAccount.getWorkQueue().getWorkRequestList().add(request);
-                }
-                break;
-            case 21:
-                JOptionPane.showMessageDialog(null, "Already Sent to IRDA");
-                break;
+                    break;
+                case 1:
+                    int dialogButton = JOptionPane.YES_NO_OPTION;
+                    int dialogResult = JOptionPane.showConfirmDialog(null, "Already Pending under a Business manager. Do you want to reassign it?", "Warning", dialogButton);
+                    if (dialogResult == JOptionPane.YES_OPTION) {
+                        request.setReceiver(userAccount);
+                        request.setStatus("Pending under" + userAccount);
+                        ((InsuranceProductWorkRequest) request).setApprovalStage("1");
+                        userAccount.getWorkQueue().getWorkRequestList().add(request);
+                    }
+                    break;
+                case 21:
+                    JOptionPane.showMessageDialog(null, "Already Sent to IRDA");
+                    break;
                 case 22:
-                JOptionPane.showMessageDialog(null, "Already Internally Rejected by BM");
-                break;
-            case 3:
-                JOptionPane.showMessageDialog(null, "Already has Forwarded Request to Further Approvals");
-                break;
-                 case 4:
-                JOptionPane.showMessageDialog(null, "pending under IRDA Approval team");
-                break;
-                 case 51:
-                JOptionPane.showMessageDialog(null, "Approved by IRDA approval team.");
-                break;
-                 case 52:
-                JOptionPane.showMessageDialog(null, "Rejected by IRDA approval team.");
-                break;
-            default:
-               break;
+                    JOptionPane.showMessageDialog(null, "Already Internally Rejected by BM");
+                    break;
+                case 3:
+                    JOptionPane.showMessageDialog(null, "Already Pending under a IRDA Policy Manager");
+                    break;
+                case 4:
+                    JOptionPane.showMessageDialog(null, "Already IRDA Policy Manager has Forwarded Request for Further Approvals");
+                    break;
+                case 5:
+                    JOptionPane.showMessageDialog(null, "Pending under Final IRDA approval team.");
+                    break;
+                case 61:
+                    JOptionPane.showMessageDialog(null, "Aproved by IRDA approval team.");
+                case 62:
+                    JOptionPane.showMessageDialog(null, "Rejected by IRDA approval team.");
+                    break;
+                default:
+                    break;
 
-        }
-       /* if (request.getReceiver().equals(userAccount)) {
+            }
+            /* if (request.getReceiver().equals(userAccount)) {
             JOptionPane.showMessageDialog(null, "Already Assigned");
             return;
         } else if (request.getStatus().equals("Completed")) {
@@ -289,9 +290,8 @@ public class BusinessManagerWorkAreaJPane extends javax.swing.JPanel {
         }
 
         InsuranceProductWorkRequest request = (InsuranceProductWorkRequest) BMworkRequestJTable1.getValueAt(selectedRow, 9);
-       
-        // request.setStatus("Approved by BM");
 
+        // request.setStatus("Approved by BM");
         ProcessWorkRequestJPanel processWorkRequestJPanel = new ProcessWorkRequestJPanel(userProcessContainer, request, business);
         userProcessContainer.add("processWorkRequestJPanel", processWorkRequestJPanel);
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();

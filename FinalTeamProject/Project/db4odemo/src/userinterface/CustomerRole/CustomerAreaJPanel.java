@@ -7,6 +7,7 @@ package userinterface.CustomerRole;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Network.Location;
+import Business.Organizations.CustomerAgentOrganization;
 import Business.Restaurant.Menu;
 import Business.Restaurant.MenuDirectory;
 import Business.Restaurant.Restaurant;
@@ -15,8 +16,12 @@ import Business.UserAccount.UserAccount;
 import Business.WorkQueue.LabTestWorkRequest;
 import Business.WorkQueue.WorkRequest;
 import Business.Organizations.Organization;
+import Business.Organizations.RegulatoryPolicyManagementOrganization;
+import Business.WorkQueue.CustomerProductWorkRequest;
 import Business.WorkQueue.InsuranceProductWorkRequest;
+
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -60,23 +65,21 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
                             if (request.getClass().equals(Business.WorkQueue.InsuranceProductWorkRequest.class)) {
                                 InsuranceProductWorkRequest iP = (InsuranceProductWorkRequest) request;
                                 // InsuranceProductWorkRequest isr = wr;
-                                if(iP.getApprovalStage()==null ? false :iP.getApprovalStage().equals("61"))
-                                {
-                                Object[] row = new Object[10];
-                                row[0] = iP.getNetwork();
-                                row[1] = iP.getEnterprise();
-                                row[3] = iP.getProductName();
-                                row[2] = iP.getInsuranceType();
-                                row[4] = iP.getPremuim();
-                                row[5] = iP.getCoverageAmount();
-                                row[6] = iP.getProductDescription();
-                                //row[7] = iP.getMessage();
-                               // row[8] = iP.getStatus();
-                                row[7] = iP;
-                                
-                                // row[9]=iP.
+                                if (iP.getApprovalStage() == null ? false : iP.getApprovalStage().equals("61")) {
+                                    Object[] row = new Object[10];
+                                    row[0] = iP.getNetwork();
+                                    row[1] = iP.getEnterprise();
+                                    row[3] = iP.getProductName();
+                                    row[2] = iP.getInsuranceType();
+                                    row[4] = iP.getPremuim();
+                                    row[5] = iP.getCoverageAmount();
+                                    row[6] = iP.getProductDescription();
+                                    //row[7] = iP.getMessage();
+                                    // row[8] = iP.getStatus();
+                                    row[7] = iP;
 
-                                model.addRow(row);
+                                    // row[9]=iP.
+                                    model.addRow(row);
                                 }
                             }
                         }
@@ -114,14 +117,17 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
 
         model.setRowCount(0);
         for (WorkRequest request : userAccount.getWorkQueue().getWorkRequestList()) {
-            Object[] row = new Object[4];
-            row[0] = request.getMessage();
-            row[1] = request.getReceiver();
-            row[2] = request.getStatus();
-            String result = ((LabTestWorkRequest) request).getTestResult();
-            row[3] = result == null ? "Waiting" : result;
+            if (request.getClass().equals(CustomerProductWorkRequest.class)) {
+                CustomerProductWorkRequest orderedProduct = (CustomerProductWorkRequest) request;
+                Object[] row = new Object[4];
+                row[0] = orderedProduct.getProductName();
+                row[1] = orderedProduct.getInsuranceType();
+                row[2] = orderedProduct.getStatus();
+                // String result = ((LabTestWorkRequest) orderedProduct).getTestResult();
+                // row[3] = result == null ? "Waiting" : result;
 
-            model.addRow(row);
+                model.addRow(row);
+            }
         }
     }
 
@@ -157,20 +163,20 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
 
         workRequestJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Message", "Receiver", "Status", "Result"
+                "Insurance", "Insurance Type", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -182,13 +188,6 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
             }
         });
         jScrollPane2.setViewportView(workRequestJTable);
-        if (workRequestJTable.getColumnModel().getColumnCount() > 0) {
-            workRequestJTable.getColumnModel().getColumn(0).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(1).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(2).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(3).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(3).setHeaderValue("Result");
-        }
 
         BMworkRequestJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -225,10 +224,6 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -236,6 +231,10 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
                     .addComponent(refreshTestJButton)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 880, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(319, 319, 319))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,32 +255,55 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
         String menuItemName = "";
         Restaurant restaurant;
         int selectedRow = BMworkRequestJTable.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null, "Select a row first.");
+            return;
+        }
         if (selectedRow >= 0) {
-            menuItemName = BMworkRequestJTable.getValueAt(selectedRow, 0).toString();
-            restaurant = (Restaurant) BMworkRequestJTable.getValueAt(selectedRow, 3);
+            //menuItemName = BMworkRequestJTable.getValueAt(selectedRow, 0).toString();
+            // Enterprise enterprise = (Enterprise) BMworkRequestJTable.getValueAt(selectedRow, 1);
+            InsuranceProductWorkRequest request = (InsuranceProductWorkRequest) BMworkRequestJTable.getValueAt(selectedRow, 7);
+            //  InsuranceProductWorkRequest custRequest = (InsuranceProductWorkRequest) BMworkRequestJTable.getValueAt(selectedRow, 7);
+            if (request.getClass().equals(InsuranceProductWorkRequest.class)) {
+                CustomerProductWorkRequest custRequest = new CustomerProductWorkRequest();
+                custRequest.setApprovalStage(request.getApprovalStage());
+                custRequest.setCoverageAmount(request.getCoverageAmount());
+                custRequest.setEnterprise(request.getEnterprise());
+                custRequest.setInsuranceType(request.getInsuranceType());
+                custRequest.setNetwork(request.getNetwork());
+                custRequest.setPremuim(request.getPremuim());
+                custRequest.setProductDescription(request.getProductDescription());
+                custRequest.setProductName(request.getProductName());
+                //custRequest.setRequestDate(daet);
+                custRequest.setSender(userAccount);
 
-            LabTestWorkRequest request = new LabTestWorkRequest();
-            request.setMessage(menuItemName);
-            request.setSender(userAccount);
-            request.setStatus("Sent");
-            if (restaurant != null) {
-                restaurant.getWorkQueue().getWorkRequestList().add(request);
-                userAccount.getWorkQueue().getWorkRequestList().add(request);
+                custRequest.setApprovalStage("0");
+
+                Organization org = null;
+
+                for (Location network : system.getNetworkList()) {
+                    for (Enterprise entp : network.getEnterpriseDirectory().getEnterpriseList()) {
+                        if (entp.getEnterpriseType().getValue().equals(Enterprise.EnterpriseType.InsuranceBroker.getValue())) {
+                            entp.getWorkQueue().getWorkRequestList().add(custRequest);
+                            for (Organization organization : entp.getOrganizaionDirectory().getOrganizationList()) {
+                                if (organization instanceof CustomerAgentOrganization) {
+                                    org = organization;
+                                    break;
+                                }
+
+                            }
+                        }
+                    }
+                }
+
+                if (org != null) {
+                    org.getWorkQueue().getWorkRequestList().add(custRequest);
+                    custRequest.setStatus("Order Placed");
+                    userAccount.getWorkQueue().getWorkRequestList().add(custRequest);
+                }
             }
         }
         populateRequestTable();
-        /* Organization org = null;
-        for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()){
-            if (organization instanceof LabOrganization){
-                org = organization;
-                break;
-            }
-        } 
-             
-        if (org!=null){
-            org.getWorkQueue().getWorkRequestList().add(request);
-            userAccount.getWorkQueue().getWorkRequestList().add(request);
-        }*/
 
 
     }//GEN-LAST:event_requestTestJButtonActionPerformed

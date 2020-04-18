@@ -51,6 +51,7 @@ public abstract class Role {
 
     @Override
     public String toString() {
+       // return RoleType.valueOf(name);
         return this.getClass().getName();
     }
     

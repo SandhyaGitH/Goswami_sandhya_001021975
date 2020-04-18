@@ -94,11 +94,8 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         lblSelectedNode = new javax.swing.JLabel();
         btnManageNetwork = new javax.swing.JButton();
-        btnManageBillingAgent = new javax.swing.JButton();
         btnManageCustomers = new javax.swing.JButton();
         btnManageInsuranceAdmin = new javax.swing.JButton();
-        btnManageCustomerAgent = new javax.swing.JButton();
-        btnManagePoliciIssuer = new javax.swing.JButton();
         btnManageEnterprise = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
@@ -138,13 +135,6 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        btnManageBillingAgent.setText("Manage Billing Agent");
-        btnManageBillingAgent.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnManageBillingAgentActionPerformed(evt);
-            }
-        });
-
         btnManageCustomers.setText("Manage All Customers");
         btnManageCustomers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,24 +142,10 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        btnManageInsuranceAdmin.setText("Manage Ins_Comp Admin");
+        btnManageInsuranceAdmin.setText("Manage Enterprise Admin");
         btnManageInsuranceAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnManageInsuranceAdminActionPerformed(evt);
-            }
-        });
-
-        btnManageCustomerAgent.setText("Manage Customer Agent");
-        btnManageCustomerAgent.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnManageCustomerAgentActionPerformed(evt);
-            }
-        });
-
-        btnManagePoliciIssuer.setText("Manage Policy issuer ");
-        btnManagePoliciIssuer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnManagePoliciIssuerActionPerformed(evt);
             }
         });
 
@@ -195,14 +171,11 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
                         .addGap(65, 65, 65)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnManageNetwork, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnManageEnterprise, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnManageInsuranceAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnManageEnterprise, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnManageBillingAgent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnManageCustomerAgent, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-                            .addComponent(btnManagePoliciIssuer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnManageCustomers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnManageCustomers, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnManageInsuranceAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(92, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -217,16 +190,10 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
                     .addComponent(btnManageNetwork)
                     .addComponent(btnManageCustomers))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnManageEnterprise)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnManageInsuranceAdmin)
-                .addGap(3, 3, 3)
-                .addComponent(btnManageCustomerAgent)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnManageBillingAgent)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnManagePoliciIssuer)
-                .addContainerGap(152, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnManageEnterprise)
+                    .addComponent(btnManageInsuranceAdmin))
+                .addContainerGap(270, Short.MAX_VALUE))
         );
 
         jSplitPane.setRightComponent(jPanel2);
@@ -241,13 +208,6 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         layout.next(userProcessContainer);
         
     }//GEN-LAST:event_btnManageNetworkActionPerformed
-
-    private void btnManageBillingAgentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageBillingAgentActionPerformed
-       ManageDeliveryManJPanel manageDeliveryManJPanel=new ManageDeliveryManJPanel(userProcessContainer, ecosystem);
-        userProcessContainer.add("manageDeliveryManJPanel",manageDeliveryManJPanel);
-        CardLayout layout=(CardLayout)userProcessContainer.getLayout();
-        layout.next(userProcessContainer); 
-    }//GEN-LAST:event_btnManageBillingAgentActionPerformed
 
     private void jTreeValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTreeValueChanged
         
@@ -273,14 +233,6 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         layout.next(userProcessContainer);
     }//GEN-LAST:event_btnManageInsuranceAdminActionPerformed
 
-    private void btnManageCustomerAgentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageCustomerAgentActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnManageCustomerAgentActionPerformed
-
-    private void btnManagePoliciIssuerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagePoliciIssuerActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnManagePoliciIssuerActionPerformed
-
     private void btnManageEnterpriseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageEnterpriseActionPerformed
         // TODO add your handling code here:
         ManageEnterpriseJPanel manageEnterpriseJPanel = new ManageEnterpriseJPanel(userProcessContainer,ecosystem);
@@ -291,13 +243,10 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnManageBillingAgent;
-    private javax.swing.JButton btnManageCustomerAgent;
     private javax.swing.JButton btnManageCustomers;
     private javax.swing.JButton btnManageEnterprise;
     private javax.swing.JButton btnManageInsuranceAdmin;
     private javax.swing.JButton btnManageNetwork;
-    private javax.swing.JButton btnManagePoliciIssuer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

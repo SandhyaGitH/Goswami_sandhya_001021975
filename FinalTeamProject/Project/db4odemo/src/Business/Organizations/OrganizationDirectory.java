@@ -46,75 +46,20 @@ public class OrganizationDirectory {
         else if (type.getValue().equals(Organization.Type.VehicleInsRegulatory.getValue())){
             organization = new VehicleInsuranceRegulatoryOrganization();
          }
+         else if (type.getValue().equals(Organization.Type.CustomerAgent.getValue())){
+            organization = new CustomerAgentOrganization();
+         }
+         else if (type.getValue().equals(Organization.Type.BillingAgent.getValue())){
+            organization = new BillingAgentOrganization();
+         }
+         else if (type.getValue().equals(Organization.Type.UnderWriter.getValue())){
+            organization = new UnderWriterOrganization();
+         }
+         else if (type.getValue().equals(Organization.Type.PolicyIssuance.getValue())){
+            organization = new PolicyIssuanceOrganization();
+         }
         
-        /*
-        else if (type.getValue().equals(Organization.Type.SocialAwareness.getValue())){
-            organization = new SocialAwarenessOrganization();
-            organizationList.add(organization);
-        }
-        
-        else if (type.getValue().equals(Organization.Type.People.getValue())){
-            organization = new PeopleOrganization();
-            organizationList.add(organization);
-        }
-        
-        else if (type.getValue().equals(Organization.Type.SmartTransport.getValue())){
-            organization = new SmartCityOrganization();
-            organizationList.add(organization);
-        }
-        
-        else if (type.getValue().equals(Organization.Type.VehicleEmmissionManagement.getValue())){
-            organization = new VehicleEmissionManagementOrganization();
-            organizationList.add(organization);
-        }
-        
-        else if (type.getValue().equals(Organization.Type.VehicleEmmissionManagement.getValue())){
-            organization = new AutomobileDriverOrganization() ;
-            organizationList.add(organization);
-        }
-        
-        else if (type.getValue().equals(Organization.Type.EarthJustice.getValue())){
-            organization = new EarthJusticeOrganization();
-            organizationList.add(organization);
-        }
-        
-        else if (type.getValue().equals(Organization.Type.SocialOrganization.getValue())){
-            organization = new SocialOrganization();
-            organizationList.add(organization);
-        }
-        
-        else if (type.getValue().equals(Organization.Type.IndustrialEmissionManagement.getValue())){
-            organization = new IndustrialEmissionManagementOrganization();
-            organizationList.add(organization);
-        }
-        
-        else if (type.getValue().equals(Organization.Type.LegalOrganization.getValue())){
-            organization = new LegalOrganization();
-            organizationList.add(organization);
-        }
-        
-        else if (type.getValue().equals(Organization.Type.AirPollutionForecast.getValue())){
-            organization = new AirPollutionForecastOrganization();
-            organizationList.add(organization);
-        }  
-        
-        else if (type.getValue().equals(Organization.Type.WeCare.getValue())){
-            organization = new WeCareOrganization();
-            organizationList.add(organization);
-        } 
-        else if (type.getValue().equals(Organization.Type.Finance.getValue())){
-            organization = new FinanceOrganization();
-            organizationList.add(organization);
-        } 
-        else if (type.getValue().equals(Organization.Type.Bank.getValue())){
-            organization = new BankOrganization();
-            organizationList.add(organization);
-        }
-        
-        else if (type.getValue().equals(Organization.Type.AutomobileDriver.getValue())){
-            organization = new AutomobileDriverOrganization();
-            organizationList.add(organization);
-        } */
+       
        boolean orgExists=false;
       for(Organization org : organizationList)
       {
