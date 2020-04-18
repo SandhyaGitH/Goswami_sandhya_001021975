@@ -6,9 +6,11 @@
 package userinterface.SystemAdminWorkArea;
 
 import Business.EcoSystem;
+import Business.Employee.Employee;
+import Business.Enterprise.Enterprise;
 import Business.Network.Location;
 
-import Business.Organization;
+import Business.Organizations.Organization;
 import Business.Restaurant.Restaurant;
 import java.awt.CardLayout;
 import java.util.ArrayList;
@@ -39,12 +41,13 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
        // Add the code for draw your system structure shown by JTree
       
         ArrayList<Location> networkList=ecosystem.getNetworkList();
-        ArrayList<Restaurant> enterpriseList;
+        ArrayList<Enterprise> enterpriseList;
         ArrayList<Organization> organizationList;
-        
+        ArrayList<Employee> employeeList;
         Location network;
-        Restaurant enterprise;
+        Enterprise enterprise;
         Organization organization;
+        Employee employee;
         
         DefaultMutableTreeNode networks=new DefaultMutableTreeNode("Networks");
         DefaultMutableTreeNode root=(DefaultMutableTreeNode)model.getRoot();
@@ -54,24 +57,32 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         DefaultMutableTreeNode networkNode;
         DefaultMutableTreeNode enterpriseNode;
         DefaultMutableTreeNode organizationNode;
+        DefaultMutableTreeNode employeeNode;
         
         for(int i=0;i<networkList.size();i++){
             network=networkList.get(i);
             networkNode=new DefaultMutableTreeNode(network.getName());
             networks.insert(networkNode, i);
             
-            enterpriseList=network.getRestaurantDirectory().getRestaurantList();
+            enterpriseList=network.getEnterpriseDirectory().getEnterpriseList();
             for(int j=0; j<enterpriseList.size();j++){
                 enterprise=enterpriseList.get(j);
                 enterpriseNode=new DefaultMutableTreeNode(enterprise.getName());
                 networkNode.insert(enterpriseNode, j);
                 
-              /*  organizationList=enterprise.getOrganizationDirectory().getOrganizationList();
+                organizationList=enterprise.getOrganizaionDirectory().getOrganizationList();
                 for(int k=0;k<organizationList.size();k++){
-                    organization=organizationList.get(i);
+                    organization=organizationList.get(k);
                     organizationNode=new DefaultMutableTreeNode(organization.getName());
                     enterpriseNode.insert(organizationNode, k);
-                } */
+                    
+                   employeeList=organization.getEmployeeDirectory().getEmployeeList();
+                for(int l=0;l<employeeList.size();l++){
+                    employee=employeeList.get(l);
+                    employeeNode=new DefaultMutableTreeNode(employee.getName());
+                    organizationNode.insert(employeeNode, l);
+                    
+                } }
             }
         }
         model.reload();
@@ -98,8 +109,16 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         btnManageInsuranceAdmin = new javax.swing.JButton();
         btnManageEnterprise = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(51, 0, 51));
         setLayout(new java.awt.BorderLayout());
 
+        jSplitPane.setBackground(new java.awt.Color(255, 51, 51));
+
+        jPanel1.setBackground(new java.awt.Color(255, 204, 204));
+
+        jTree.setBackground(new java.awt.Color(180, 121, 108));
+        jTree.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTree.setForeground(new java.awt.Color(255, 255, 255));
         jTree.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
             public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
                 jTreeValueChanged(evt);
@@ -111,23 +130,26 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 118, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
         );
 
         jSplitPane.setLeftComponent(jPanel1);
 
+        jPanel2.setBackground(new java.awt.Color(204, 151, 238));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Selected Node:");
 
+        lblSelectedNode.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
         lblSelectedNode.setText("<View_selected_node>");
 
+        btnManageNetwork.setBackground(new java.awt.Color(51, 0, 51));
+        btnManageNetwork.setForeground(new java.awt.Color(255, 255, 255));
         btnManageNetwork.setText("Manage Networks");
         btnManageNetwork.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,6 +157,8 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnManageCustomers.setBackground(new java.awt.Color(51, 0, 51));
+        btnManageCustomers.setForeground(new java.awt.Color(255, 255, 255));
         btnManageCustomers.setText("Manage All Customers");
         btnManageCustomers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,6 +166,8 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnManageInsuranceAdmin.setBackground(new java.awt.Color(51, 0, 51));
+        btnManageInsuranceAdmin.setForeground(new java.awt.Color(255, 255, 255));
         btnManageInsuranceAdmin.setText("Manage Enterprise Admin");
         btnManageInsuranceAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,6 +175,8 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnManageEnterprise.setBackground(new java.awt.Color(51, 0, 51));
+        btnManageEnterprise.setForeground(new java.awt.Color(255, 255, 255));
         btnManageEnterprise.setText("Manage Enterprise");
         btnManageEnterprise.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,7 +204,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnManageCustomers, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnManageInsuranceAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,7 +221,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnManageEnterprise)
                     .addComponent(btnManageInsuranceAdmin))
-                .addContainerGap(270, Short.MAX_VALUE))
+                .addContainerGap(266, Short.MAX_VALUE))
         );
 
         jSplitPane.setRightComponent(jPanel2);

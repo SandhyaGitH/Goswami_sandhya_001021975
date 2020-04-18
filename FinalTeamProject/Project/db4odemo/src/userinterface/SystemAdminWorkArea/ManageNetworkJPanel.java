@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import Business.Network.Location;
 import javax.swing.JOptionPane;
+import userinterface.MainJFrame;
 
 /**
  *
@@ -33,6 +34,7 @@ public class ManageNetworkJPanel extends javax.swing.JPanel {
         this.system = system;
 
         populateNetworkTable();
+       // MainJFrame.getFrames().
     }
 
     private void populateNetworkTable() {
@@ -64,8 +66,21 @@ if(system.getNetworkList()!=null)
         nameJTextField = new javax.swing.JTextField();
         backJButton = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(204, 151, 238));
+
+        jScrollPane1.setBackground(new java.awt.Color(51, 0, 51));
+        jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
+
+        networkJTable.setBackground(new java.awt.Color(255, 204, 204));
+        networkJTable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         networkJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
                 {null},
                 {null},
                 {null},
@@ -90,6 +105,8 @@ if(system.getNetworkList()!=null)
                 return canEdit [columnIndex];
             }
         });
+        networkJTable.setGridColor(new java.awt.Color(102, 51, 255));
+        networkJTable.setSelectionBackground(new java.awt.Color(204, 0, 204));
         jScrollPane1.setViewportView(networkJTable);
         if (networkJTable.getColumnModel().getColumnCount() > 0) {
             networkJTable.getColumnModel().getColumn(0).setResizable(false);
@@ -97,6 +114,8 @@ if(system.getNetworkList()!=null)
 
         jLabel1.setText("Name");
 
+        submitJButton.setBackground(new java.awt.Color(51, 0, 51));
+        submitJButton.setForeground(new java.awt.Color(255, 255, 255));
         submitJButton.setText("Submit");
         submitJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,6 +123,8 @@ if(system.getNetworkList()!=null)
             }
         });
 
+        backJButton.setBackground(new java.awt.Color(51, 0, 51));
+        backJButton.setForeground(new java.awt.Color(255, 255, 255));
         backJButton.setText("<< Back");
         backJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,36 +136,35 @@ if(system.getNetworkList()!=null)
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(backJButton)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(backJButton)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(nameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(submitJButton)))))
-                .addContainerGap(174, Short.MAX_VALUE))
+                        .addComponent(jLabel1)
+                        .addGap(30, 30, 30)
+                        .addComponent(nameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(submitJButton)))
+                .addGap(254, 254, 254))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(submitJButton)
-                    .addComponent(nameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
+                    .addComponent(nameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(submitJButton))
+                .addGap(29, 29, 29)
                 .addComponent(backJButton)
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addContainerGap(209, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

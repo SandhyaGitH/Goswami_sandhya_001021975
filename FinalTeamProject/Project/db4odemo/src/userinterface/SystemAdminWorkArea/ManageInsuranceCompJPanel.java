@@ -90,6 +90,8 @@ public class ManageInsuranceCompJPanel extends javax.swing.JPanel {
         backJButton = new javax.swing.JButton();
         submitJButton = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(204, 151, 238));
+
         enterpriseJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
