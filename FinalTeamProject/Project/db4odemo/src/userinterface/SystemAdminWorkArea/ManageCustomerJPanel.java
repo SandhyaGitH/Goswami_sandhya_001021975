@@ -108,6 +108,8 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         UpdatejButton = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(204, 151, 238));
+
         enterpriseJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

@@ -101,6 +101,8 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
         btnView = new javax.swing.JButton();
         btnUpdateConfirm1 = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(204, 151, 238));
+
         enterpriseJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
