@@ -83,6 +83,8 @@ public class ProductManagerAreaJPanel extends javax.swing.JPanel {
         valueLabel = new javax.swing.JLabel();
         Propose = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(233, 255, 101));
+
         workRequestJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -117,6 +119,8 @@ public class ProductManagerAreaJPanel extends javax.swing.JPanel {
             workRequestJTable.getColumnModel().getColumn(3).setResizable(false);
         }
 
+        requestTestJButton.setBackground(new java.awt.Color(51, 51, 0));
+        requestTestJButton.setForeground(new java.awt.Color(255, 255, 255));
         requestTestJButton.setText("Request Test");
         requestTestJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,6 +128,8 @@ public class ProductManagerAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        refreshTestJButton.setBackground(new java.awt.Color(51, 51, 0));
+        refreshTestJButton.setForeground(new java.awt.Color(255, 255, 255));
         refreshTestJButton.setText("Refresh");
         refreshTestJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,7 +142,9 @@ public class ProductManagerAreaJPanel extends javax.swing.JPanel {
 
         valueLabel.setText("<value>");
 
-        Propose.setText("Porpose Product");
+        Propose.setBackground(new java.awt.Color(51, 51, 0));
+        Propose.setForeground(new java.awt.Color(255, 255, 255));
+        Propose.setText("Propose Product");
         Propose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ProposeActionPerformed(evt);

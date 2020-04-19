@@ -23,7 +23,7 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
 
     private JPanel userProcessContainer;
     private EcoSystem system;
-     private Validation valid;
+    private Validation valid;
 
     /**
      * Creates new form ManageEnterpriseJPanel
@@ -35,32 +35,31 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
 
         populateTable();
         populateComboBox();
-          btnUpdateConfirm.setEnabled(false); 
-         // btnUpdateConfirm.setEnabled(true); 
-         btnView.setEnabled(true); 
-         enterpriseTypeJComboBox.setEnabled(true);
+        btnUpdateConfirm.setEnabled(false);
+        // btnUpdateConfirm.setEnabled(true); 
+        btnView.setEnabled(true);
+        enterpriseTypeJComboBox.setEnabled(true);
     }
 
     private void populateTable() {
         DefaultTableModel model = (DefaultTableModel) enterpriseJTable.getModel();
 
         model.setRowCount(0);
-        ArrayList<Enterprise> NoEnterpriseExists= new ArrayList<Enterprise>();
+        ArrayList<Enterprise> NoEnterpriseExists = new ArrayList<Enterprise>();
         for (Location network : system.getNetworkList()) {
-            for (Enterprise enterprise : network.getEnterpriseDirectory()==null? NoEnterpriseExists:network.getEnterpriseDirectory().getEnterpriseList()) {
-               if(enterprise!=null){
-                Object[] row = new Object[6];
-                row[0] = network;
-                row[1] = enterprise;
-                row[2]= enterprise.getEnterpriseType();
-               
+            for (Enterprise enterprise : network.getEnterpriseDirectory() == null ? NoEnterpriseExists : network.getEnterpriseDirectory().getEnterpriseList()) {
+                if (enterprise != null) {
+                    Object[] row = new Object[6];
+                    row[0] = network;
+                    row[1] = enterprise;
+                    row[2] = enterprise.getEnterpriseType();
 
-                model.addRow(row);
-               }
+                    model.addRow(row);
+                }
             }
         }
-     //  enterpriseJTable.getColumnModel().getColumn(3).setMaxWidth(0); 
-     //  enterpriseJTable.getColumnModel().getColumn(4).setMaxWidth(0); 
+        //  enterpriseJTable.getColumnModel().getColumn(3).setMaxWidth(0); 
+        //  enterpriseJTable.getColumnModel().getColumn(4).setMaxWidth(0); 
     }
 
     private void populateComboBox() {
@@ -250,29 +249,34 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
 
     private void DeleteJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteJButtonActionPerformed
 
-         int selectedRow = enterpriseJTable.getSelectedRow();
-        if(selectedRow >= 0){
-             Enterprise restaurant = (Enterprise) enterpriseJTable.getValueAt(selectedRow, 1);
-           
-            int dialogButton = JOptionPane.YES_NO_OPTION;
-            int dialogResult = JOptionPane.showConfirmDialog(null, "Would you like to remove this Enterprise!", "Warning", dialogButton);
-            if(dialogResult == JOptionPane.YES_OPTION){
-               Location lc =(Location) enterpriseJTable.getValueAt(selectedRow, 0) ;
-                int index= lc.getEnterpriseDirectory().getEnterpriseList().indexOf(restaurant);
-                lc.getEnterpriseDirectory().getEnterpriseList().remove(index);
-                populateTable();
-            
+        int selectedRow = enterpriseJTable.getSelectedRow();
+        if (selectedRow >= 0) {
+            Enterprise enterprise = (Enterprise) enterpriseJTable.getValueAt(selectedRow, 1);
+            if (enterprise.getWorkQueue().getWorkRequestList().size() > 0) {
+                JOptionPane.showMessageDialog(null, "Cannot delete this enterprise as it contains associated data with it.");
+                return;
+            } else {
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+                int dialogResult = JOptionPane.showConfirmDialog(null, "Would you like to remove this Enterprise!", "Warning", dialogButton);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    Location lc = (Location) enterpriseJTable.getValueAt(selectedRow, 0);
+                    int index = lc.getEnterpriseDirectory().getEnterpriseList().indexOf(enterprise);
+                    lc.getEnterpriseDirectory().getEnterpriseList().remove(index);
+                    populateTable();
+
+                }
             }
-        }else{
-            JOptionPane.showMessageDialog(null, "Please select a row from table first.", "Warning",JOptionPane.WARNING_MESSAGE);
-            
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a row from table first.", "Warning", JOptionPane.WARNING_MESSAGE);
+
         }
 
     }//GEN-LAST:event_DeleteJButtonActionPerformed
 
     private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
         userProcessContainer.remove(this);
-         Component[] componentArray = userProcessContainer.getComponents();
+        Component[] componentArray = userProcessContainer.getComponents();
         Component component = componentArray[componentArray.length - 1];
         SystemAdminWorkAreaJPanel sysAdminwjp = (SystemAdminWorkAreaJPanel) component;
         sysAdminwjp.populateTree();
@@ -283,18 +287,26 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
 
     private void submitJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitJButtonActionPerformed
 
-        for(Location loc: system.getNetworkList())
-         {    
-            for (Enterprise enterpriseL : loc.getEnterpriseDirectory().getEnterpriseList()){
-               if( enterpriseL.getName().equals(nameJTextField.getText()))
-               {
-                  JOptionPane.showMessageDialog(null,"Duplicate Enterprise Name in same Network"); 
-                   // btnUpdateConfirm.setEnabled(false); 
-                  return;
-               }
-
+        for (Location loc : system.getNetworkList()) {
+            for (Enterprise enterpriseL : loc.getEnterpriseDirectory().getEnterpriseList()) {
+                if (enterpriseL.getName().equals(nameJTextField.getText())) {
+                    JOptionPane.showMessageDialog(null, "Duplicate Enterprise Name in same Network");
+                    // btnUpdateConfirm.setEnabled(false); 
+                    return;
+                }
             }
-         }
+
+            if (loc.equals((Location) networkJComboBox.getSelectedItem())
+                    && ((Enterprise.EnterpriseType) enterpriseTypeJComboBox.getSelectedItem()).getValue().equals(Enterprise.EnterpriseType.InsuranceRegulator.getValue())) {
+                for (Enterprise enterpriseL : loc.getEnterpriseDirectory().getEnterpriseList()) {
+                    if (enterpriseL.getEnterpriseType().getValue().equals(Enterprise.EnterpriseType.InsuranceRegulator.getValue())) {
+                        JOptionPane.showMessageDialog(null, "One Network or Country can have only one Insurance Regulatory");
+                        // btnUpdateConfirm.setEnabled(false); 
+                        return;
+                    }
+                }
+            }
+        }
         addEnterprise();
         populateTable();
         btnView.setEnabled(true);
@@ -302,119 +314,113 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
 
     private void btnUpdateConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateConfirmActionPerformed
         // TODO add your handling code here:
-        
-          int selectedRow =  enterpriseJTable.getSelectedRow();
-       Enterprise  oldEnterprise = null;//= new Enterprise();
-        if(selectedRow < 0){
-            JOptionPane.showMessageDialog(null, "Please select a row from table first to view details.", "Warning",JOptionPane.WARNING_MESSAGE);
-        }else{
-              oldEnterprise = (Enterprise) enterpriseJTable.getValueAt(selectedRow, 1);
+
+        int selectedRow = enterpriseJTable.getSelectedRow();
+        Enterprise oldEnterprise = null;//= new Enterprise();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null, "Please select a row from table first to view details.", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            oldEnterprise = (Enterprise) enterpriseJTable.getValueAt(selectedRow, 1);
         }
-      //  Enterprise newEnterprise = (Enterprise) enterpriseTypeJComboBox.getSelectedItem();
+        //  Enterprise newEnterprise = (Enterprise) enterpriseTypeJComboBox.getSelectedItem();
         Location oldNetwork = (Location) enterpriseJTable.getValueAt(selectedRow, 0);
         Location newNetwork = (Location) networkJComboBox.getSelectedItem();
-        boolean flag=true;
-       if(flag){
-          int index=-1 ;
-         for(Location loc: system.getNetworkList())
-         {    if(index==-1)
-              index =  loc.getEnterpriseDirectory().getEnterpriseList().indexOf(oldEnterprise);
-         
-            for (Enterprise enterpriseL : loc.getEnterpriseDirectory().getEnterpriseList()){
-               if(loc.equals(newNetwork) && enterpriseL.getName().equals(nameJTextField.getText()))
-               {
-                  JOptionPane.showMessageDialog(null,"Duplicate Enterprise Name in same Network"); 
-                    btnUpdateConfirm.setEnabled(false); 
-                    btnView.setEnabled(true); 
-                    submitJButton.setEnabled(true);
-                    enterpriseTypeJComboBox.setEnabled(true);
-                  return;
-               }
+        boolean flag = true;
+        if (flag) {
+            int index = -1;
+            for (Location loc : system.getNetworkList()) {
+                if (index == -1) {
+                    index = loc.getEnterpriseDirectory().getEnterpriseList().indexOf(oldEnterprise);
+                }
 
+                for (Enterprise enterpriseL : loc.getEnterpriseDirectory().getEnterpriseList()) {
+                    if (loc.equals(newNetwork) && enterpriseL.getName().equals(nameJTextField.getText())) {
+                        JOptionPane.showMessageDialog(null, "Duplicate Enterprise Name in same Network");
+                        btnUpdateConfirm.setEnabled(false);
+                        btnView.setEnabled(true);
+                        submitJButton.setEnabled(true);
+                        enterpriseTypeJComboBox.setEnabled(true);
+                        return;
+                    }
+
+                }
             }
-         }
-             if(index!=-1)
-             {
-                    oldNetwork.getEnterpriseDirectory().getEnterpriseList().remove(index);
-                   // system.getCustomerDirectory().getCustomerList().set(k, customer);
-                    addEnterprise();
-                    JOptionPane.showMessageDialog(null, "updated successfully!");
-                    btnUpdateConfirm.setEnabled(false); 
-                    btnView.setEnabled(true); 
-                    submitJButton.setEnabled(true);
-                    enterpriseTypeJComboBox.setEnabled(true);
-                    nameJTextField.setText("");
-             }
+            if (index != -1) {
+                oldNetwork.getEnterpriseDirectory().getEnterpriseList().remove(index);
+                // system.getCustomerDirectory().getCustomerList().set(k, customer);
+                addEnterprise();
+                JOptionPane.showMessageDialog(null, "updated successfully!");
+                btnUpdateConfirm.setEnabled(false);
+                btnView.setEnabled(true);
+                submitJButton.setEnabled(true);
+                enterpriseTypeJComboBox.setEnabled(true);
+                nameJTextField.setText("");
+            }
 
-       
         }
-         
+
         //Customer customer = new Customer( location,  name,  username,  address,  "5");
         // system.getNetworkList().get(WIDTH).getEnterpriseDirectory().get
-        
         populateTable();
-        
+
     }//GEN-LAST:event_btnUpdateConfirmActionPerformed
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // TODO add your handling code here:
         //
-         int selectedRow =  enterpriseJTable.getSelectedRow();
-        if(selectedRow < 0){
-            JOptionPane.showMessageDialog(null, "Please select a row from table first to view details.", "Warning",JOptionPane.WARNING_MESSAGE);
-        }else{
-             Location  loc = (Location) enterpriseJTable.getValueAt(selectedRow, 0);
+        int selectedRow = enterpriseJTable.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null, "Please select a row from table first to view details.", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Location loc = (Location) enterpriseJTable.getValueAt(selectedRow, 0);
             networkJComboBox.setSelectedItem(loc);
-            Enterprise  enterprise = (Enterprise) enterpriseJTable.getValueAt(selectedRow, 1);
+            Enterprise enterprise = (Enterprise) enterpriseJTable.getValueAt(selectedRow, 1);
             enterpriseTypeJComboBox.setSelectedItem(enterprise.getEnterpriseType());
-            nameJTextField.setText(enterprise.getName());     
-            
-           
-           // AddressTextbox.setText(enterprise.getAddress());
-           // passwordJPasswordField
+            nameJTextField.setText(enterprise.getName());
+
+            // AddressTextbox.setText(enterprise.getAddress());
+            // passwordJPasswordField
             //passwordJPasswordField.setText(cust.g);
         }
-         btnUpdateConfirm.setEnabled(true); 
-         btnView.setEnabled(false); 
-         enterpriseTypeJComboBox.setEnabled(false);
-         submitJButton.setEnabled(false);
+        btnUpdateConfirm.setEnabled(true);
+        btnView.setEnabled(false);
+        enterpriseTypeJComboBox.setEnabled(false);
+        submitJButton.setEnabled(false);
     }//GEN-LAST:event_btnViewActionPerformed
 
     private void btnUpdateConfirm1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateConfirm1ActionPerformed
         // TODO add your handling code here:
         nameJTextField.setText("");
-         btnUpdateConfirm.setEnabled(false); 
-         btnView.setEnabled(true); 
-         submitJButton.setEnabled(true); 
-         enterpriseTypeJComboBox.setEnabled(true);
+        btnUpdateConfirm.setEnabled(false);
+        btnView.setEnabled(true);
+        submitJButton.setEnabled(true);
+        enterpriseTypeJComboBox.setEnabled(true);
     }//GEN-LAST:event_btnUpdateConfirm1ActionPerformed
 
-    private void addEnterprise()
-    {
-         Location network = (Location) networkJComboBox.getSelectedItem();
+    private void addEnterprise() {
+        Location network = (Location) networkJComboBox.getSelectedItem();
         Enterprise.EnterpriseType type = (Enterprise.EnterpriseType) enterpriseTypeJComboBox.getSelectedItem();
-          if (nameJTextField.getText().equals("")){  //User have not entered anything. 
-        JOptionPane.showMessageDialog(null,"Name Can't be empty");
-        nameJTextField.requestFocusInWindow();
-        nameJTextField.setText("");
-        return;
+        if (nameJTextField.getText().equals("")) {  //User have not entered anything. 
+            JOptionPane.showMessageDialog(null, "Name Can't be empty");
+            nameJTextField.requestFocusInWindow();
+            nameJTextField.setText("");
+            return;
         }
-       
-      // String type  = "All";
+
+        // String type  = "All";
         if (network == null || type == null) {
             JOptionPane.showMessageDialog(null, "Invalid Input!");
             return;
         }
 
         String name = nameJTextField.getText();
-       valid = new Validation();
-        boolean rtnFnVal= valid.validOnlyStr(name);   //Add
-       if (rtnFnVal == false) {
+        valid = new Validation();
+        boolean rtnFnVal = valid.validOnlyStr(name);   //Add
+        if (rtnFnVal == false) {
             JOptionPane.showMessageDialog(null, "Only aplhanum and <space> allowed in name field");
+        } else {
+            Enterprise enterprise = network.getEnterpriseDirectory().createAndAddEnterprise(name, type);
         }
-       else{
-        Enterprise enterprise = network.getEnterpriseDirectory().createAndAddEnterprise(name,type);
-       }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton DeleteJButton;

@@ -13,9 +13,14 @@ import Business.Restaurant.Restaurant;
 import Business.Role.Role;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
+//import javafx.scene.paint.Color;
+//import static javafx.scene.paint.Color.color;
+//import static javafx.scene.paint.Color.color;
+import java.awt.*;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 //import com.teknikindustries.bulksms.SMS;
+
 /**
  *
  * @author Lingfeng
@@ -27,16 +32,17 @@ public class MainJFrame extends javax.swing.JFrame {
      */
     private EcoSystem system;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
+    private java.awt.Color JpanalColor;
+    private java.awt.Color JpanalChangeColor;
 
     public MainJFrame() {
         initComponents();
         system = dB4OUtil.retrieveSystem();
         this.setSize(1680, 1050);
-        
-       //  SMS sm = new SMS();
-      //  sm.SendSMS("smsservice_2", "Sandysandy@2", "hello sandy sandy here ", "8572720360", ""
-         //       + "http://bulksms.2way.co.za/eapi/submission/send_sms/2/2.0");
-        
+        JpanalColor = jPanel1.getBackground();
+        //  SMS sm = new SMS();
+        //  sm.SendSMS("smsservice_2", "Sandysandy@2", "hello sandy sandy here ", "8572720360", ""
+        //       + "http://bulksms.2way.co.za/eapi/submission/send_sms/2/2.0");
     }
 
     /**
@@ -307,67 +313,84 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void loginJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginJButtonActionPerformed
         // Get user name
-       
+
         String userName = userNameJTextField.getText();
         // Get Password
         char[] passwordCharArray = passwordField.getPassword();
         String password = String.valueOf(passwordCharArray);
-        
+
         //Step1: Check in the system admin user account directory if you have the user
-        UserAccount userAccount=system.getUserAccountDirectory().authenticateUser(userName, password);
-        
-        
-        Enterprise inEnterprise=null;
-        Organization inOrganization=null; 
-        if(userAccount==null){
+        UserAccount userAccount = system.getUserAccountDirectory().authenticateUser(userName, password);
+
+        Enterprise inEnterprise = null;
+        Organization inOrganization = null;
+        if (userAccount == null) {
             //Step 2: Go inside each network and check each enterprise
-            for(Location network:system.getNetworkList()){
+            for (Location network : system.getNetworkList()) {
                 //Step 2.a: check against each enterprise
-                for(Enterprise enterprise:network.getEnterpriseDirectory().getEnterpriseList()){
-                    userAccount=enterprise.getUserAccountDirectory().authenticateUser(userName, password);
-                    if(userAccount==null){
-                       //Step 3:check against each organization for each enterprise
-                       for(Organization organization:enterprise.getOrganizaionDirectory().getOrganizationList()){
-                           userAccount=organization.getUserAccountDirectory().authenticateUser(userName, password);
-                           if(userAccount!=null){
-                               inEnterprise=enterprise;
-                               inOrganization=organization;
-                               break;
-                           }
-                       } 
-                        
-                    }
-                    else{
-                       inEnterprise=enterprise;
-                       break;
-                    }
-                    if(inOrganization!=null){
+                for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
+                    userAccount = enterprise.getUserAccountDirectory().authenticateUser(userName, password);
+                    if (userAccount == null) {
+                        //Step 3:check against each organization for each enterprise
+                        for (Organization organization : enterprise.getOrganizaionDirectory().getOrganizationList()) {
+                            userAccount = organization.getUserAccountDirectory().authenticateUser(userName, password);
+                            if (userAccount != null) {
+                                inEnterprise = enterprise;
+                                inOrganization = organization;
+                                break;
+                            }
+                        }
+
+                    } else {
+                        inEnterprise = enterprise;
                         break;
-                    }  
+                    }
+                    if (inOrganization != null) {
+                        break;
+                    }
                 }
-                if(inEnterprise!=null){
+                if (inEnterprise != null) {
                     break;
                 }
             }
         }
-       
-       
-       
-        if(userAccount==null){
+
+        if (userAccount == null) {
             JOptionPane.showMessageDialog(null, "Invalid credentials");
             return;
-        }
-        else{
-            CardLayout layout=(CardLayout)container.getLayout();
-         //  Role role = 
-            container.add("workArea",userAccount.getRole().createWorkArea(container, userAccount,inOrganization, inEnterprise,  system));
-            layout.next(container);
+        } else {
+            Color c;
+            if (inEnterprise != null) {
+                if (inEnterprise.getEnterpriseType().equals(Enterprise.EnterpriseType.InsuranceCompany)) {
+                    c = new Color(51, 51, 0);// darkgreen
+                    jPanel1.setBackground(c);
+                }
+                if (inEnterprise.getEnterpriseType().getValue().equals(Enterprise.EnterpriseType.InsuranceBroker.getValue())) {
+                    c = new Color(102, 51, 0); // mustrud dark
+                    jPanel1.setBackground(c);
+                }
+                if (inEnterprise.getEnterpriseType().getValue().equals(Enterprise.EnterpriseType.InsuranceRegulator.getValue())) {
+                    c = new Color(0, 0, 51); // dark blue
+                    jPanel1.setBackground(c);
+                    
+                }
+                if (inEnterprise.getEnterpriseType().getValue().equals(Enterprise.EnterpriseType.Hospitals.getValue())) {
+                    c = new Color(102,0,0); // dark blue
+                    jPanel1.setBackground(c);
+                    
+                }
+            }
+                CardLayout layout = (CardLayout) container.getLayout();
+                //  Role role = ;
+                container.add("workArea", userAccount.getRole().createWorkArea(container, userAccount, inOrganization, inEnterprise, system));
+                layout.next(container);
+            
         }
         loginJButton.setEnabled(false);
         logoutJButton.setEnabled(true);
         userNameJTextField.setEnabled(false);
         passwordField.setEnabled(false);
-       
+
     }//GEN-LAST:event_loginJButtonActionPerformed
 
     private void logoutJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutJButtonActionPerformed
@@ -385,6 +408,7 @@ public class MainJFrame extends javax.swing.JFrame {
         CardLayout crdLyt = (CardLayout) container.getLayout();
         crdLyt.next(container);
         dB4OUtil.storeSystem(system);
+        jPanel1.setBackground(JpanalColor);
     }//GEN-LAST:event_logoutJButtonActionPerformed
 
     /**

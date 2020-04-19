@@ -21,6 +21,16 @@ public class InsuranceProductWorkRequest extends WorkRequest{
     private Enterprise enterprise;
     private insuranceType insuranceType;
     private String ApprovalStage;
+    private int ProductLaunchRequestId;
+    private String ProductLaunchRequestIdStr;
+    private static int count=1;
+    
+    public InsuranceProductWorkRequest()
+    {
+        ProductLaunchRequestId=count;
+        ProductLaunchRequestIdStr=Integer.toString(ProductLaunchRequestId);
+       count++;
+    }
 
     public String getApprovalStage() {
         return ApprovalStage;
@@ -116,7 +126,9 @@ public class InsuranceProductWorkRequest extends WorkRequest{
     
     @Override
     public String toString(){
-        return testResult;
+        if(ProductLaunchRequestIdStr==null)
+            return "";
+        else return ProductLaunchRequestIdStr;
     }
     
     
