@@ -34,6 +34,7 @@ public abstract class Organization {
         UnderWriter("Underwriter"),
         BillingAgent("Billing Agent"),
         PolicyIssuance("Policy Issuance"),
+        ClaimHandler("Claim Handler"),
         
         ProductManagement("Product management"),
         BusinessManagement("Business management"),
@@ -44,6 +45,8 @@ public abstract class Organization {
         LifeInsRegulatory("Life Insurance Regulatory"),
         VehicleInsRegulatory("Vehicle Insurance Regulatory"),
         
+        PaymentManagement("Hosptial Payment management"),
+        //BusinessManagement("Business management"),
         
         Admin("Admin Organization") {
         }, 

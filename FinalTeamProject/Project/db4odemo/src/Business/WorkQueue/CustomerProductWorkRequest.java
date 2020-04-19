@@ -16,6 +16,15 @@ public class CustomerProductWorkRequest extends InsuranceProductWorkRequest{
     private String customerName;
     private String customerPhone;
     private String customerMailId;
+    private int id;
+    private String idStr;
+    private static int count = 1;
+    
+    public CustomerProductWorkRequest() {
+        id = count;
+        idStr= Integer.toString(id) ;
+        count++;
+    }
 
     public String getCustomerName() {
         return customerName;
@@ -41,7 +50,12 @@ public class CustomerProductWorkRequest extends InsuranceProductWorkRequest{
         this.customerMailId = customerMailId;
     }
        
-   
+    @Override
+    public String toString(){
+        if(idStr==null)
+            return "";
+        else return idStr;
+    }
    /* 
     @Override
     public String toString(){

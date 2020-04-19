@@ -58,6 +58,12 @@ public class OrganizationDirectory {
          else if (type.getValue().equals(Organization.Type.PolicyIssuance.getValue())){
             organization = new PolicyIssuanceOrganization();
          }
+        else if (type.getValue().equals(Organization.Type.PaymentManagement.getValue())){
+            organization = new HospitalPaymentManagementOrganization();
+         }
+        else if (type.getValue().equals(Organization.Type.ClaimHandler.getValue())){
+            organization = new ClaimHandlerOrganizations();
+         }
         
        
        boolean orgExists=false;

@@ -4,6 +4,7 @@
  */
 package userinterface.AdministrativeRole;
 
+import Business.EcoSystem;
 import Business.Employee.Employee;
 import Business.Enterprise.Enterprise;
 import Business.Organizations.Organization;
@@ -25,11 +26,13 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
      */
     private JPanel container;
     private Enterprise enterprise;
+    private EcoSystem system;
 
-    public ManageUserAccountJPanel(JPanel container, Enterprise enterprise) {
+    public ManageUserAccountJPanel(JPanel container, Enterprise enterprise, EcoSystem system) {
         initComponents();
         this.enterprise = enterprise;
         this.container = container;
+        this.system=system;
 
         popOrganizationComboBox();
        // employeeJComboBox.removeAllItems();
@@ -255,7 +258,8 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
         Organization organization = (Organization) organizationJComboBox.getSelectedItem();
         Employee employee = (Employee) employeeJComboBox.getSelectedItem();
         Role role = (Role) roleJComboBox.getSelectedItem();
-        for(UserAccount uAccount :organization.getUserAccountDirectory().getUserAccountList() )
+        if(system.checkIfUserIsUnique(userName))
+        { for(UserAccount uAccount :organization.getUserAccountDirectory().getUserAccountList() )
         {
             if(uAccount.getUsername().equals(userName))
             {
@@ -264,7 +268,11 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
             }
         }
         organization.getUserAccountDirectory().createUserAccount(userName, password, employee, role);
-        
+        }
+        else {
+        JOptionPane.showMessageDialog(null, "UserName already Exist");
+        return;
+        }
         popData();
     }//GEN-LAST:event_createUserJButtonActionPerformed
 
