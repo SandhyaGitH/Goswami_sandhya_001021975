@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package userinterface.ClaimHandlerRole;
+
 import Business.EcoSystem;
 
 import Business.UserAccount.UserAccount;
@@ -15,7 +16,8 @@ import javax.swing.table.DefaultTableModel;
 import Business.Organizations.Organization;
 import Business.WorkQueue.CustomerProductWorkRequest;
 import Business.WorkQueue.HospitalPaymentSettlementWorkRequest;
-import Business.WorkQueue.InsuranceProductWorkRequest;
+
+import java.awt.Color;
 
 /**
  *
@@ -45,32 +47,38 @@ public class ClaimHandlerWorkAreaJPane extends javax.swing.JPanel {
     }
 
     public void populateTable() {
-        DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();
-
-        model.setRowCount(0);
-
+        DefaultTableModel model = (DefaultTableModel) workRequesttable.getModel();
+       model.setRowCount(0);
         for (WorkRequest request : organization.getWorkQueue().getWorkRequestList()) {
 
             if (request.getClass().equals(Business.WorkQueue.HospitalPaymentSettlementWorkRequest.class)) {
+
+                HospitalPaymentSettlementWorkRequest pHR = (HospitalPaymentSettlementWorkRequest) request;
+                if(pHR.getApprovalStage().equals(0) && !pHR.getApprovalStage().equals(""))
+                {
                 Object[] row = new Object[8];
 
-                row[0] = request.getSender();//((LabTestWorkRequest) request).getPatient().getAge();
+                row[0] = pHR.getSender();//((LabTestWorkRequest) request).getPatient().getAge();
                 //row[2] = "";//((LabTestWorkRequest) request).getPatient().getSex();
-                row[1] = request.getMessage();
-                row[2] = request.getReceiver() == null ? "" : request.getReceiver();
-                row[3] = request.getStatus();
-                row[4] = ((HospitalPaymentSettlementWorkRequest) request);
+                row[1] = pHR.getHospitalName();
+                // row[2] = request.getReceiver() == null ? "" : request.getReceiver();
+                row[2] = pHR.getPolicy();
+                row[3] = pHR.getPolicy().getCustomerName();
+                row[4] = pHR.getStatus();
+                row[5] = request;
+                row[6] = pHR.getRequestDate();
                 // row[4] = request.getSender().getUsername();
                 // row[4] = "";//request.getReceiver() == null ? null : request.getReceiver().getEmployee().getName();
 
                 //  row[7] = ((LabTestWorkRequest) request).getPatient().getNewDrug();
                 model.addRow(row);
+                }
             }
         }
     }
 
     public void populateBMTable() {
-        DefaultTableModel model = (DefaultTableModel) BMworkRequestJTable1.getModel();
+        DefaultTableModel model = (DefaultTableModel) CMworkRequestJTable1.getModel();
 
         model.setRowCount(0);
 
@@ -81,17 +89,18 @@ public class ClaimHandlerWorkAreaJPane extends javax.swing.JPanel {
                     HospitalPaymentSettlementWorkRequest iP = (HospitalPaymentSettlementWorkRequest) request;
                     // InsuranceProductWorkRequest isr = wr;
                     Object[] row = new Object[10];
-                  /*  row[0] = iP.getNetwork();
-                    row[1] = iP.getEnterprise();
-                    row[2] = iP.getProductName();
-                    row[3] = iP.getInsuranceType();
-                    row[4] = iP.getPremuim();
-                    row[5] = iP.getCoverageAmount();
-                    row[6] = iP.getProductDescription(); */
-                    row[7] = iP.getMessage();
-                    row[8] = iP.getStatus();
-                    row[9] = iP;
-                    // row[9]=iP.
+                    row[0] = iP.getSettlementRequestIdStr();
+                    row[1] = iP.getPolicy().getCustomerName();
+                    row[2] = iP.getPolicy().getEnterpriseName();
+                    row[3] = iP.getDiagnosis();
+                    row[4] = iP.getBillAmout();
+                    //row[5] = iP.;
+                    // row[6] = iP.getProductDescription(); 
+                    // row[7] = iP.getMessage();
+                    row[5] = iP.getStatus();
+                    row[6] = iP;
+                    row[7] = iP.getRequestDate();
+                     row[8]=iP.getTestResult();
 
                     model.addRow(row);
                 }
@@ -110,93 +119,71 @@ public class ClaimHandlerWorkAreaJPane extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        workRequestJTable = new javax.swing.JTable();
         assignJButton = new javax.swing.JButton();
         processJButton = new javax.swing.JButton();
         refreshJButton = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        BMworkRequestJTable1 = new javax.swing.JTable();
+        workRequesttable = new javax.swing.JTable();
+        RejectJButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        messgaetextarea = new javax.swing.JTextArea();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        CMworkRequestJTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(255, 255, 153));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        workRequestJTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Sender", "Message", "Receiver", "Status", "Request Result"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(workRequestJTable);
-        if (workRequestJTable.getColumnModel().getColumnCount() > 0) {
-            workRequestJTable.getColumnModel().getColumn(0).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(1).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(2).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(3).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(4).setResizable(false);
-        }
-
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 570, 96));
-
+        assignJButton.setBackground(new java.awt.Color(102, 51, 0));
+        assignJButton.setForeground(new java.awt.Color(255, 255, 255));
         assignJButton.setText("Assign to me");
         assignJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 assignJButtonActionPerformed(evt);
             }
         });
-        add(assignJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 0, -1, -1));
+        add(assignJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 10, 100, -1));
 
-        processJButton.setText("Process");
+        processJButton.setBackground(new java.awt.Color(102, 51, 0));
+        processJButton.setForeground(new java.awt.Color(255, 255, 255));
+        processJButton.setText("Approve");
         processJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 processJButtonActionPerformed(evt);
             }
         });
-        add(processJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 140, -1, -1));
+        add(processJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 220, -1, -1));
 
+        refreshJButton.setBackground(new java.awt.Color(102, 51, 0));
+        refreshJButton.setForeground(new java.awt.Color(255, 255, 255));
         refreshJButton.setText("Refresh");
         refreshJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 refreshJButtonActionPerformed(evt);
             }
         });
-        add(refreshJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 0, -1, -1));
+        add(refreshJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 10, -1, -1));
 
-        BMworkRequestJTable1.setModel(new javax.swing.table.DefaultTableModel(
+        workRequesttable.setAutoCreateRowSorter(true);
+        workRequesttable.setBackground(new java.awt.Color(255, 255, 153));
+        workRequesttable.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(102, 51, 0), new java.awt.Color(255, 153, 51)));
+        workRequesttable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Network", "Enterprise", "Name", "Type", "Premium", "Description", "Coverage Amount", "Message", "Status", "Request"
+                "Sender", "Hospital Name", "Policy", "Customer", "Status", "Request", "RequestDate"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -207,69 +194,132 @@ public class ClaimHandlerWorkAreaJPane extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(BMworkRequestJTable1);
-        if (BMworkRequestJTable1.getColumnModel().getColumnCount() > 0) {
-            BMworkRequestJTable1.getColumnModel().getColumn(9).setResizable(false);
-        }
+        workRequesttable.setGridColor(new java.awt.Color(102, 51, 0));
+        workRequesttable.setSelectionBackground(new java.awt.Color(153, 51, 0));
+        jScrollPane4.setViewportView(workRequesttable);
 
-        add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 880, 110));
+        add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 790, 140));
+
+        RejectJButton.setBackground(new java.awt.Color(102, 51, 0));
+        RejectJButton.setForeground(new java.awt.Color(255, 255, 255));
+        RejectJButton.setText("Reject");
+        RejectJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RejectJButtonActionPerformed(evt);
+            }
+        });
+        add(RejectJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 220, 70, -1));
+
+        messgaetextarea.setColumns(20);
+        messgaetextarea.setRows(5);
+        messgaetextarea.setText("Type your message here");
+        jScrollPane2.setViewportView(messgaetextarea);
+
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 40, 190, 160));
+
+        CMworkRequestJTable1.setAutoCreateRowSorter(true);
+        CMworkRequestJTable1.setBackground(new java.awt.Color(255, 255, 153));
+        CMworkRequestJTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(102, 51, 0), new java.awt.Color(255, 255, 102)));
+        CMworkRequestJTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "RequestId", "Customer Name", "Enterprise", "Daignosis", "Bill amount", "Status", "Request", "RequestDate", "Message"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        CMworkRequestJTable1.setGridColor(new java.awt.Color(102, 51, 0));
+        CMworkRequestJTable1.setSelectionBackground(new java.awt.Color(102, 51, 0));
+        jScrollPane5.setViewportView(CMworkRequestJTable1);
+
+        add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 990, 170));
+
+        jLabel1.setBackground(new java.awt.Color(102, 51, 0));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(102, 51, 0));
+        jLabel1.setText(" Pending and Processed Claims");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 270, 20));
+
+        jLabel2.setBackground(new java.awt.Color(102, 51, 0));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(102, 51, 0));
+        jLabel2.setText(" Claim Requests");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, 20));
     }// </editor-fold>//GEN-END:initComponents
+
+    private int sumClaimedAmount(String custUserName) {
+        int TotalClaimedTillNow = 0;
+        for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
+            if (wr.getClass().equals(HospitalPaymentSettlementWorkRequest.class)) {
+                if(wr!=null)
+                {
+                if (((HospitalPaymentSettlementWorkRequest) wr).getApprovalStage().equals("21")
+                        && ((HospitalPaymentSettlementWorkRequest) wr).getPolicy().getCustomerName().equals(custUserName)) {
+                    TotalClaimedTillNow = TotalClaimedTillNow + Integer.parseInt(((HospitalPaymentSettlementWorkRequest) wr).getBillAmout());
+                }
+                }
+            }
+        }
+        return TotalClaimedTillNow;
+    }
 
     private void assignJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignJButtonActionPerformed
 
-        int selectedRow = workRequestJTable.getSelectedRow();
+        int selectedRow = workRequesttable.getSelectedRow();
 
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(null, "Select a row");
             return;
         }
 
-        WorkRequest request = (WorkRequest) workRequestJTable.getValueAt(selectedRow, 4);
-        if (request.getClass().equals(CustomerProductWorkRequest.class)) {
-            int stage = Integer.parseInt(((CustomerProductWorkRequest) request).getApprovalStage() == null ? "-1" : ((InsuranceProductWorkRequest) request).getApprovalStage());
+        WorkRequest request = (WorkRequest) workRequesttable.getValueAt(selectedRow, 5);
+        if (request.getClass().equals(HospitalPaymentSettlementWorkRequest.class)) {
+            int stage = Integer.parseInt(((HospitalPaymentSettlementWorkRequest) request).getApprovalStage() == null ? "-1" : ((HospitalPaymentSettlementWorkRequest) request).getApprovalStage());
             switch (stage) {
                 case 11:
-                    int dialogButton1 = JOptionPane.YES_NO_OPTION;
-                    int dialogResult1 = JOptionPane.showConfirmDialog(null, "Order Cancelled by customer. Cannot process.", "Warning", dialogButton1);
-                    if (dialogResult1 == JOptionPane.YES_OPTION) {
-                        // JOptionPane.showMessageDialog(null, "");
-                    }
+                    JOptionPane.showMessageDialog(null, "Claim Request rolled back by the hospital.");
                     break;
                 case 0:
-                    break;
-                case 2:
-                    break;
-                case 21:
-                    JOptionPane.showMessageDialog(null, "Underwriter has Approved");
-                    break;
-                case 3:
-
-                    break;
-                case 31:
                     request.setReceiver(userAccount);
-                    request.setStatus("Pending under" + userAccount);
-                    ((InsuranceProductWorkRequest) request).setApprovalStage("4");
+                    request.setStatus("Pending under " + userAccount);
+                    ((HospitalPaymentSettlementWorkRequest) request).setApprovalStage("2");
                     userAccount.getWorkQueue().getWorkRequestList().add(request);
                     break;
-                case 32:
-                    JOptionPane.showMessageDialog(null, "Already Underwriter has raised risk");
-                    break;
-                case 4:
+                case 2:
                     int dialogButton = JOptionPane.YES_NO_OPTION;
-                    int dialogResult = JOptionPane.showConfirmDialog(null, "Already Pending under a Billing Agent. Do you want to reassign it?", "Warning", dialogButton);
+                    int dialogResult = JOptionPane.showConfirmDialog(null, "Already Pending under a Claim Hadler. Do you want to reassign it?", "Warning", dialogButton);
                     if (dialogResult == JOptionPane.YES_OPTION) {
                         request.setReceiver(userAccount);
                         request.setStatus("Pending under" + userAccount);
-                        ((InsuranceProductWorkRequest) request).setApprovalStage("4");
+                        ((HospitalPaymentSettlementWorkRequest) request).setApprovalStage("2");
                         userAccount.getWorkQueue().getWorkRequestList().add(request);
                     }
                     break;
-                case 41:
-                    JOptionPane.showMessageDialog(null, "Billing Done/Poliy Issued.");
+                case 21:
+                    JOptionPane.showMessageDialog(null, "Already  Approved");
                     break;
-                case 42:
-                    JOptionPane.showMessageDialog(null, "Cancelled by billing Agent");
+                case 22:
+                    JOptionPane.showMessageDialog(null, "Cannot Approve Rejected Request");
                     break;
+
                 default:
                     break;
 
@@ -281,7 +331,7 @@ public class ClaimHandlerWorkAreaJPane extends javax.swing.JPanel {
 
     private void processJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processJButtonActionPerformed
 
-        int selectedRow = BMworkRequestJTable1.getSelectedRow();
+        int selectedRow = CMworkRequestJTable1.getSelectedRow();
 
         if (selectedRow < 0) {
 
@@ -289,27 +339,114 @@ public class ClaimHandlerWorkAreaJPane extends javax.swing.JPanel {
             return;
         }
 
-        InsuranceProductWorkRequest request = (InsuranceProductWorkRequest) BMworkRequestJTable1.getValueAt(selectedRow, 9);
+        HospitalPaymentSettlementWorkRequest request = (HospitalPaymentSettlementWorkRequest) CMworkRequestJTable1.getValueAt(selectedRow, 6);
 
-        // request.setStatus("Approved by BM");
-        ProcessWorkRequestJPanel processWorkRequestJPanel = new ProcessWorkRequestJPanel(userProcessContainer, request, business);
-        userProcessContainer.add("processWorkRequestJPanel", processWorkRequestJPanel);
-        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
-        layout.next(userProcessContainer);
+        if (request.getClass().equals(HospitalPaymentSettlementWorkRequest.class)) {
+            int stage = Integer.parseInt(((HospitalPaymentSettlementWorkRequest) request).getApprovalStage());
+            switch (stage) {
+                case 11:
+                    JOptionPane.showMessageDialog(null, "Hospital has Cancelled Request");
+                    break;
+                case 0:
+                    break;
+                case 2:
+                    int CoveredAmount = Integer.parseInt(((HospitalPaymentSettlementWorkRequest) request).getPolicy().getCustProdWQ().getCoverageAmount());
+                    int ClaimedAmount = sumClaimedAmount(((HospitalPaymentSettlementWorkRequest) request).getPolicy().getCustomerName())+ Integer.parseInt(((HospitalPaymentSettlementWorkRequest) request).getBillAmout());
+                    if (CoveredAmount <ClaimedAmount ) {
+                        request.setTestResult("Total Claimed amount against this policy has crossed the limit.");
+                        request.setStatus("Claim Rejected. No Insurance Balance");
+                        ((HospitalPaymentSettlementWorkRequest) request).setApprovalStage("22");
+                        JOptionPane.showMessageDialog(null, "Policy has reached to its Covered Amount.");
+                        populateBMTable();
+                        populateTable();
+                        return;
+                    }
+                    if (messgaetextarea.getText().length() > 100) {
+                        JOptionPane.showMessageDialog(null, "Message limit is 100 words only");
+                        return;
+                    }
+                    request.setTestResult(messgaetextarea.getText());
+                    request.setStatus("Claim Approved.");
+                    ((HospitalPaymentSettlementWorkRequest) request).setApprovalStage("21");
+                    JOptionPane.showMessageDialog(null, "Claim Approved.");
+                    break;
+                case 21:
+                    JOptionPane.showMessageDialog(null, "Already Claim Approved.");
+                    break;
+                case 22:
+                    JOptionPane.showMessageDialog(null, "Already Claim Rejected.");
+                    break;
+                default:
+                    break;
 
+            }
+        }
+        populateBMTable();
+        populateTable();
     }//GEN-LAST:event_processJButtonActionPerformed
 
     private void refreshJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshJButtonActionPerformed
+          populateBMTable();
         populateTable();
     }//GEN-LAST:event_refreshJButtonActionPerformed
 
+    private void RejectJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RejectJButtonActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = CMworkRequestJTable1.getSelectedRow();
+
+        if (selectedRow < 0) {
+
+            JOptionPane.showMessageDialog(null, "Select a row");
+            return;
+        }
+
+        HospitalPaymentSettlementWorkRequest request = (HospitalPaymentSettlementWorkRequest) CMworkRequestJTable1.getValueAt(selectedRow, 6);
+
+        if (request.getClass().equals(HospitalPaymentSettlementWorkRequest.class)) {
+            int stage = Integer.parseInt(((HospitalPaymentSettlementWorkRequest) request).getApprovalStage());
+            switch (stage) {
+                case 11:
+                    JOptionPane.showMessageDialog(null, "Hospital has Cancelled Request");
+                    break;
+                case 0:
+                    break;
+                case 2:
+                    if (messgaetextarea.getText().length() > 100) {
+                        JOptionPane.showMessageDialog(null, "Message limit is 100 words only");
+                        return;
+                    }
+                    request.setTestResult(messgaetextarea.getText());
+                    request.setStatus("Claim Rejected.");
+                    ((HospitalPaymentSettlementWorkRequest) request).setApprovalStage("22");
+                    JOptionPane.showMessageDialog(null, "Claim Rejected.");
+                    break;
+                case 21:
+                    JOptionPane.showMessageDialog(null, "Already Claim Approved.");
+                    break;
+                case 22:
+                    JOptionPane.showMessageDialog(null, "Already Claim Rejected.");
+                    break;
+                default:
+                    break;
+
+            }
+        }
+        populateBMTable();
+        populateTable();
+    }//GEN-LAST:event_RejectJButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable BMworkRequestJTable1;
+    private javax.swing.JTable CMworkRequestJTable1;
+    private javax.swing.JButton RejectJButton;
     private javax.swing.JButton assignJButton;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTextArea messgaetextarea;
     private javax.swing.JButton processJButton;
     private javax.swing.JButton refreshJButton;
-    private javax.swing.JTable workRequestJTable;
+    private javax.swing.JTable workRequesttable;
     // End of variables declaration//GEN-END:variables
 }

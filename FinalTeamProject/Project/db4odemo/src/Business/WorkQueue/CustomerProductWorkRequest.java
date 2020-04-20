@@ -12,7 +12,7 @@ import Business.Network.Location;
  */
 public class CustomerProductWorkRequest extends InsuranceProductWorkRequest{
     
-    
+    private String customerUserName;
     private String customerName;
     private String customerPhone;
     private String customerMailId;

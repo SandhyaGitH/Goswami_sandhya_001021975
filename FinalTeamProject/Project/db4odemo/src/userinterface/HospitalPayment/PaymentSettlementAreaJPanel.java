@@ -17,6 +17,8 @@ import Business.Organizations.Organization;
 import Business.WorkQueue.CustomerProductWorkRequest;
 import Business.WorkQueue.HospitalPaymentSettlementWorkRequest;
 import Business.WorkQueue.InsuranceProductWorkRequest;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -31,17 +33,19 @@ public class PaymentSettlementAreaJPanel extends javax.swing.JPanel {
 
     private UserAccount userAccount;
     private EcoSystem system;
+    private Enterprise enterprise;
 
     /**
      * Creates new form DoctorWorkAreaJPanel
      */
-    public PaymentSettlementAreaJPanel(JPanel userProcessContainer, UserAccount account, EcoSystem system) {
+    public PaymentSettlementAreaJPanel(JPanel userProcessContainer, UserAccount account, EcoSystem system, Enterprise enterprise) {
         initComponents();
 
         this.userProcessContainer = userProcessContainer;
 
         this.userAccount = account;
         this.system = system;
+        this.enterprise=enterprise;
         //valueLabel.setText(enterprise.getName());
         populateRequestTable();
 
@@ -92,9 +96,10 @@ public class PaymentSettlementAreaJPanel extends javax.swing.JPanel {
                 row[2] = orderedProduct.getPolicy().getCustomerName();
                 row[3] = orderedProduct.getDiagnosis();
                 row[4] = orderedProduct.getBillAmout();
-               // row[5] = orderedProduct.getDiagnosis();
+                // row[5] = orderedProduct.getDiagnosis();
                 row[5] = orderedProduct.getStatus();
-               // String result = ((HospitalPaymentSettlementWorkRequest) orderedProduct).get();
+                row[6]=orderedProduct.getTestResult();
+                // String result = ((HospitalPaymentSettlementWorkRequest) orderedProduct).get();
                 // row[3] = result == null ? "Waiting" : result;
 
                 model.addRow(row);
@@ -124,6 +129,10 @@ public class PaymentSettlementAreaJPanel extends javax.swing.JPanel {
         TotalamountjLabel2 = new javax.swing.JLabel();
         SubmitjButton1 = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 228, 255));
+
+        requestTestJButton.setBackground(new java.awt.Color(102, 0, 0));
+        requestTestJButton.setForeground(new java.awt.Color(255, 255, 255));
         requestTestJButton.setText("Initiate Cliam");
         requestTestJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,6 +140,8 @@ public class PaymentSettlementAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        refreshTestJButton.setBackground(new java.awt.Color(102, 0, 0));
+        refreshTestJButton.setForeground(new java.awt.Color(255, 255, 255));
         refreshTestJButton.setText("Refresh");
         refreshTestJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,26 +149,29 @@ public class PaymentSettlementAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        workRequestJTable.setAutoCreateRowSorter(true);
+        workRequestJTable.setBackground(new java.awt.Color(255, 204, 204));
+        workRequestJTable.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(102, 0, 0), new java.awt.Color(255, 204, 204)));
         workRequestJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "RequestID", "PolicyID", "Customer Name", "Daignosis", "Claimed Amount", "Status"
+                "RequestID", "PolicyID", "Customer Name", "Daignosis", "Claimed Amount", "Status", "Message"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -168,8 +182,12 @@ public class PaymentSettlementAreaJPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        workRequestJTable.setGridColor(new java.awt.Color(51, 0, 0));
+        workRequestJTable.setSelectionBackground(new java.awt.Color(51, 0, 0));
         jScrollPane2.setViewportView(workRequestJTable);
 
+        PolicyJTable.setBackground(new java.awt.Color(255, 204, 255));
+        PolicyJTable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 0, 0), new java.awt.Color(102, 0, 0), new java.awt.Color(255, 153, 153), new java.awt.Color(255, 153, 153)));
         PolicyJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
@@ -196,18 +214,29 @@ public class PaymentSettlementAreaJPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        PolicyJTable.setGridColor(new java.awt.Color(102, 0, 0));
+        PolicyJTable.setSelectionBackground(new java.awt.Color(102, 0, 0));
         jScrollPane4.setViewportView(PolicyJTable);
 
         DaignosisjTextArea1.setColumns(20);
         DaignosisjTextArea1.setRows(5);
         jScrollPane1.setViewportView(DaignosisjTextArea1);
 
+        DiagnosisjLabel1.setForeground(new java.awt.Color(102, 0, 0));
         DiagnosisjLabel1.setText("Daignosis:");
 
-        AmountjTextField1.setText("jTextField1");
+        AmountjTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AmountjTextField1ActionPerformed(evt);
+            }
+        });
 
+        TotalamountjLabel2.setBackground(new java.awt.Color(255, 204, 204));
+        TotalamountjLabel2.setForeground(new java.awt.Color(102, 0, 0));
         TotalamountjLabel2.setText("Total Amount");
 
+        SubmitjButton1.setBackground(new java.awt.Color(102, 0, 0));
+        SubmitjButton1.setForeground(new java.awt.Color(255, 255, 255));
         SubmitjButton1.setText("Submit");
         SubmitjButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -220,48 +249,49 @@ public class PaymentSettlementAreaJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(refreshTestJButton)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 880, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(requestTestJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(DiagnosisjLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(TotalamountjLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(AmountjTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(SubmitjButton1))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(refreshTestJButton)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 880, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(requestTestJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(DiagnosisjLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(TotalamountjLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(AmountjTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(SubmitjButton1))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(62, 62, 62))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 851, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(refreshTestJButton)
-                    .addComponent(DiagnosisjLabel1))
-                .addGap(10, 10, 10)
+                    .addComponent(DiagnosisjLabel1)
+                    .addComponent(refreshTestJButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(requestTestJButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(AmountjTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TotalamountjLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SubmitjButton1))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(requestTestJButton)
+                        .addComponent(TotalamountjLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(SubmitjButton1)))
                 .addGap(56, 56, 56)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -280,8 +310,6 @@ public class PaymentSettlementAreaJPanel extends javax.swing.JPanel {
             SubmitjButton1.setVisible(true);
         }
 
-       
-
 
     }//GEN-LAST:event_requestTestJButtonActionPerformed
 
@@ -298,68 +326,95 @@ public class PaymentSettlementAreaJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Select a row first.");
             return;
         }
-         if (selectedRow >= 0) {
-             
+        if (selectedRow >= 0) {
+
             Policy policy = (Policy) PolicyJTable.getValueAt(selectedRow, 3);
             HospitalPaymentSettlementWorkRequest paymenRequest = new HospitalPaymentSettlementWorkRequest();
             //if(policy.et)
             paymenRequest.setPolicy(policy);
-            if(DaignosisjTextArea1.getText().equals(""))
-            {
+            if (DaignosisjTextArea1.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Please add Daignosis.");
                 return;
             }
-            if(AmountjTextField1.getText().equals(""))
-            {
+            if (AmountjTextField1.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Please add total Bill Amount");
                 return;
             }
-            if(Integer.parseInt(AmountjTextField1.getText())>Integer.parseInt(policy.getCustProdWQ().getCoverageAmount()))
-            {
+            String regex_Pattern_For_Number = "^[0-9]*";
+            Pattern pattern = Pattern.compile(regex_Pattern_For_Number);
+            //Pattern pattern = Pattern.compile(regex_Pattern_For_Letter);
+            Matcher matcher = pattern.matcher(AmountjTextField1.getText());
+            if (!matcher.matches()) {
+
+                JOptionPane.showMessageDialog(null, "Enter Valid Integer Only for Amount");
+                AmountjTextField1.requestFocusInWindow();
+                AmountjTextField1.setText("");
+                return;
+
+            }
+            if (DiagnosisjLabel1.getText().length() > 100) {
+                JOptionPane.showMessageDialog(null, "Daigonisis limit is 100 words only");
+                return;
+            }
+
+            if (Integer.parseInt(AmountjTextField1.getText()) > Integer.parseInt(policy.getCustProdWQ().getCoverageAmount())) {
                 JOptionPane.showMessageDialog(null, "Claimed amount cannot be more than covered amount");
                 return;
             }
-            paymenRequest.setDiagnosis(DaignosisjTextArea1.getText());
-            paymenRequest.setBillAmout(AmountjTextField1.getText());
-            
-                //custRequest.setRequestDate(daet);
-                paymenRequest.setSender(userAccount);
 
-                paymenRequest.setApprovalStage("0");
+            //custRequest.setRequestDate(daet);
+            Organization org = null;
 
-                Organization org = null;
-
-                for (Location network : system.getNetworkList()) {
-                    for (Enterprise entp : network.getEnterpriseDirectory().getEnterpriseList()) {
-                        if (entp.getEnterpriseType().getValue().equals(Enterprise.EnterpriseType.InsuranceBroker.getValue())) {
-                            entp.getWorkQueue().getWorkRequestList().add(paymenRequest);
-                            for (Organization organization : entp.getOrganizaionDirectory().getOrganizationList()) {
-                                if (organization instanceof ClaimHandlerOrganizations) {
-                                    org = organization;
-                                    break;
-                                }
-
+            for (Location network : system.getNetworkList()) {
+                for (Enterprise entp : network.getEnterpriseDirectory().getEnterpriseList()) {
+                    if (entp.getEnterpriseType().getValue().equals(Enterprise.EnterpriseType.InsuranceBroker.getValue())) {
+                        entp.getWorkQueue().getWorkRequestList().add(paymenRequest);
+                        for (Organization organization : entp.getOrganizaionDirectory().getOrganizationList()) {
+                            if (organization instanceof ClaimHandlerOrganizations) {
+                                org = organization;
+                                break;
                             }
+
                         }
                     }
                 }
+            }
 
-                if (org != null) {
-                    org.getWorkQueue().getWorkRequestList().add(paymenRequest);
-                    paymenRequest.setStatus("Claim Request Initiated");
-                    userAccount.getWorkQueue().getWorkRequestList().add(paymenRequest);
-                    JOptionPane.showMessageDialog(null, "Claim Request Initiated");
-                }
-        DiagnosisjLabel1.setVisible(false);
-        DaignosisjTextArea1.setVisible(false);
-        TotalamountjLabel2.setVisible(false);
-        AmountjTextField1.setVisible(false);
-        SubmitjButton1.setVisible(false);
-            
-         }
-        
+            if (org != null) {
+                paymenRequest.setDiagnosis(DaignosisjTextArea1.getText());
+                paymenRequest.setBillAmout(AmountjTextField1.getText());
+                org.getWorkQueue().getWorkRequestList().add(paymenRequest);
+                paymenRequest.setHospitalName(enterprise.getName());
+                paymenRequest.setStatus("Claim Request Initiated");
+                userAccount.getWorkQueue().getWorkRequestList().add(paymenRequest);
+                paymenRequest.setSender(userAccount);
+                paymenRequest.setApprovalStage("0");
+                DaignosisjTextArea1.setText("");
+                AmountjTextField1.setText("");
+                JOptionPane.showMessageDialog(null, "Claim Request Initiated");
+                
+
+            }
+            DiagnosisjLabel1.setVisible(false);
+            DaignosisjTextArea1.setVisible(false);
+            TotalamountjLabel2.setVisible(false);
+            AmountjTextField1.setVisible(false);
+            SubmitjButton1.setVisible(false);
+
+        }
+
         populateRequestTable();
     }//GEN-LAST:event_SubmitjButton1ActionPerformed
+
+    private void sumClaimedAmount(String custUserName) {
+        /* for(Cu pc : enterprise.getCustPolicyDirectory().getPolicyList())
+        {
+            
+        } */
+    }
+    private void AmountjTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AmountjTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AmountjTextField1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField AmountjTextField1;

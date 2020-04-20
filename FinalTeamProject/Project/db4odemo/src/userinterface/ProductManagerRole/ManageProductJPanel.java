@@ -30,7 +30,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author raunak
+ * @author sandhya goswami
  */
 public class ManageProductJPanel extends javax.swing.JPanel {
 
