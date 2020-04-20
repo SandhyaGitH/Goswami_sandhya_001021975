@@ -250,7 +250,7 @@ public class ProductManagerAreaJPanel extends javax.swing.JPanel {
                     }
                 }
                 int dialogButton = JOptionPane.YES_NO_OPTION;
-                int dialogResult = JOptionPane.showConfirmDialog(null, "Would you like to remove this Admin!", "Warning", dialogButton);
+                int dialogResult = JOptionPane.showConfirmDialog(null, "Would you like to remove it!", "Warning", dialogButton);
                 if (dialogResult == JOptionPane.YES_OPTION) {
                     InsuranceProductWorkRequest uA = (InsuranceProductWorkRequest) workRequestJTable.getValueAt(selectedRow, 6);
                     int index = enterprise.getWorkQueue().getWorkRequestList().indexOf(uA);
