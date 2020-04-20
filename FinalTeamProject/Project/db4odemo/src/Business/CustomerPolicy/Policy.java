@@ -4,8 +4,10 @@
  */
 package Business.CustomerPolicy;
 
-import Business.Employee.*;
+
 import Business.WorkQueue.CustomerProductWorkRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -56,10 +58,16 @@ public class Policy {
     private String customerMail;
     public Policy() {
         id = count;
-        policyIdStr= Integer.toString(id) ;
+        policyIdStr= Integer.toString(id)+generateId() ;
         count++;
     }
 
+    private String generateId(){
+         Date dNow = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat("hhmmssMs");
+        String datetime = ft.format(dNow);
+        return datetime;
+    }
     
     public String getCustomerName() {
         return customerName;

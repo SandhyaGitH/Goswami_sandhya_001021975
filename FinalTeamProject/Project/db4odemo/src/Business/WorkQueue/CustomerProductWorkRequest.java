@@ -5,6 +5,8 @@
 package Business.WorkQueue;
 import Business.Enterprise.Enterprise;
 import Business.Network.Location;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -22,10 +24,15 @@ public class CustomerProductWorkRequest extends InsuranceProductWorkRequest{
     
     public CustomerProductWorkRequest() {
         id = count;
-        idStr= Integer.toString(id) ;
+        idStr= Integer.toString(id) +generateId();
         count++;
     }
-
+private String generateId(){
+         Date dNow = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat("hhmmssMs");
+        String datetime = ft.format(dNow);
+        return datetime;
+    }
     public String getCustomerName() {
         return customerName;
     }

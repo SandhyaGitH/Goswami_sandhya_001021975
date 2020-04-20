@@ -54,7 +54,7 @@ public class ClaimHandlerWorkAreaJPane extends javax.swing.JPanel {
             if (request.getClass().equals(Business.WorkQueue.HospitalPaymentSettlementWorkRequest.class)) {
 
                 HospitalPaymentSettlementWorkRequest pHR = (HospitalPaymentSettlementWorkRequest) request;
-                if(pHR.getApprovalStage().equals(0) && !pHR.getApprovalStage().equals(""))
+                if(pHR.getApprovalStage().equals("0") && !pHR.getApprovalStage().equals(""))
                 {
                 Object[] row = new Object[8];
 
