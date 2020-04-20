@@ -26,7 +26,7 @@ public class HPaymentManagerRole extends Role{
     } */
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
-      return new PaymentSettlementAreaJPanel(userProcessContainer, account,business);
+      return new PaymentSettlementAreaJPanel(userProcessContainer, account,business,enterprise);
         //return new BusinessManagerWorkAreaJPane(userProcessContainer, account, organization, enterprise);
     }
 

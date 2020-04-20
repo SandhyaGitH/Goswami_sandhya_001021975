@@ -120,6 +120,7 @@ public class BillingAgentWorkAreaJPane extends javax.swing.JPanel {
         jScrollPane4 = new javax.swing.JScrollPane();
         BMworkRequestJTable1 = new javax.swing.JTable();
 
+        setBackground(new java.awt.Color(255, 255, 153));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         workRequestJTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -159,6 +160,8 @@ public class BillingAgentWorkAreaJPane extends javax.swing.JPanel {
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 570, 96));
 
+        assignJButton.setBackground(new java.awt.Color(102, 51, 0));
+        assignJButton.setForeground(new java.awt.Color(255, 255, 255));
         assignJButton.setText("Assign to me");
         assignJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -167,6 +170,8 @@ public class BillingAgentWorkAreaJPane extends javax.swing.JPanel {
         });
         add(assignJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 0, -1, -1));
 
+        processJButton.setBackground(new java.awt.Color(102, 51, 0));
+        processJButton.setForeground(new java.awt.Color(255, 255, 255));
         processJButton.setText("Process");
         processJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -175,6 +180,8 @@ public class BillingAgentWorkAreaJPane extends javax.swing.JPanel {
         });
         add(processJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 140, -1, -1));
 
+        refreshJButton.setBackground(new java.awt.Color(102, 51, 0));
+        refreshJButton.setForeground(new java.awt.Color(255, 255, 255));
         refreshJButton.setText("Refresh");
         refreshJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
