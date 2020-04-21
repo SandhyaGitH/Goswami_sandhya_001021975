@@ -63,7 +63,6 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
             row[3] = cust.getCustomerEmail();
             row[4] = cust.getPhoneNumber();
             row[5] = cust.getAddress();
-            
 
             model.addRow(row);
         }
@@ -119,9 +118,12 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
         eMailIdJTextField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         PhoneJTextField = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(204, 151, 238));
 
+        enterpriseJTable.setBackground(new java.awt.Color(204, 102, 255));
+        enterpriseJTable.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 0, 51), new java.awt.Color(255, 51, 204)));
         enterpriseJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -151,6 +153,8 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        enterpriseJTable.setGridColor(new java.awt.Color(153, 51, 255));
+        enterpriseJTable.setSelectionBackground(new java.awt.Color(51, 0, 51));
         jScrollPane1.setViewportView(enterpriseJTable);
 
         jLabel1.setText("Network");
@@ -168,6 +172,8 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
 
         enterpriseJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        submitJButton.setBackground(new java.awt.Color(51, 0, 51));
+        submitJButton.setForeground(new java.awt.Color(255, 255, 255));
         submitJButton.setText("Submit");
         submitJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,6 +185,8 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
 
         jLabel5.setText("Name");
 
+        backJButton.setBackground(new java.awt.Color(51, 0, 51));
+        backJButton.setForeground(new java.awt.Color(255, 255, 255));
         backJButton.setText("<< Back");
         backJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,6 +196,8 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
 
         jLabel12.setText("Address");
 
+        jButton1.setBackground(new java.awt.Color(51, 0, 51));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("View");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,6 +205,8 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
             }
         });
 
+        UpdatejButton.setBackground(new java.awt.Color(51, 0, 51));
+        UpdatejButton.setForeground(new java.awt.Color(255, 255, 255));
         UpdatejButton.setText("Update");
         UpdatejButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -206,52 +218,58 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
 
         jLabel6.setText("Phone");
 
+        jLabel7.setFont(new java.awt.Font("Calisto MT", 1, 18)); // NOI18N
+        jLabel7.setText("Manage customer");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(51, 51, 51)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(networkJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(usernameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passwordJPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(AddressTextbox, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(submitJButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(backJButton)
-                            .addComponent(UpdatejButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(Reslable, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(enterpriseJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(29, 29, 29)
-                        .addComponent(PhoneJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(eMailIdJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(103, 337, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
-                .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(51, 51, 51)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(networkJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(usernameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(passwordJPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(nameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(AddressTextbox, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(43, 43, 43)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(submitJButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(backJButton)
+                                            .addComponent(UpdatejButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Reslable, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(enterpriseJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addGap(29, 29, 29)
+                                        .addComponent(PhoneJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(eMailIdJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -260,9 +278,11 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -300,7 +320,7 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(enterpriseJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Reslable))
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -317,7 +337,7 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
     private void submitJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitJButtonActionPerformed
 
         Restaurant restaurant = (Restaurant) enterpriseJComboBox.getSelectedItem();
-        boolean flag = ValidateForm();
+        boolean flag = ValidateForm("Submit");
 
         // String name=
         if (flag) {
@@ -340,16 +360,16 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
 
             }
 
-           // Customer customer = new Customer(location, name, username, address, "5");
+            // Customer customer = new Customer(location, name, username, address, "5");
             Customer customer = new Customer();
             customer.setName(name);
             customer.setUsername(username);
             customer.setLocation(location);
             customer.setAddress(address);
             customer.setCustomerRating("5");
-            customer.setCustomerEmail(address);
+            customer.setCustomerEmail(emailId);
             customer.setPhoneNumber(phoneNumber);
-            
+
             CustomerDirectory cd = system.getCustomerDirectory();
             cd.createCustomer(customer);
 
@@ -372,23 +392,52 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_backJButtonActionPerformed
-
+    private void ResetAllTextboxs() {
+        Border border = BorderFactory.createLineBorder(Color.WHITE, 1);
+        passwordJPasswordField.setBorder(border);
+        usernameJTextField.setBorder(border);
+        nameJTextField.setBorder(border);
+        AddressTextbox.setBorder(border);
+        eMailIdJTextField.setBorder(border);
+        PhoneJTextField.setBorder(border);
+        usernameJTextField.setText("");
+        nameJTextField.setText("");
+        AddressTextbox.setText("");
+        eMailIdJTextField.setText("");
+        PhoneJTextField.setText("");
+        passwordJPasswordField.setEnabled(true);
+        usernameJTextField.setEnabled(true);
+        submitJButton.setEnabled(true);
+    }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
+        //ResetAllTextboxs();
         int selectedRow = enterpriseJTable.getSelectedRow();
         if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(null, "Please select a row from table first to view details.", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please select a customer to view the details.", "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
-            Customer cust = (Customer) enterpriseJTable.getValueAt(selectedRow, 3);
+            Customer cust = (Customer) enterpriseJTable.getValueAt(selectedRow, 0);
             usernameJTextField.setText(cust.getUsername());
             nameJTextField.setText(cust.getName());
             AddressTextbox.setText(cust.getAddress());
+            eMailIdJTextField.setText(cust.getCustomerEmail());
+            PhoneJTextField.setText(cust.getPhoneNumber());
+            passwordJPasswordField.setEnabled(false);
+            for (Location network : system.getNetworkList()) {
+                if (network.getName().equals(cust.getLocation())) {
+                    networkJComboBox.setSelectedItem(network);
+                    break;
+                }
+            }
             // passwordJPasswordField
             //passwordJPasswordField.setText(cust.g);
+            UpdatejButton.setEnabled(true);
+            usernameJTextField.setEnabled(false);
+            passwordJPasswordField.setEnabled(false);
+            submitJButton.setEnabled(false);
         }
-        UpdatejButton.setEnabled(true);
-        usernameJTextField.setEnabled(false);
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void UpdatejButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdatejButtonActionPerformed
@@ -400,44 +449,30 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(null, "Please select a row from table first to view details.", "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
-            cust = (Customer) enterpriseJTable.getValueAt(selectedRow, 3);
+            cust = (Customer) enterpriseJTable.getValueAt(selectedRow, 0);
         }
-        Restaurant restaurant = (Restaurant) enterpriseJComboBox.getSelectedItem();
-        boolean flag = ValidateForm();
+        //  Restaurant restaurant = (Restaurant) enterpriseJComboBox.getSelectedItem();
+        boolean flag = ValidateForm("Update");
 
         // String name=
         if (flag) {
             String name = nameJTextField.getText();
             String username = usernameJTextField.getText();
-            String password = String.valueOf(passwordJPasswordField.getPassword());
+            // String password = String.valueOf(passwordJPasswordField.getPassword());
             String address = AddressTextbox.getText();
 
             String location = ((Location) networkJComboBox.getSelectedItem()).getName();
-            //Employee employee = restaurant.getEmployeeDirectory().createEmployee(name);
-            //UserAccount account = system.getUserAccountDirectory().createUserAccount(username, password, null, new CustomerRole());
 
-            /* for (UserAccount account : system.getUserAccountDirectory().getUserAccountList()){
-            if(account.getUsername().equals(username))
-            {
-               JOptionPane.showMessageDialog(null,"Duplicate Username"); 
-               return;
-            }
-             
-             
-        }*/
-            Customer customer = new Customer(location, name, username, address, "5");
+            Customer customer = new Customer(location, name, username, address, "5", eMailIdJTextField.getText(), PhoneJTextField.getText(),
+                    cust.getCustomerIdStr());
 
             int k = system.getCustomerDirectory().getCustomerList().indexOf(cust);
             system.getCustomerDirectory().getCustomerList().set(k, customer);
             UpdatejButton.setEnabled(false);
-            /*  btnUpdate.setEnabled(true);
-        Txt_PlaneAirLineID.setEditable(false);
-        Txt_PlaneModel.setEditable(false);
-        Txt_Capacity.setEditable(false);
-             */
 
             JOptionPane.showMessageDialog(null, "updated successfully!");
             populateTable();
+            ResetAllTextboxs();
     }//GEN-LAST:event_UpdatejButtonActionPerformed
     }
 
@@ -464,7 +499,7 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
         return result;
     }
 
-    private boolean ValidateForm() {
+    private boolean ValidateForm(String callingButton) {
         boolean flag = true;
         Border border = BorderFactory.createLineBorder(Color.WHITE, 3);
 
@@ -476,6 +511,7 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
             nameJTextField.setBorder(border);
             flag = false;
         } else {
+            border = BorderFactory.createLineBorder(Color.WHITE, 1);
             nameJTextField.setBorder(border);
         }
         if (usernameJTextField.getText().equals("")) {  //User have not entered anything. 
@@ -486,18 +522,10 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
             usernameJTextField.setBorder(border);
             flag = false;
         } else {
+            border = BorderFactory.createLineBorder(Color.WHITE, 1);
             usernameJTextField.setBorder(border);
         }
-        if (String.valueOf(passwordJPasswordField.getPassword()).equals("")) {  //User have not entered anything. 
-            JOptionPane.showMessageDialog(null, "Customer Password Can't be empty");
-            passwordJPasswordField.requestFocusInWindow();
-            passwordJPasswordField.setText("");
-            border = BorderFactory.createLineBorder(Color.RED, 1);
-            passwordJPasswordField.setBorder(border);
-            flag = false;
-        } else {
-            passwordJPasswordField.setBorder(border);
-        }
+
         if (AddressTextbox.getText().equals("")) {  //User have not entered anything. 
             JOptionPane.showMessageDialog(null, "Customer Address Can't be empty");
             AddressTextbox.requestFocusInWindow();
@@ -506,17 +534,10 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
             AddressTextbox.setBorder(border);
             flag = false;
         } else {
+            border = BorderFactory.createLineBorder(Color.WHITE, 1);
             AddressTextbox.setBorder(border);
         }
-        if (ValidatePassword(passwordJPasswordField.getText()) != true) {
 
-            border = BorderFactory.createLineBorder(Color.RED, 2);
-            passwordJPasswordField.setBorder(border);
-            JOptionPane.showMessageDialog(null, "Invalid Password Format.");
-            flag = false;
-        } else {
-            passwordJPasswordField.setBorder(border);
-        }
         if (String.valueOf(eMailIdJTextField.getText()).equals("")) {  //User have not entered anything. 
             JOptionPane.showMessageDialog(null, "Email Address Can't be empty");
             eMailIdJTextField.requestFocusInWindow();
@@ -525,6 +546,7 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
             eMailIdJTextField.setBorder(border);
             flag = false;
         } else {
+            border = BorderFactory.createLineBorder(Color.WHITE, 1);
             eMailIdJTextField.setBorder(border);
         }
 
@@ -535,6 +557,7 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Invalid Email Format.");
             flag = false;
         } else {
+            border = BorderFactory.createLineBorder(Color.WHITE, 1);
             eMailIdJTextField.setBorder(border);
         }
         if (String.valueOf(PhoneJTextField.getText()).equals("")) {  //User have not entered anything. 
@@ -545,6 +568,7 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
             PhoneJTextField.setBorder(border);
             flag = false;
         } else {
+            border = BorderFactory.createLineBorder(Color.WHITE, 1);
             PhoneJTextField.setBorder(border);
         }
 
@@ -555,7 +579,31 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Invalid Phone Number Format.");
             flag = false;
         } else {
+            border = BorderFactory.createLineBorder(Color.WHITE, 1);
             PhoneJTextField.setBorder(border);
+        }
+        if (!callingButton.equals("Update")) {
+            if (ValidatePassword(passwordJPasswordField.getText()) != true) {
+
+                border = BorderFactory.createLineBorder(Color.RED, 2);
+                passwordJPasswordField.setBorder(border);
+                JOptionPane.showMessageDialog(null, "Invalid Password Format.");
+                flag = false;
+            } else {
+                border = BorderFactory.createLineBorder(Color.WHITE, 1);
+                passwordJPasswordField.setBorder(border);
+            }
+            if (String.valueOf(passwordJPasswordField.getPassword()).equals("")) {  //User have not entered anything. 
+                JOptionPane.showMessageDialog(null, "Customer Password Can't be empty");
+                passwordJPasswordField.requestFocusInWindow();
+                passwordJPasswordField.setText("");
+                border = BorderFactory.createLineBorder(Color.RED, 1);
+                passwordJPasswordField.setBorder(border);
+                flag = false;
+            } else {
+                border = BorderFactory.createLineBorder(Color.WHITE, 1);
+                passwordJPasswordField.setBorder(border);
+            }
         }
         return flag;
     }
@@ -577,6 +625,7 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nameJTextField;
     private javax.swing.JComboBox networkJComboBox;
