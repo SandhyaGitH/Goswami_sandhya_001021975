@@ -5,16 +5,18 @@
 package userinterface.RegVehicleInsuranceManagerRole;
 
 import userinterface.RegLifeInsuranceManagerRole.*;
-import userinterface.RegHealthManagerRole.*;
-import userinterface.BusinessManagerRole.*;
+import userinterface.RegLifeInsuranceManagerRole.*;
+
 import Business.EcoSystem;
-import Business.Enterprise.Enterprise;
-import Business.Network.Location;
+
 import Business.Organizations.Organization;
-import Business.Organizations.RegulatoryPolicyManagementOrganization;
-import Business.WorkQueue.LabTestWorkRequest;
+
+import Business.WorkQueue.InsuranceProductWorkRequest;
+
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -26,12 +28,12 @@ import javax.swing.JPanel;
 public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
 
     JPanel userProcessContainer;
-    LabTestWorkRequest request;
+    InsuranceProductWorkRequest request;
     EcoSystem system ;
     /**
      * Creates new form ProcessWorkRequestJPanel
      */
-    public ProcessWorkRequestJPanel(JPanel userProcessContainer, LabTestWorkRequest request, EcoSystem system) {
+    public ProcessWorkRequestJPanel(JPanel userProcessContainer, InsuranceProductWorkRequest request, EcoSystem system) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.request = request;
@@ -54,6 +56,10 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
         backJButton = new javax.swing.JButton();
         rejectJButton = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(204, 204, 255));
+
+        submitJButton.setBackground(new java.awt.Color(0, 0, 51));
+        submitJButton.setForeground(new java.awt.Color(255, 255, 255));
         submitJButton.setText("Approve");
         submitJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -63,6 +69,8 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
 
         jLabel1.setText("Comments");
 
+        backJButton.setBackground(new java.awt.Color(0, 0, 51));
+        backJButton.setForeground(new java.awt.Color(255, 255, 255));
         backJButton.setText("Back");
         backJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,6 +78,8 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
             }
         });
 
+        rejectJButton.setBackground(new java.awt.Color(0, 0, 51));
+        rejectJButton.setForeground(new java.awt.Color(255, 255, 255));
         rejectJButton.setText("Reject");
         rejectJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,36 +91,34 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(backJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(resultJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(158, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(backJButton)
+                        .addGap(58, 58, 58)
                         .addComponent(rejectJButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(submitJButton)
-                        .addGap(73, 73, 73))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(submitJButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(resultJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(138, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addGap(77, 77, 77)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(resultJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
+                    .addComponent(resultJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitJButton)
                     .addComponent(backJButton)
                     .addComponent(rejectJButton))
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addGap(169, 169, 169))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -119,20 +127,33 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
         userProcessContainer.remove(this);
         Component[] componentArray = userProcessContainer.getComponents();
         Component component = componentArray[componentArray.length - 1];
-        HealthInsuManagerWorkAreaJPane dwjp = (HealthInsuManagerWorkAreaJPane) component;
+        LifeInsuManagerWorkAreaJPane dwjp = (LifeInsuManagerWorkAreaJPane) component;
         dwjp.populateTable();
+        dwjp.populateBMTable();
         
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_backJButtonActionPerformed
 
     private void submitJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitJButtonActionPerformed
+       
+        if (request.getStatus().equals("Completed")||((InsuranceProductWorkRequest)request).getApprovalStage().equals("61")) {
+            JOptionPane.showMessageDialog(null, "Already Request Completed");
+            return;
+        }
+        else  if (request.getStatus().equals("Rejected")|| ((InsuranceProductWorkRequest)request).getApprovalStage().equals("62")) {
+            JOptionPane.showMessageDialog(null, "Already Rejected");
+            return;
+        }
         request.setTestResult(resultJTextField.getText());
-        request.setStatus("Approved By BM");
+        request.setStatus("Completed");
+        ((InsuranceProductWorkRequest)request).setApprovalStage("61");
+        Date dt = new Date ();
+        request.setRequestDate(dt);
         
          Organization org = null;
          
-          for(Location  network : system.getNetworkList())
+        /*  for(Location  network : system.getNetworkList())
           { for(Enterprise entp : network.getEnterpriseDirectory().getEnterpriseList())
                 {
                     if (entp.getEnterpriseType().equals(Enterprise.EnterpriseType.InsuranceRegulator) ){
@@ -149,19 +170,30 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
           }
        /*
         enterprise.getWorkQueue().getWorkRequestList().add(request);
-        */
+        
         if (org!=null){
             org.getWorkQueue().getWorkRequestList().add(request);
            // userAccount.getWorkQueue().getWorkRequestList().add(request);
-        }
+        } */
+        JOptionPane.showMessageDialog(null, "Thank you !!");
+        resultJTextField.setText("");
         
     }//GEN-LAST:event_submitJButtonActionPerformed
 
     private void rejectJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejectJButtonActionPerformed
         // TODO add your handling code here:
+         if (request.getStatus().equals("Completed")) {
+            JOptionPane.showMessageDialog(null, "Already Request Completed");
+            return;
+        }
+        else  if (request.getStatus().equals("Rejected")) {
+            JOptionPane.showMessageDialog(null, "Already Rejected");
+            return;
+        }
         request.setTestResult(resultJTextField.getText());
         request.setStatus("Rejected");
-        
+        ((InsuranceProductWorkRequest)request).setApprovalStage("62");
+        JOptionPane.showMessageDialog(null, "Rejected.");
        
     }//GEN-LAST:event_rejectJButtonActionPerformed
 

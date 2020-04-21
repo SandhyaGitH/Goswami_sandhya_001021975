@@ -18,6 +18,7 @@ import Business.WorkQueue.InsuranceProductWorkRequest;
 import Business.WorkQueue.LabTestWorkRequest;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -286,6 +287,8 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
             request.setStatus("Policy Issued");
             JOptionPane.showMessageDialog(null, "Billing Done. Policy Issued Successfuly.");
             resultJTextField.setText("");
+             Date dt = new Date ();
+        request.setResolveDate(dt);
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
