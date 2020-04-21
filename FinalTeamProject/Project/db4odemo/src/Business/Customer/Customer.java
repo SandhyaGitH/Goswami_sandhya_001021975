@@ -5,6 +5,9 @@
  */
 package Business.Customer;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author harold
@@ -39,12 +42,19 @@ public class Customer {
         this.customerEmail = customerEmail;
     }
 
-    public Customer(String Location, String name, String Username, String Address, String customerRating) {
+    public Customer(String Location, String name, String Username, String Address, String customerRating,String emailId, String phoneNumber,String custId) {
         this.Location = Location;
         this.name = name;
         this.Username = Username;
         this.Address = Address;
         this.customerRating = customerRating;
+        this.customerEmail=emailId;
+        this.phoneNumber=phoneNumber;
+        this.customerIdStr=custId;
+    }
+
+    public String getCustomerIdStr() {
+        return customerIdStr;
     }
 
     /*public Customer()
@@ -53,10 +63,15 @@ public class Customer {
     public Customer()
     {
         customerId = customerCount;
-        customerIdStr=Integer.toString(customerId);
+        customerIdStr=Integer.toString(customerId)+generateId();
         customerCount++;
     }
-    
+     private String generateId(){
+         Date dNow = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat("hhmmssMs");
+        String datetime = ft.format(dNow);
+        return datetime;
+    }
     public int getCustomerId() {
         return customerId;
     }

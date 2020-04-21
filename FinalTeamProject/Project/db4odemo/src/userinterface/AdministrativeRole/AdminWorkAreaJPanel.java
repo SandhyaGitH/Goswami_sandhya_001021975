@@ -81,7 +81,7 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
         jDesktopPane1.add(manageOrganizationJButton);
-        manageOrganizationJButton.setBounds(470, 150, 140, 30);
+        manageOrganizationJButton.setBounds(470, 150, 170, 30);
 
         manageEmployeeJButton.setText("Manage Employee");
         manageEmployeeJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -90,7 +90,7 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
         jDesktopPane1.add(manageEmployeeJButton);
-        manageEmployeeJButton.setBounds(470, 190, 140, 30);
+        manageEmployeeJButton.setBounds(470, 190, 170, 30);
 
         userJButton.setText("Manage User");
         userJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -99,7 +99,7 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
         jDesktopPane1.add(userJButton);
-        userJButton.setBounds(470, 230, 140, 30);
+        userJButton.setBounds(470, 230, 170, 30);
 
         add(jDesktopPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 1150, 570));
 
@@ -174,7 +174,7 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void manageEmployeeJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageEmployeeJButtonActionPerformed
 
-        ManageEmployeeJPanel manageEmployeeJPanel = new ManageEmployeeJPanel(userProcessContainer, enterprise.getOrganizaionDirectory());
+        ManageEmployeeJPanel manageEmployeeJPanel = new ManageEmployeeJPanel(userProcessContainer, enterprise.getOrganizaionDirectory(),enterprise);
         userProcessContainer.add("manageEmployeeJPanel", manageEmployeeJPanel);
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.next(userProcessContainer);
