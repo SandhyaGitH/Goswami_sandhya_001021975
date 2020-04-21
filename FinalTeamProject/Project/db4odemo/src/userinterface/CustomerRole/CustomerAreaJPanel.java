@@ -30,6 +30,7 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
 
     private UserAccount userAccount;
     private EcoSystem system;
+    private String customerMailId ="";
 
     /**
      * Creates new form DoctorWorkAreaJPanel
@@ -41,9 +42,11 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
 
         this.userAccount = account;
         this.system = system;
+
         for (Customer cust : system.getCustomerDirectory().getCustomerList()) {
             if (cust.getUsername().equals(userAccount.getUsername())) {
                 lblcustomername.setText("WelCome!! " + cust.getName());
+                customerMailId = cust.getCustomerEmail();
                 break;
             }
         }
@@ -335,6 +338,8 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
                 custRequest.setPremuim(request.getPremuim());
                 custRequest.setProductDescription(request.getProductDescription());
                 custRequest.setProductName(request.getProductName());
+                custRequest.setCustomerMailId(customerMailId);
+                
                 //custRequest.setRequestDate(daet);
                 custRequest.setSender(userAccount);
 

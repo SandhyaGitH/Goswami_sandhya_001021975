@@ -18,6 +18,7 @@ import Business.WorkQueue.CustomerProductWorkRequest;
 import Business.WorkQueue.HospitalPaymentSettlementWorkRequest;
 
 import java.awt.Color;
+import java.util.Date;
 
 /**
  *
@@ -48,30 +49,29 @@ public class ClaimHandlerWorkAreaJPane extends javax.swing.JPanel {
 
     public void populateTable() {
         DefaultTableModel model = (DefaultTableModel) workRequesttable.getModel();
-       model.setRowCount(0);
+        model.setRowCount(0);
         for (WorkRequest request : organization.getWorkQueue().getWorkRequestList()) {
 
             if (request.getClass().equals(Business.WorkQueue.HospitalPaymentSettlementWorkRequest.class)) {
 
                 HospitalPaymentSettlementWorkRequest pHR = (HospitalPaymentSettlementWorkRequest) request;
-                if(pHR.getApprovalStage().equals("0") && !pHR.getApprovalStage().equals(""))
-                {
-                Object[] row = new Object[8];
+                if (pHR.getApprovalStage().equals("0") && !pHR.getApprovalStage().equals("")) {
+                    Object[] row = new Object[8];
 
-                row[0] = pHR.getSender();//((LabTestWorkRequest) request).getPatient().getAge();
-                //row[2] = "";//((LabTestWorkRequest) request).getPatient().getSex();
-                row[1] = pHR.getHospitalName();
-                // row[2] = request.getReceiver() == null ? "" : request.getReceiver();
-                row[2] = pHR.getPolicy();
-                row[3] = pHR.getPolicy().getCustomerName();
-                row[4] = pHR.getStatus();
-                row[5] = request;
-                row[6] = pHR.getRequestDate();
-                // row[4] = request.getSender().getUsername();
-                // row[4] = "";//request.getReceiver() == null ? null : request.getReceiver().getEmployee().getName();
+                    row[0] = pHR.getSender();//((LabTestWorkRequest) request).getPatient().getAge();
+                    //row[2] = "";//((LabTestWorkRequest) request).getPatient().getSex();
+                    row[1] = pHR.getHospitalName();
+                    // row[2] = request.getReceiver() == null ? "" : request.getReceiver();
+                    row[2] = pHR.getPolicy();
+                    row[3] = pHR.getPolicy().getCustomerName();
+                    row[4] = pHR.getStatus();
+                    row[5] = request;
+                    row[6] = pHR.getRequestDate();
+                    // row[4] = request.getSender().getUsername();
+                    // row[4] = "";//request.getReceiver() == null ? null : request.getReceiver().getEmployee().getName();
 
-                //  row[7] = ((LabTestWorkRequest) request).getPatient().getNewDrug();
-                model.addRow(row);
+                    //  row[7] = ((LabTestWorkRequest) request).getPatient().getNewDrug();
+                    model.addRow(row);
                 }
             }
         }
@@ -100,7 +100,7 @@ public class ClaimHandlerWorkAreaJPane extends javax.swing.JPanel {
                     row[5] = iP.getStatus();
                     row[6] = iP;
                     row[7] = iP.getRequestDate();
-                     row[8]=iP.getTestResult();
+                    row[8] = iP.getTestResult();
 
                     model.addRow(row);
                 }
@@ -269,12 +269,11 @@ public class ClaimHandlerWorkAreaJPane extends javax.swing.JPanel {
         int TotalClaimedTillNow = 0;
         for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
             if (wr.getClass().equals(HospitalPaymentSettlementWorkRequest.class)) {
-                if(wr!=null)
-                {
-                if (((HospitalPaymentSettlementWorkRequest) wr).getApprovalStage().equals("21")
-                        && ((HospitalPaymentSettlementWorkRequest) wr).getPolicy().getCustomerName().equals(custUserName)) {
-                    TotalClaimedTillNow = TotalClaimedTillNow + Integer.parseInt(((HospitalPaymentSettlementWorkRequest) wr).getBillAmout());
-                }
+                if (wr != null) {
+                    if (((HospitalPaymentSettlementWorkRequest) wr).getApprovalStage().equals("21")
+                            && ((HospitalPaymentSettlementWorkRequest) wr).getPolicy().getCustomerName().equals(custUserName)) {
+                        TotalClaimedTillNow = TotalClaimedTillNow + Integer.parseInt(((HospitalPaymentSettlementWorkRequest) wr).getBillAmout());
+                    }
                 }
             }
         }
@@ -351,8 +350,8 @@ public class ClaimHandlerWorkAreaJPane extends javax.swing.JPanel {
                     break;
                 case 2:
                     int CoveredAmount = Integer.parseInt(((HospitalPaymentSettlementWorkRequest) request).getPolicy().getCustProdWQ().getCoverageAmount());
-                    int ClaimedAmount = sumClaimedAmount(((HospitalPaymentSettlementWorkRequest) request).getPolicy().getCustomerName())+ Integer.parseInt(((HospitalPaymentSettlementWorkRequest) request).getBillAmout());
-                    if (CoveredAmount <ClaimedAmount ) {
+                    int ClaimedAmount = sumClaimedAmount(((HospitalPaymentSettlementWorkRequest) request).getPolicy().getCustomerName()) + Integer.parseInt(((HospitalPaymentSettlementWorkRequest) request).getBillAmout());
+                    if (CoveredAmount < ClaimedAmount) {
                         request.setTestResult("Total Claimed amount against this policy has crossed the limit.");
                         request.setStatus("Claim Rejected. No Insurance Balance");
                         ((HospitalPaymentSettlementWorkRequest) request).setApprovalStage("22");
@@ -369,6 +368,8 @@ public class ClaimHandlerWorkAreaJPane extends javax.swing.JPanel {
                     request.setStatus("Claim Approved.");
                     ((HospitalPaymentSettlementWorkRequest) request).setApprovalStage("21");
                     JOptionPane.showMessageDialog(null, "Claim Approved.");
+                    Date dt = new Date();
+                    request.setResolveDate(dt);
                     break;
                 case 21:
                     JOptionPane.showMessageDialog(null, "Already Claim Approved.");
@@ -386,7 +387,7 @@ public class ClaimHandlerWorkAreaJPane extends javax.swing.JPanel {
     }//GEN-LAST:event_processJButtonActionPerformed
 
     private void refreshJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshJButtonActionPerformed
-          populateBMTable();
+        populateBMTable();
         populateTable();
     }//GEN-LAST:event_refreshJButtonActionPerformed
 

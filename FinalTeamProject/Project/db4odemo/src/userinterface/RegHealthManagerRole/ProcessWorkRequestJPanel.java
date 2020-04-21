@@ -148,7 +148,7 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
         request.setStatus("Completed");
         ((InsuranceProductWorkRequest)request).setApprovalStage("61");
         Date dt = new Date ();
-        request.setRequestDate(dt);
+        request.setResolveDate(dt);
         
          Organization org = null;
          

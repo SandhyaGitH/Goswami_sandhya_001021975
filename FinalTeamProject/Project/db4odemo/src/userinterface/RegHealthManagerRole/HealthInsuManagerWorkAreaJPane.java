@@ -41,6 +41,8 @@ public class HealthInsuManagerWorkAreaJPane extends javax.swing.JPanel {
 
         populateTable();
         populateBMTable();
+        lblentp.setText("Organization: ");
+        lblEnterpriseName.setText(org.getName());
         //assignJButton.setVisible(false);
     }
 
@@ -115,8 +117,8 @@ public class HealthInsuManagerWorkAreaJPane extends javax.swing.JPanel {
                     row[2] = iP.getProductName();
                     row[3] = iP.getInsuranceType();
                     row[4] = iP.getPremuim();
-                    row[5] = iP.getCoverageAmount();
-                    row[6] = iP.getProductDescription();
+                    row[5] = iP.getProductDescription();
+                    row[6] = iP.getCoverageAmount();
                     row[7] = iP.getMessage();
                     row[8] = iP.getStatus();
                     row[9] = iP;
@@ -147,7 +149,7 @@ public class HealthInsuManagerWorkAreaJPane extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         workRequestJTable = new javax.swing.JTable();
         lblEnterpriseName = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblentp = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -257,9 +259,9 @@ public class HealthInsuManagerWorkAreaJPane extends javax.swing.JPanel {
         lblEnterpriseName.setText("jLabel2");
         add(lblEnterpriseName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 330, 30));
 
-        jLabel2.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
-        jLabel2.setText("Enterprise:");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, -1));
+        lblentp.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        lblentp.setText("Enterprise:");
+        add(lblentp, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText(" New Approval Requests :");
@@ -394,12 +396,12 @@ public class HealthInsuManagerWorkAreaJPane extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable BMworkRequestJTable1;
     private javax.swing.JButton assignJButton;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lblEnterpriseName;
+    private javax.swing.JLabel lblentp;
     private javax.swing.JButton processJButton;
     private javax.swing.JButton refreshJButton;
     private javax.swing.JTable workRequestJTable;

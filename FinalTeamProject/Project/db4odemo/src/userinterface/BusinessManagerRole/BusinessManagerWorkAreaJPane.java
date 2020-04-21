@@ -91,18 +91,18 @@ public class BusinessManagerWorkAreaJPane extends javax.swing.JPanel {
                 if (request.getClass().equals(Business.WorkQueue.InsuranceProductWorkRequest.class)) {
                     InsuranceProductWorkRequest iP = (InsuranceProductWorkRequest) request;
                     // InsuranceProductWorkRequest isr = wr;
-                    Object[] row = new Object[11];
+                    Object[] row = new Object[12];
                     row[0] = iP.getNetwork();
                     row[1] = iP.getEnterprise();
                     row[2] = iP.getProductName();
-                    row[3] = iP.getInsuranceType();
+                    row[3] = iP.getInsuranceType().getValue();
                     row[4] = iP.getPremuim();
-                    row[5] =  iP.getProductDescription();
+                    row[5] =  iP.getProductDescription() ;
                     row[6] =iP.getCoverageAmount();
                     row[7] = iP.getMessage();
                     row[8] = iP.getStatus();
                     row[9] = iP;
-                    row[3] = request.getRequestDate();
+                    row[10] = request.getRequestDate();
                     // row[9]=iP.
 
                     model.addRow(row);

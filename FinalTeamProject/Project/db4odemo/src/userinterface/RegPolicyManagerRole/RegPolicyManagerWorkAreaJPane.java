@@ -70,9 +70,9 @@ public class RegPolicyManagerWorkAreaJPane extends javax.swing.JPanel {
 
                     row[4] = ((InsuranceProductWorkRequest) request).getProductName();
                     row[5] = ((InsuranceProductWorkRequest) request).getProductDescription();
-                    row[6] = request.getStatus();
+                    row[6] = request.getReceiver() == null ? null : request.getReceiver().getEmployee().getName();
 
-                    row[7] = request.getReceiver() == null ? null : request.getReceiver().getEmployee().getName();
+                    row[7] = request.getStatus();
                     row[8] = ((InsuranceProductWorkRequest) request);
                     // row[9]=iP.
                     // row[4] = request.getSender().getUsername();
@@ -242,11 +242,11 @@ public class RegPolicyManagerWorkAreaJPane extends javax.swing.JPanel {
 
         lblEnterpriseName.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
         lblEnterpriseName.setText("jLabel2");
-        add(lblEnterpriseName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 330, 30));
+        add(lblEnterpriseName, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 370, 30));
 
         jLabel2.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         jLabel2.setText("Enterprise");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 150, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 170, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText(" My Pending and Processed Requests");
