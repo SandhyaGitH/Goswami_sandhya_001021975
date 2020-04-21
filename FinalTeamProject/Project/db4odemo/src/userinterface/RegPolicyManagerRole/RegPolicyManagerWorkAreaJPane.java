@@ -44,31 +44,38 @@ public class RegPolicyManagerWorkAreaJPane extends javax.swing.JPanel {
         this.business = business;
         this.organization = org;
         this.enterprise = enterprise;
-
-        populateTable();
-        populateBMTable();
+        lblEnterpriseName.setText(enterprise.getName());
+        populateAllRequestTable();
+        populateMyPendingTable();
+        
         //assignJButton.setVisible(false);
         processJButton.setVisible(false);
     }
 
-    public void populateTable() {
-        DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();
+    public void populateAllRequestTable() {
+        DefaultTableModel model = (DefaultTableModel) workRequeststable.getModel();
 
         model.setRowCount(0);
 
         for (WorkRequest request : organization.getWorkQueue().getWorkRequestList()) {
             if (request.getClass().equals(Business.WorkQueue.InsuranceProductWorkRequest.class)) {
-                if (!request.getStatus().equals("Completed")) {
-                    Object[] row = new Object[8];
-
-                    row[0] = request.getSender();//((LabTestWorkRequest) request).getPatient().getAge();
+                String approvalStage = ((InsuranceProductWorkRequest) request).getApprovalStage() == null ? "-1" : ((InsuranceProductWorkRequest) request).getApprovalStage();
+                if (approvalStage.equals("21")) {
+                    Object[] row = new Object[10];
+                    row[0] = request;
+                    row[1] = request.getSender();//((LabTestWorkRequest) request).getPatient().getAge();
                     //row[2] = "";//((LabTestWorkRequest) request).getPatient().getSex();
-                    row[1] = request.getMessage();
-                    row[2] = request.getReceiver() == null ? "" : request.getReceiver();
-                    row[3] = request.getStatus();
-                    row[4] = ((InsuranceProductWorkRequest) request);
+                    row[2] = request.getMessage();
+                    row[3] = request.getRequestDate(); //getReceiver() == null ? "" : request.getReceiver();
+
+                    row[4] = ((InsuranceProductWorkRequest) request).getProductName();
+                    row[5] = ((InsuranceProductWorkRequest) request).getProductDescription();
+                    row[6] = request.getStatus();
+
+                    row[7] = request.getReceiver() == null ? null : request.getReceiver().getEmployee().getName();
+                    row[8] = ((InsuranceProductWorkRequest) request);
+                    // row[9]=iP.
                     // row[4] = request.getSender().getUsername();
-                    // row[4] = "";//request.getReceiver() == null ? null : request.getReceiver().getEmployee().getName();
 
                     //  row[7] = ((LabTestWorkRequest) request).getPatient().getNewDrug();
                     model.addRow(row);
@@ -99,7 +106,7 @@ public class RegPolicyManagerWorkAreaJPane extends javax.swing.JPanel {
 //            model.addRow(row);
 //        }
 //    }
-    public void populateBMTable() {
+    public void populateMyPendingTable() {
         DefaultTableModel model = (DefaultTableModel) BMworkRequestJTable1.getModel();
 
         model.setRowCount(0);
@@ -110,17 +117,18 @@ public class RegPolicyManagerWorkAreaJPane extends javax.swing.JPanel {
                 if (request.getClass().equals(Business.WorkQueue.InsuranceProductWorkRequest.class)) {
                     InsuranceProductWorkRequest iP = (InsuranceProductWorkRequest) request;
                     // InsuranceProductWorkRequest isr = wr;
-                    Object[] row = new Object[10];
+                    Object[] row = new Object[11];
                     row[0] = iP.getNetwork();
                     row[1] = iP.getEnterprise();
                     row[2] = iP.getProductName();
                     row[3] = iP.getInsuranceType();
                     row[4] = iP.getPremuim();
-                    row[5] = iP.getCoverageAmount();
-                    row[6] = iP.getProductDescription();
+                    row[5] = iP.getProductDescription();
+                    row[6] = iP.getCoverageAmount();
                     row[7] = iP.getMessage();
                     row[8] = iP.getStatus();
                     row[9] = iP;
+                    row[10]= iP.getRequestDate();
                     // row[9]=iP.
 
                     model.addRow(row);
@@ -140,61 +148,31 @@ public class RegPolicyManagerWorkAreaJPane extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        workRequestJTable = new javax.swing.JTable();
         assignJButton = new javax.swing.JButton();
         processJButton = new javax.swing.JButton();
         refreshJButton = new javax.swing.JButton();
         ForwardJButton = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         BMworkRequestJTable1 = new javax.swing.JTable();
+        lblEnterpriseName = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        workRequeststable = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(204, 204, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        workRequestJTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Sender", "Message", "Receiver", "Status", "Request Result"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(workRequestJTable);
-        if (workRequestJTable.getColumnModel().getColumnCount() > 0) {
-            workRequestJTable.getColumnModel().getColumn(0).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(1).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(2).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(3).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(4).setResizable(false);
-        }
-
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 870, 96));
-
+        assignJButton.setBackground(new java.awt.Color(0, 0, 51));
+        assignJButton.setForeground(new java.awt.Color(255, 255, 255));
         assignJButton.setText("Assign to me");
         assignJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 assignJButtonActionPerformed(evt);
             }
         });
-        add(assignJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, -1, -1));
+        add(assignJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 60, -1, -1));
 
         processJButton.setText("Process");
         processJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -202,40 +180,47 @@ public class RegPolicyManagerWorkAreaJPane extends javax.swing.JPanel {
                 processJButtonActionPerformed(evt);
             }
         });
-        add(processJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 140, -1, -1));
+        add(processJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 250, -1, -1));
 
+        refreshJButton.setBackground(new java.awt.Color(0, 0, 51));
+        refreshJButton.setForeground(new java.awt.Color(255, 255, 255));
         refreshJButton.setText("Refresh");
         refreshJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 refreshJButtonActionPerformed(evt);
             }
         });
-        add(refreshJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, -1, -1));
+        add(refreshJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 60, -1, -1));
 
+        ForwardJButton.setBackground(new java.awt.Color(0, 0, 51));
+        ForwardJButton.setForeground(new java.awt.Color(255, 255, 255));
         ForwardJButton.setText("Forward");
         ForwardJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ForwardJButtonActionPerformed(evt);
             }
         });
-        add(ForwardJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 140, -1, -1));
+        add(ForwardJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 250, -1, -1));
 
+        BMworkRequestJTable1.setAutoCreateRowSorter(true);
+        BMworkRequestJTable1.setBackground(new java.awt.Color(204, 204, 255));
+        BMworkRequestJTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 51), new java.awt.Color(255, 255, 51)));
         BMworkRequestJTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Network", "Enterprise", "Name", "Type", "Premium", "Description", "Coverage Amount", "Message", "Status", "Request"
+                "Network", "Enterprise", "Name", "Type", "Premium", "Description", "Coverage Amount", "Message", "Status", "Request", "Request Date"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -246,21 +231,76 @@ public class RegPolicyManagerWorkAreaJPane extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        BMworkRequestJTable1.setGridColor(new java.awt.Color(0, 0, 51));
+        BMworkRequestJTable1.setSelectionBackground(new java.awt.Color(0, 0, 51));
         jScrollPane4.setViewportView(BMworkRequestJTable1);
+        if (BMworkRequestJTable1.getColumnModel().getColumnCount() > 0) {
+            BMworkRequestJTable1.getColumnModel().getColumn(9).setResizable(false);
+        }
 
-        add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 880, 110));
+        add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 1160, 240));
+
+        lblEnterpriseName.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lblEnterpriseName.setText("jLabel2");
+        add(lblEnterpriseName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 330, 30));
+
+        jLabel2.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        jLabel2.setText("Enterprise");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 150, -1));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setText(" My Pending and Processed Requests");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 290, -1));
+
+        workRequeststable.setAutoCreateRowSorter(true);
+        workRequeststable.setBackground(new java.awt.Color(204, 204, 255));
+        workRequeststable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Request Id", "Sender", "Message", "RequestDate", "Product Name", "Description", "Receiver", "Status", "Request Result"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        workRequeststable.setGridColor(new java.awt.Color(0, 0, 51));
+        workRequeststable.setSelectionBackground(new java.awt.Color(0, 0, 51));
+        jScrollPane2.setViewportView(workRequeststable);
+
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 1160, 110));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setText(" New Approval Requests :");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 240, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void assignJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignJButtonActionPerformed
 
-        int selectedRow = workRequestJTable.getSelectedRow();
+        int selectedRow = workRequeststable.getSelectedRow();
 
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(null, "Select a row");
             return;
         }
 
-        WorkRequest request = (WorkRequest) workRequestJTable.getValueAt(selectedRow, 4);
+        WorkRequest request = (WorkRequest) workRequeststable.getValueAt(selectedRow, 0);
         /* if (request.getReceiver().equals(userAccount)) {
             JOptionPane.showMessageDialog(null, "Already Assigned");
             return;
@@ -313,6 +353,7 @@ public class RegPolicyManagerWorkAreaJPane extends javax.swing.JPanel {
                     break;
                 case 61:
                     JOptionPane.showMessageDialog(null, "Aproved by IRDA approval team.");
+                    break;
                 case 62:
                     JOptionPane.showMessageDialog(null, "Rejected by IRDA approval team.");
                     break;
@@ -322,8 +363,8 @@ public class RegPolicyManagerWorkAreaJPane extends javax.swing.JPanel {
             }
         }
 
-        populateTable();
-        populateBMTable();
+        populateAllRequestTable();
+        populateMyPendingTable();
     }//GEN-LAST:event_assignJButtonActionPerformed
 
     private void processJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processJButtonActionPerformed
@@ -354,7 +395,8 @@ public class RegPolicyManagerWorkAreaJPane extends javax.swing.JPanel {
     }//GEN-LAST:event_processJButtonActionPerformed
 
     private void refreshJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshJButtonActionPerformed
-        populateTable();
+        populateAllRequestTable();
+        populateMyPendingTable();
     }//GEN-LAST:event_refreshJButtonActionPerformed
 
     private void ForwardJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ForwardJButtonActionPerformed
@@ -389,8 +431,7 @@ public class RegPolicyManagerWorkAreaJPane extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(null, "Already Internally Rejected by BM");
                     break;
                 case 3:
-                    request.setReceiver(userAccount);
-                    ((InsuranceProductWorkRequest)request).setApprovalStage("4");
+
                     Organization org = null;
                     OUTER:
                     for (Organization organisation : enterprise.getOrganizaionDirectory().getOrganizationList()) {
@@ -423,8 +464,13 @@ public class RegPolicyManagerWorkAreaJPane extends javax.swing.JPanel {
 
                     if (org != null) {
                         org.getWorkQueue().getWorkRequestList().add(request);
+                        JOptionPane.showMessageDialog(null, request.getStatus());
+                        request.setReceiver(userAccount);
+                        ((InsuranceProductWorkRequest) request).setApprovalStage("4");
                         //  userAccount.getWorkQueue().getWorkRequestList().add(request);
+                         //   JOptionPane.showMessageDialog(null, request.getStatus());
                     }
+                    else   JOptionPane.showMessageDialog(null, "Could not found the organization. Please contact to Enterprise admin");
 
                     break;
                 case 4:
@@ -435,6 +481,7 @@ public class RegPolicyManagerWorkAreaJPane extends javax.swing.JPanel {
                     break;
                 case 61:
                     JOptionPane.showMessageDialog(null, "Aproved by IRDA approval team.");
+                    break;
                 case 62:
                     JOptionPane.showMessageDialog(null, "Rejected by IRDA approval team.");
                     break;
@@ -444,8 +491,8 @@ public class RegPolicyManagerWorkAreaJPane extends javax.swing.JPanel {
             }
         }
 
-        populateTable();
-        populateBMTable();
+        populateAllRequestTable();
+        populateMyPendingTable();
 
     }//GEN-LAST:event_ForwardJButtonActionPerformed
 
@@ -453,10 +500,14 @@ public class RegPolicyManagerWorkAreaJPane extends javax.swing.JPanel {
     private javax.swing.JTable BMworkRequestJTable1;
     private javax.swing.JButton ForwardJButton;
     private javax.swing.JButton assignJButton;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JLabel lblEnterpriseName;
     private javax.swing.JButton processJButton;
     private javax.swing.JButton refreshJButton;
-    private javax.swing.JTable workRequestJTable;
+    private javax.swing.JTable workRequeststable;
     // End of variables declaration//GEN-END:variables
 }

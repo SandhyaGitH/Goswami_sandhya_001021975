@@ -52,6 +52,10 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
         backJButton = new javax.swing.JButton();
         rejectJButton = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(204, 255, 255));
+
+        submitJButton.setBackground(new java.awt.Color(0, 0, 51));
+        submitJButton.setForeground(new java.awt.Color(255, 255, 255));
         submitJButton.setText("Approve");
         submitJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -61,6 +65,14 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
 
         jLabel1.setText("Comments");
 
+        resultJTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resultJTextFieldActionPerformed(evt);
+            }
+        });
+
+        backJButton.setBackground(new java.awt.Color(0, 0, 51));
+        backJButton.setForeground(new java.awt.Color(255, 255, 255));
         backJButton.setText("Back");
         backJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -68,6 +80,8 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
             }
         });
 
+        rejectJButton.setBackground(new java.awt.Color(0, 0, 51));
+        rejectJButton.setForeground(new java.awt.Color(255, 255, 255));
         rejectJButton.setText("Reject");
         rejectJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,31 +98,28 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(backJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(resultJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(158, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(rejectJButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(submitJButton)
-                        .addGap(73, 73, 73))))
+                        .addGap(18, 18, 18)
+                        .addComponent(submitJButton))
+                    .addComponent(resultJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 160, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addGap(82, 82, 82)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(resultJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
+                    .addComponent(resultJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rejectJButton)
                     .addComponent(submitJButton)
-                    .addComponent(backJButton)
-                    .addComponent(rejectJButton))
-                .addContainerGap(169, Short.MAX_VALUE))
+                    .addComponent(backJButton))
+                .addContainerGap(181, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -119,7 +130,7 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
         Component component = componentArray[componentArray.length - 1];
         BusinessManagerWorkAreaJPane dwjp = (BusinessManagerWorkAreaJPane) component;
         dwjp.populateTable();
-        dwjp.populateBMTable();
+        dwjp.populateUsersPendingTable();
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_backJButtonActionPerformed
@@ -137,15 +148,12 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(null, "Already Internally Rejected by BM");
                         break;
                     default:
-                        request.setTestResult(resultJTextField.getText());
-                        request.setStatus("Approved By BM");
-                        ((InsuranceProductWorkRequest) request).setApprovalStage("21");
 
                         Organization org = null;
 
                         for (Location network : system.getNetworkList()) {
                             for (Enterprise entp : network.getEnterpriseDirectory().getEnterpriseList()) {
-                               // if (entp.getEnterpriseType().getValue().equals(Enterprise.EnterpriseType.InsuranceRegulator.getValue())) {
+                                // if (entp.getEnterpriseType().getValue().equals(Enterprise.EnterpriseType.InsuranceRegulator.getValue())) {
                                 if (entp.getEnterpriseType().equals(Enterprise.EnterpriseType.InsuranceRegulator)) {
                                     entp.getWorkQueue().getWorkRequestList().add(request);
                                     for (Organization organization : entp.getOrganizaionDirectory().getOrganizationList()) {
@@ -163,10 +171,16 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                          */
                         if (org != null) {
                             org.getWorkQueue().getWorkRequestList().add(request);
+                            request.setTestResult(resultJTextField.getText());
+                            request.setStatus("Approved By BM");
+                            ((InsuranceProductWorkRequest) request).setApprovalStage("21");
                             // userAccount.getWorkQueue().getWorkRequestList().add(request);
+                            JOptionPane.showMessageDialog(null, "Sent to IRDA");
+                            resultJTextField.setText("");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Could not found the further organization. Please contact to Regularoty Enterprise");
                         }
-                        JOptionPane.showMessageDialog(null, "Sent to IRDA");
-                        resultJTextField.setText("");
+
                         break;
 
                 }
@@ -174,7 +188,7 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
 
         }
 
-      /*  if (request.getStatus().equals("Approved By BM")) {
+        /*  if (request.getStatus().equals("Approved By BM")) {
             JOptionPane.showMessageDialog(null, "Already sent to IRDA for approval");
             return;
         }
@@ -182,7 +196,6 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Already Rejected");
             return;
         } */
-
 
     }//GEN-LAST:event_submitJButtonActionPerformed
 
@@ -213,6 +226,10 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
 
 
     }//GEN-LAST:event_rejectJButtonActionPerformed
+
+    private void resultJTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resultJTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_resultJTextFieldActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backJButton;

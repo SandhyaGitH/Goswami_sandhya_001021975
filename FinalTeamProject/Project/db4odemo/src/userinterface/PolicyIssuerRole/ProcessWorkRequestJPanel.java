@@ -139,9 +139,6 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(null, "Already Internally Rejected by BM");
                         break;
                     default:
-                        request.setTestResult(resultJTextField.getText());
-                        request.setStatus("Approved By BM");
-                        ((InsuranceProductWorkRequest) request).setApprovalStage("21");
 
                         Organization org = null;
 
@@ -163,11 +160,17 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
         enterprise.getWorkQueue().getWorkRequestList().add(request);
                          */
                         if (org != null) {
+                            request.setTestResult(resultJTextField.getText());
+                            request.setStatus("Approved By BM");
+                            ((InsuranceProductWorkRequest) request).setApprovalStage("21");
                             org.getWorkQueue().getWorkRequestList().add(request);
                             // userAccount.getWorkQueue().getWorkRequestList().add(request);
+                            JOptionPane.showMessageDialog(null, "Sent to IRDA");
+                            resultJTextField.setText("");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Could not found the organization. Please to Regulatory Enterpsrise.");
                         }
-                        JOptionPane.showMessageDialog(null, "Sent to IRDA");
-                        resultJTextField.setText("");
+
                         break;
 
                 }
@@ -175,7 +178,7 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
 
         }
 
-      /*  if (request.getStatus().equals("Approved By BM")) {
+        /*  if (request.getStatus().equals("Approved By BM")) {
             JOptionPane.showMessageDialog(null, "Already sent to IRDA for approval");
             return;
         }
@@ -183,7 +186,6 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Already Rejected");
             return;
         } */
-
 
     }//GEN-LAST:event_submitJButtonActionPerformed
 
