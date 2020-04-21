@@ -168,6 +168,8 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                             JOptionPane.showMessageDialog(null, "Sent for underwriting");
                             resultJTextField.setText("");
                             // userAccount.getWorkQueue().getWorkRequestList().add(request);
+                        }else {
+                            JOptionPane.showMessageDialog(null, "Could not found the UnderWriter organization. Please create it first");
                         }
 
                         break;

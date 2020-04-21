@@ -45,7 +45,7 @@ public class PaymentSettlementAreaJPanel extends javax.swing.JPanel {
 
         this.userAccount = account;
         this.system = system;
-        this.enterprise=enterprise;
+        this.enterprise = enterprise;
         //valueLabel.setText(enterprise.getName());
         populateRequestTable();
 
@@ -98,7 +98,7 @@ public class PaymentSettlementAreaJPanel extends javax.swing.JPanel {
                 row[4] = orderedProduct.getBillAmout();
                 // row[5] = orderedProduct.getDiagnosis();
                 row[5] = orderedProduct.getStatus();
-                row[6]=orderedProduct.getTestResult();
+                row[6] = orderedProduct.getTestResult();
                 // String result = ((HospitalPaymentSettlementWorkRequest) orderedProduct).get();
                 // row[3] = result == null ? "Waiting" : result;
 
@@ -392,8 +392,9 @@ public class PaymentSettlementAreaJPanel extends javax.swing.JPanel {
                 DaignosisjTextArea1.setText("");
                 AmountjTextField1.setText("");
                 JOptionPane.showMessageDialog(null, "Claim Request Initiated");
-                
 
+            } else {
+                JOptionPane.showMessageDialog(null, "Could not found the Claim organization. Please Contact Insurance Company.");
             }
             DiagnosisjLabel1.setVisible(false);
             DaignosisjTextArea1.setVisible(false);

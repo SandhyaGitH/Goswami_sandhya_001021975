@@ -172,7 +172,7 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                             resultJTextField.setText("");
                             // userAccount.getWorkQueue().getWorkRequestList().add(request);
                         } else {
-                            JOptionPane.showMessageDialog(null, "System orb issue");
+                            JOptionPane.showMessageDialog(null, "Contact to admin organization does not exist. ");
                         }
                         resultJTextField.setText("");
 

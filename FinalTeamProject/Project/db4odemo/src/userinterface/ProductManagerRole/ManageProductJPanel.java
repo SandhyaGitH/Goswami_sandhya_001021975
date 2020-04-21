@@ -55,6 +55,7 @@ public class ManageProductJPanel extends javax.swing.JPanel {
         getInNetwork();
         populateTable(enterprise);
         populateIsuranceTypeCombo();
+        lblEnterpriseName.setText(enterprise.getName());
 
     }
 
@@ -83,7 +84,7 @@ public class ManageProductJPanel extends javax.swing.JPanel {
         model.setRowCount(0);
 
         // { InNetwork.getRestaurantDirectory().}
-        WorkQueue wq = enterprise.getWorkQueue();
+        WorkQueue wq =  userAccount.getWorkQueue();//enterprise.getWorkQueue();
         if (wq != null) {
             for (WorkRequest wr : wq.getWorkRequestList()) {
                 if (wr != null) {
@@ -155,6 +156,9 @@ public class ManageProductJPanel extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         txtMessage = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lblEnterpriseName = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(233, 255, 101));
 
@@ -260,15 +264,21 @@ public class ManageProductJPanel extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Launch New Product");
 
+        jLabel3.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        jLabel3.setText("My Requested products");
+
+        lblEnterpriseName.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lblEnterpriseName.setText("jLabel2");
+
+        jLabel6.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        jLabel6.setText("Enterprise");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 877, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -309,7 +319,19 @@ public class ManageProductJPanel extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(310, 310, 310)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 877, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblEnterpriseName, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
 
@@ -318,7 +340,13 @@ public class ManageProductJPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
+                .addGap(4, 4, 4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(lblEnterpriseName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -381,8 +409,8 @@ public class ManageProductJPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_networkJComboBoxActionPerformed
 
-    private boolean ValidateForm()
-    { boolean flag = true;
+    private boolean ValidateForm() {
+        boolean flag = true;
 
         if (nameJTextField.getText().equals("")) {  //User have not entered anything. 
             JOptionPane.showMessageDialog(null, "Product Name Can't be empty");
@@ -426,7 +454,7 @@ public class ManageProductJPanel extends javax.swing.JPanel {
             txtCoverage.setText("");
             flag = false;
         }
-return flag;
+        return flag;
     }
     private void requestTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestTestJButtonActionPerformed
 
@@ -467,13 +495,16 @@ return flag;
                     }
                 }
             }
-            enterprise.getWorkQueue().getWorkRequestList().add(request);
 
             if (org != null) {
+                enterprise.getWorkQueue().getWorkRequestList().add(request);
                 org.getWorkQueue().getWorkRequestList().add(request);
                 userAccount.getWorkQueue().getWorkRequestList().add(request);
+                JOptionPane.showMessageDialog(null, "saved and sent for approval. Request ID is: " + request);
+            } else {
+                JOptionPane.showMessageDialog(null, "Could not found the Business organization. Please to Your Enterpsrise admin.");
             }
-            JOptionPane.showMessageDialog(null, "saved and sent for approval. Request ID is: " + request);
+
         }
         populateTable(enterprise);
 
@@ -564,9 +595,12 @@ return flag;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblEnterpriseName;
     private javax.swing.JTable menuListJTable;
     private javax.swing.JTextField nameJTextField;
     private javax.swing.JComboBox networkJComboBox;

@@ -14,6 +14,7 @@ import Business.WorkQueue.InsuranceProductWorkRequest;
 import Business.WorkQueue.LabTestWorkRequest;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -54,6 +55,10 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
         backJButton = new javax.swing.JButton();
         rejectJButton = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(204, 204, 255));
+
+        submitJButton.setBackground(new java.awt.Color(0, 0, 51));
+        submitJButton.setForeground(new java.awt.Color(255, 255, 255));
         submitJButton.setText("Approve");
         submitJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -63,6 +68,8 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
 
         jLabel1.setText("Comments");
 
+        backJButton.setBackground(new java.awt.Color(0, 0, 51));
+        backJButton.setForeground(new java.awt.Color(255, 255, 255));
         backJButton.setText("Back");
         backJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,6 +77,8 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
             }
         });
 
+        rejectJButton.setBackground(new java.awt.Color(0, 0, 51));
+        rejectJButton.setForeground(new java.awt.Color(255, 255, 255));
         rejectJButton.setText("Reject");
         rejectJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,36 +90,34 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(backJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(resultJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(158, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(backJButton)
+                        .addGap(58, 58, 58)
                         .addComponent(rejectJButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(submitJButton)
-                        .addGap(73, 73, 73))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(submitJButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(resultJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(138, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addGap(77, 77, 77)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(resultJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
+                    .addComponent(resultJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitJButton)
                     .addComponent(backJButton)
                     .addComponent(rejectJButton))
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addGap(169, 169, 169))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -140,10 +147,12 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
         request.setTestResult(resultJTextField.getText());
         request.setStatus("Completed");
         ((InsuranceProductWorkRequest)request).setApprovalStage("61");
+        Date dt = new Date ();
+        request.setRequestDate(dt);
         
          Organization org = null;
          
-          for(Location  network : system.getNetworkList())
+        /*  for(Location  network : system.getNetworkList())
           { for(Enterprise entp : network.getEnterpriseDirectory().getEnterpriseList())
                 {
                     if (entp.getEnterpriseType().equals(Enterprise.EnterpriseType.InsuranceRegulator) ){
@@ -160,11 +169,11 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
           }
        /*
         enterprise.getWorkQueue().getWorkRequestList().add(request);
-        */
+        
         if (org!=null){
             org.getWorkQueue().getWorkRequestList().add(request);
            // userAccount.getWorkQueue().getWorkRequestList().add(request);
-        }
+        } */
         JOptionPane.showMessageDialog(null, "Thank you !!");
         resultJTextField.setText("");
         
@@ -183,6 +192,7 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
         request.setTestResult(resultJTextField.getText());
         request.setStatus("Rejected");
         ((InsuranceProductWorkRequest)request).setApprovalStage("62");
+        JOptionPane.showMessageDialog(null, "Rejected.");
        
     }//GEN-LAST:event_rejectJButtonActionPerformed
 

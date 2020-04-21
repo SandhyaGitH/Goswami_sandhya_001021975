@@ -9,13 +9,15 @@ import Business.Enterprise.Enterprise;
 import Business.Organizations.BusinessManagementOrganization;
 import Business.Organizations.ProductManagementOrganization;
 import Business.Organizations.Organization;
+import Business.Organizations.PolicyIssuanceOrganization;
 import Business.UserAccount.UserAccount;
 import userinterface.BusinessManagerRole.BusinessManagerWorkAreaJPane;
 import javax.swing.JPanel;
+import userinterface.PolicyIssuerRole.PolicyIssuerWorkAreaJPane;
 
 /**
  *
- * @author raunak
+ * @author Sandhya Goswami
  */
 public class PolicyIssuerRole extends Role{
 
@@ -25,7 +27,7 @@ public class PolicyIssuerRole extends Role{
     } */
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
-      return new BusinessManagerWorkAreaJPane(userProcessContainer, account,(BusinessManagementOrganization)organization ,business);
+      return new PolicyIssuerWorkAreaJPane(userProcessContainer, account,(PolicyIssuanceOrganization)organization ,business);
         //return new BusinessManagerWorkAreaJPane(userProcessContainer, account, organization, enterprise);
     }
 

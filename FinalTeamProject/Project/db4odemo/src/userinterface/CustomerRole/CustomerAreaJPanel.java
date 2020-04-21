@@ -147,6 +147,10 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
         jScrollPane4 = new javax.swing.JScrollPane();
         BMworkRequestJTable = new javax.swing.JTable();
 
+        setBackground(new java.awt.Color(240, 166, 232));
+
+        requestTestJButton.setBackground(new java.awt.Color(51, 0, 51));
+        requestTestJButton.setForeground(new java.awt.Color(255, 255, 255));
         requestTestJButton.setText("Add to Cart");
         requestTestJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,6 +158,8 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        refreshTestJButton.setBackground(new java.awt.Color(51, 0, 51));
+        refreshTestJButton.setForeground(new java.awt.Color(255, 255, 255));
         refreshTestJButton.setText("Refresh");
         refreshTestJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -304,6 +310,8 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
                     org.getWorkQueue().getWorkRequestList().add(custRequest);
                     custRequest.setStatus("Order Placed");
                     userAccount.getWorkQueue().getWorkRequestList().add(custRequest);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Soory!! cannot place your order at this time.Could not found the further approval organization.");
                 }
             }
         }
