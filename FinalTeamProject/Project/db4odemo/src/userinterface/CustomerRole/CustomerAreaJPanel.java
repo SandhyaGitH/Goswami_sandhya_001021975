@@ -4,23 +4,18 @@
  */
 package userinterface.CustomerRole;
 
+import Business.Customer.Customer;
+import Business.CustomerPolicy.Policy;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Network.Location;
 import Business.Organizations.CustomerAgentOrganization;
-import Business.Restaurant.Menu;
-import Business.Restaurant.MenuDirectory;
-import Business.Restaurant.Restaurant;
-
 import Business.UserAccount.UserAccount;
-import Business.WorkQueue.LabTestWorkRequest;
 import Business.WorkQueue.WorkRequest;
 import Business.Organizations.Organization;
-import Business.Organizations.RegulatoryPolicyManagementOrganization;
+import static Business.Organizations.Organization.Type.Customer;
 import Business.WorkQueue.CustomerProductWorkRequest;
 import Business.WorkQueue.InsuranceProductWorkRequest;
-
-import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -46,13 +41,19 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
 
         this.userAccount = account;
         this.system = system;
+        for (Customer cust : system.getCustomerDirectory().getCustomerList()) {
+            if (cust.getUsername().equals(userAccount.getUsername())) {
+                lblcustomername.setText("WelCome!! " + cust.getName());
+                break;
+            }
+        }
+
         //valueLabel.setText(enterprise.getName());
         populateRequestTable();
-
-        populateMenuTable();
+        populateProductTable();
     }
 
-    private void populateMenuTable() {
+    private void populateProductTable() {
         DefaultTableModel model = (DefaultTableModel) BMworkRequestJTable.getModel();
 
         model.setRowCount(0);
@@ -72,8 +73,8 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
                                     row[3] = iP.getProductName();
                                     row[2] = iP.getInsuranceType();
                                     row[4] = iP.getPremuim();
-                                    row[5] = iP.getCoverageAmount();
-                                    row[6] = iP.getProductDescription();
+                                    row[5] = iP.getProductDescription();
+                                    row[6] = iP.getCoverageAmount();
                                     //row[7] = iP.getMessage();
                                     // row[8] = iP.getStatus();
                                     row[7] = iP;
@@ -86,27 +87,7 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
                         // }
                     }
                 }
-                /*  MenuDirectory mD = enterprise.getEnterpriseType().equals(Enterprise.EnterpriseType.InsuranceCompany);
-                if (mD == null) {
-                    break;
-                } else {
-                    for (Menu menu : mD.getMenuItemList()) {
-                        if (menu != null) {
-                            Object[] row = new Object[6];
 
-                            row[0] = menu.getMenuItem();
-                            row[1] = menu.getDescription();
-                            row[2] = menu.getPrice();
-                            row[3] = menu.getRestaurant();
-                            row[4] = menu.getNetwork();
-
-                            row[5] = menu.getIsavailable();
-
-                            model.addRow(row);
-                        }
-                    }
-                }
-                 */
             }
         }
 
@@ -146,6 +127,11 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
         workRequestJTable = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         BMworkRequestJTable = new javax.swing.JTable();
+        txtSearch = new javax.swing.JTextField();
+        searchBtn = new javax.swing.JButton();
+        lblcustomername = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        bestPlanBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(240, 166, 232));
 
@@ -167,6 +153,9 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        workRequestJTable.setAutoCreateRowSorter(true);
+        workRequestJTable.setBackground(new java.awt.Color(255, 204, 204));
+        workRequestJTable.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 0, 51), new java.awt.Color(255, 153, 153)));
         workRequestJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -197,8 +186,13 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        workRequestJTable.setGridColor(new java.awt.Color(255, 153, 204));
+        workRequestJTable.setSelectionBackground(new java.awt.Color(51, 0, 51));
         jScrollPane2.setViewportView(workRequestJTable);
 
+        BMworkRequestJTable.setAutoCreateRowSorter(true);
+        BMworkRequestJTable.setBackground(new java.awt.Color(255, 204, 204));
+        BMworkRequestJTable.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 0, 51), new java.awt.Color(255, 153, 153)));
         BMworkRequestJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
@@ -225,48 +219,105 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        BMworkRequestJTable.setGridColor(new java.awt.Color(255, 204, 255));
+        BMworkRequestJTable.setSelectionBackground(new java.awt.Color(51, 0, 51));
         jScrollPane4.setViewportView(BMworkRequestJTable);
         if (BMworkRequestJTable.getColumnModel().getColumnCount() > 0) {
             BMworkRequestJTable.getColumnModel().getColumn(7).setMaxWidth(0);
         }
 
+        txtSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearchActionPerformed(evt);
+            }
+        });
+
+        searchBtn.setText("Search");
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
+            }
+        });
+
+        lblcustomername.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setText("Insurance Plans:");
+
+        bestPlanBtn.setBackground(new java.awt.Color(51, 0, 51));
+        bestPlanBtn.setForeground(new java.awt.Color(255, 255, 255));
+        bestPlanBtn.setText("Best Plan");
+        bestPlanBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bestPlanBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(requestTestJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(refreshTestJButton)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 880, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(319, 319, 319))
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 851, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 1154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(48, 48, 48)
+                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(searchBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(bestPlanBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(refreshTestJButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(requestTestJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(45, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(462, 462, 462)
+                .addComponent(lblcustomername, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(refreshTestJButton)
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(74, 74, 74)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(requestTestJButton)
+                            .addComponent(refreshTestJButton)
+                            .addComponent(bestPlanBtn)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblcustomername, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(searchBtn)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(requestTestJButton)
-                .addGap(56, 56, 56)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void requestTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestTestJButtonActionPerformed
         String menuItemName = "";
-        Restaurant restaurant;
+        // Restaurant restaurant;
         int selectedRow = BMworkRequestJTable.getSelectedRow();
         if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(null, "Select a row first.");
+            JOptionPane.showMessageDialog(null, "Please choose a plan.");
             return;
         }
         if (selectedRow >= 0) {
@@ -287,7 +338,15 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
                 //custRequest.setRequestDate(daet);
                 custRequest.setSender(userAccount);
 
+                // custRequest.getProductDescription().contains("");
                 custRequest.setApprovalStage("0");
+
+                for (Policy policy : system.getCustPolicyDirectory().getPolicyList()) {
+                    if (policy.getName().equals(request.getProductName()) && policy.getCustomerName().equals(userAccount.getUsername())) {
+                        JOptionPane.showMessageDialog(null, "Sorry!! cannot place your order as You already have this policy");
+                        return;
+                    }
+                }
 
                 Organization org = null;
 
@@ -311,7 +370,7 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
                     custRequest.setStatus("Order Placed");
                     userAccount.getWorkQueue().getWorkRequestList().add(custRequest);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Soory!! cannot place your order at this time.Could not found the further approval organization.");
+                    JOptionPane.showMessageDialog(null, "Sorry!! cannot place your order at this time.Could not found the further approval organization.");
                 }
             }
         }
@@ -321,17 +380,140 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_requestTestJButtonActionPerformed
 
     private void refreshTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTestJButtonActionPerformed
-
+        txtSearch.setText("");
+        populateProductTable();
         populateRequestTable();
 
     }//GEN-LAST:event_refreshTestJButtonActionPerformed
 
+    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchActionPerformed
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        // TODO add your handling code here:
+        // String s= "the of name desc 30 life health dental";
+        //  boolean flag = s.contains("dental");
+
+        DefaultTableModel model = (DefaultTableModel) BMworkRequestJTable.getModel();
+
+        model.setRowCount(0);
+        for (Location network : system.getNetworkList()) {
+            for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
+                if (enterprise.getEnterpriseType().equals(Enterprise.EnterpriseType.InsuranceCompany)) {
+                    // for (Enterprise ent : enterprise.getOrganizaionDirectory().getOrganizationList()) {
+                    for (WorkRequest request : enterprise.getWorkQueue().getWorkRequestList()) {
+                        if (request != null) {
+                            if (request.getClass().equals(Business.WorkQueue.InsuranceProductWorkRequest.class)) {
+                                InsuranceProductWorkRequest iP = (InsuranceProductWorkRequest) request;
+                                // InsuranceProductWorkRequest isr = wr;
+                                if (iP.getApprovalStage() == null ? false : iP.getApprovalStage().equals("61")) {
+                                    if (iP.getNetwork().getName().toLowerCase().contains(txtSearch.getText().toLowerCase())
+                                            || iP.getEnterprise().getName().toLowerCase().contains(txtSearch.getText().toLowerCase())
+                                            || iP.getProductName().toLowerCase().contains(txtSearch.getText().toLowerCase())
+                                            || iP.getProductDescription().toLowerCase().contains(txtSearch.getText().toLowerCase())
+                                            || iP.getPremuim().toLowerCase().contains(txtSearch.getText().toLowerCase())
+                                            || iP.getCoverageAmount().toLowerCase().contains(txtSearch.getText().toLowerCase())
+                                            || iP.getInsuranceType().getValue().toLowerCase().contains(txtSearch.getText().toLowerCase())) {
+
+                                        Object[] row = new Object[10];
+                                        row[0] = iP.getNetwork();
+                                        row[1] = iP.getEnterprise();
+                                        row[3] = iP.getProductName();
+                                        row[2] = iP.getInsuranceType();
+                                        row[4] = iP.getPremuim();
+                                        row[5] = iP.getProductDescription();
+                                        row[6] = iP.getCoverageAmount();
+                                        //row[7] = iP.getMessage();
+                                        // row[8] = iP.getStatus();
+                                        row[7] = iP;
+
+                                        // row[9]=iP.
+                                        model.addRow(row);
+                                    }
+                                }
+                            }
+                        }
+                        // }
+                    }
+                }
+
+            }
+        }
+
+
+    }//GEN-LAST:event_searchBtnActionPerformed
+
+    private void bestPlanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bestPlanBtnActionPerformed
+        // TODO add your handling code here:
+
+        DefaultTableModel model = (DefaultTableModel) BMworkRequestJTable.getModel();
+
+        model.setRowCount(0);
+        InsuranceProductWorkRequest bestplan = null;
+        int previousprofit = 0;
+        for (Location network : system.getNetworkList()) {
+            for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
+                if (enterprise.getEnterpriseType().equals(Enterprise.EnterpriseType.InsuranceCompany)) {
+                    // for (Enterprise ent : enterprise.getOrganizaionDirectory().getOrganizationList()) {
+                    for (WorkRequest request : enterprise.getWorkQueue().getWorkRequestList()) {
+                        if (request != null) {
+                            if (request.getClass().equals(Business.WorkQueue.InsuranceProductWorkRequest.class)) {
+                                InsuranceProductWorkRequest iP = (InsuranceProductWorkRequest) request;
+                                // InsuranceProductWorkRequest isr = wr;
+                                if (iP.getApprovalStage() == null ? false : iP.getApprovalStage().equals("61")) {
+                                    if (iP.getNetwork().getName().toLowerCase().contains(txtSearch.getText().toLowerCase())
+                                            || iP.getEnterprise().getName().toLowerCase().contains(txtSearch.getText().toLowerCase())
+                                            || iP.getProductName().toLowerCase().contains(txtSearch.getText().toLowerCase())
+                                            || iP.getProductDescription().toLowerCase().contains(txtSearch.getText().toLowerCase())
+                                            || iP.getPremuim().toLowerCase().contains(txtSearch.getText().toLowerCase())
+                                            || iP.getCoverageAmount().toLowerCase().contains(txtSearch.getText().toLowerCase())
+                                            || iP.getInsuranceType().getValue().toLowerCase().contains(txtSearch.getText().toLowerCase())) {
+                                        int coverage = Integer.parseInt(iP.getCoverageAmount());
+                                        int Premuim = Integer.parseInt(iP.getPremuim());
+                                        int profit = coverage / Premuim;
+                                        if (profit > previousprofit) {
+                                            bestplan = iP;
+                                            previousprofit = profit;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        // }
+                    }
+                }
+
+            }
+        }
+        if (bestplan != null) {
+            Object[] row = new Object[10];
+            row[0] = bestplan.getNetwork();
+            row[1] = bestplan.getEnterprise();
+            row[3] = bestplan.getProductName();
+            row[2] = bestplan.getInsuranceType();
+            row[4] = bestplan.getPremuim();
+            row[5] = bestplan.getProductDescription();
+            row[6] = bestplan.getCoverageAmount();
+            //row[7] = iP.getMessage();
+            // row[8] = iP.getStatus();
+            row[7] = bestplan;
+            model.addRow(row);
+        }
+
+    }//GEN-LAST:event_bestPlanBtnActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable BMworkRequestJTable;
+    private javax.swing.JButton bestPlanBtn;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JLabel lblcustomername;
     private javax.swing.JButton refreshTestJButton;
     private javax.swing.JButton requestTestJButton;
+    private javax.swing.JButton searchBtn;
+    private javax.swing.JTextField txtSearch;
     private javax.swing.JTable workRequestJTable;
     // End of variables declaration//GEN-END:variables
 }
