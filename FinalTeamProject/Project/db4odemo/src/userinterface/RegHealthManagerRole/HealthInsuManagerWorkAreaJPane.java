@@ -257,7 +257,7 @@ public class HealthInsuManagerWorkAreaJPane extends javax.swing.JPanel {
 
         lblEnterpriseName.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
         lblEnterpriseName.setText("jLabel2");
-        add(lblEnterpriseName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 330, 30));
+        add(lblEnterpriseName, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 330, 30));
 
         lblentp.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         lblentp.setText("Enterprise:");

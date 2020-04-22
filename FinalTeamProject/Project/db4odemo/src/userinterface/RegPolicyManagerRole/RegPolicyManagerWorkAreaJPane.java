@@ -242,7 +242,7 @@ public class RegPolicyManagerWorkAreaJPane extends javax.swing.JPanel {
 
         lblEnterpriseName.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
         lblEnterpriseName.setText("jLabel2");
-        add(lblEnterpriseName, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 370, 30));
+        add(lblEnterpriseName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 370, 30));
 
         jLabel2.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         jLabel2.setText("Enterprise");

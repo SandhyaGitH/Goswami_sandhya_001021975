@@ -31,6 +31,7 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
     private UserAccount userAccount;
     private EcoSystem system;
     private String customerMailId ="";
+    
 
     /**
      * Creates new form DoctorWorkAreaJPanel
@@ -339,7 +340,7 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
                 custRequest.setProductDescription(request.getProductDescription());
                 custRequest.setProductName(request.getProductName());
                 custRequest.setCustomerMailId(customerMailId);
-                
+                custRequest.setCustomerName(userAccount.getUsername());
                 //custRequest.setRequestDate(daet);
                 custRequest.setSender(userAccount);
 

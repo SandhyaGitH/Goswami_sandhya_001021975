@@ -27,7 +27,7 @@ public class CustomerAgentRole extends Role{
     } */
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
-      return new CustomerAgentWorkAreaJPane(userProcessContainer, account,(CustomerAgentOrganization)organization ,business);
+      return new CustomerAgentWorkAreaJPane(userProcessContainer, account,(CustomerAgentOrganization)organization ,business, enterprise);
         //return new BusinessManagerWorkAreaJPane(userProcessContainer, account, organization, enterprise);
     }
 

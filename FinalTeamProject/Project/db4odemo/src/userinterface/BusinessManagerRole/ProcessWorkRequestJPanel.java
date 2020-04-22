@@ -52,9 +52,9 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
         backJButton = new javax.swing.JButton();
         rejectJButton = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 255, 255));
+        setBackground(new java.awt.Color(233, 255, 101));
 
-        submitJButton.setBackground(new java.awt.Color(0, 0, 51));
+        submitJButton.setBackground(new java.awt.Color(51, 51, 0));
         submitJButton.setForeground(new java.awt.Color(255, 255, 255));
         submitJButton.setText("Approve");
         submitJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -71,7 +71,7 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
             }
         });
 
-        backJButton.setBackground(new java.awt.Color(0, 0, 51));
+        backJButton.setBackground(new java.awt.Color(51, 51, 0));
         backJButton.setForeground(new java.awt.Color(255, 255, 255));
         backJButton.setText("Back");
         backJButton.addActionListener(new java.awt.event.ActionListener() {
@@ -80,7 +80,7 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
             }
         });
 
-        rejectJButton.setBackground(new java.awt.Color(0, 0, 51));
+        rejectJButton.setBackground(new java.awt.Color(51, 51, 0));
         rejectJButton.setForeground(new java.awt.Color(255, 255, 255));
         rejectJButton.setText("Reject");
         rejectJButton.addActionListener(new java.awt.event.ActionListener() {

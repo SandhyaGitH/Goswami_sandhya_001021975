@@ -131,7 +131,7 @@ public class BusinessManagerWorkAreaJPane extends javax.swing.JPanel {
                     }
                     if(iP.getApprovalStage().equals("61"))
                     {  // InsuranceProductWorkRequest isr = wr;
-                    Object[] row = new Object[11];
+                    Object[] row = new Object[12];
                     row[0] = iP.getNetwork();
                     row[1] = iP.getEnterprise();
                     row[2] = iP.getProductName();
@@ -142,7 +142,7 @@ public class BusinessManagerWorkAreaJPane extends javax.swing.JPanel {
                     row[7] = iP.getMessage();
                     row[8] = iP.getStatus();
                     row[9] = iP;
-                    row[3] = request.getRequestDate();
+                    row[10] = request.getRequestDate();
                     // row[9]=iP.
 
                     model.addRow(row);

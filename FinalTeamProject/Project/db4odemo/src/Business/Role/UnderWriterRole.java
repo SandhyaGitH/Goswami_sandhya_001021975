@@ -27,7 +27,7 @@ public class UnderWriterRole extends Role{
     } */
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
-      return new UnderwriterWorkAreaJPane(userProcessContainer, account,(UnderWriterOrganization)organization ,business);
+      return new UnderwriterWorkAreaJPane(userProcessContainer, account,(UnderWriterOrganization)organization ,business, enterprise);
         //return new BusinessManagerWorkAreaJPane(userProcessContainer, account, organization, enterprise);
     }
 
