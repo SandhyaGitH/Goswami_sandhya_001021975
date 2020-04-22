@@ -11,6 +11,7 @@ import Business.Organizations.OrganizationDirectory;
 import java.awt.CardLayout;
 import java.awt.Color;
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
@@ -294,8 +295,13 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
     private void addJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addJButtonActionPerformed
         
         Organization organization = (Organization) organizationEmpJComboBox.getSelectedItem();
-        String name = nameJTextField.getText();
         
+         if(nameJTextField.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Employee name Cannot be empty.");
+            return;
+        }
+         String name = nameJTextField.getText();
         organization.getEmployeeDirectory().createEmployee(name);
         populateTable(organization);
         

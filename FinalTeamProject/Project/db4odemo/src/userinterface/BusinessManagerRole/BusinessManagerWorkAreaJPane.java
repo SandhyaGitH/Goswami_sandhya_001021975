@@ -66,9 +66,9 @@ public class BusinessManagerWorkAreaJPane extends javax.swing.JPanel {
 
                     row[4] = ((InsuranceProductWorkRequest) request).getProductName();
                     row[5] = ((InsuranceProductWorkRequest) request).getProductDescription();
-                    row[6] = request.getStatus();
+                    row[6] = request.getReceiver() == null ? null : request.getReceiver().getEmployee().getName();
 
-                    row[7] = request.getReceiver() == null ? null : request.getReceiver().getEmployee().getName();
+                    row[7] = request.getStatus();
                     row[8] = ((InsuranceProductWorkRequest) request);
                     // row[9]=iP.
                     // row[4] = request.getSender().getUsername();

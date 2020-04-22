@@ -35,14 +35,15 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
         initComponents();
         this.enterprise = enterprise;
         this.container = container;
-        this.system=system;
+        this.system = system;
 
         popOrganizationComboBox();
-       // employeeJComboBox.removeAllItems();
+        // employeeJComboBox.removeAllItems();
         popData();
         lblEnterpriseName.setText(enterprise.getName());
         setBackGroundColor();
         lblWecomenote.setVisible(false);
+        DeleteUserJButton.setEnabled(false);
     }
 
     private void setBackGroundColor() {
@@ -53,40 +54,38 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
             //Color 
             if (enterprise.getEnterpriseType().equals(Enterprise.EnterpriseType.InsuranceCompany)) {
                 c = new Color(51, 51, 0);// darkgreen
-                basecolor= new Color(233,255,101);
-               
+                basecolor = new Color(233, 255, 101);
 
             }
             if (enterprise.getEnterpriseType().getValue().equals(Enterprise.EnterpriseType.InsuranceBroker.getValue())) {
                 c = new Color(102, 51, 0); // mustrud dark
                 // jPanel1.setBackground(c);
-                basecolor= new Color(255,255,204);
+                basecolor = new Color(255, 255, 204);
 
             }
             if (enterprise.getEnterpriseType().getValue().equals(Enterprise.EnterpriseType.InsuranceRegulator.getValue())) {
                 c = new Color(0, 0, 51); // dark blue
                 // jPanel1.setBackground(c);
-                basecolor= new Color(204,204,255);
+                basecolor = new Color(204, 204, 255);
 
             }
             if (enterprise.getEnterpriseType().getValue().equals(Enterprise.EnterpriseType.Hospitals.getValue())) {
                 c = new Color(102, 0, 0); // dark red
                 // jDesktopPane1.setBackground(c);
-                basecolor= new Color(255,204,204);
+                basecolor = new Color(255, 204, 204);
 
             }
-             createUserJButton.setBackground(c);
+            createUserJButton.setBackground(c);
             createUserJButton.setForeground(Color.WHITE);
             backjButton1.setBackground(c);
             backjButton1.setForeground(Color.WHITE);
             jPanel1.setBackground(basecolor);
-             Border border = BorderFactory.createEtchedBorder(c,Color.YELLOW );
-             userJTable.setSelectionBackground(c);
+            Border border = BorderFactory.createEtchedBorder(c, Color.YELLOW);
+            userJTable.setSelectionBackground(c);
             userJTable.setBorder(border);
         }
     }
 
-    
     public void popOrganizationComboBox() {
         organizationJComboBox.removeAllItems();
 
@@ -94,18 +93,18 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
             organizationJComboBox.addItem(organization);
         }
     }
-    
-    public void populateEmployeeComboBox(Organization organization){
+
+    public void populateEmployeeComboBox(Organization organization) {
         employeeJComboBox.removeAllItems();
-        
-        for (Employee employee : organization.getEmployeeDirectory().getEmployeeList()){
+
+        for (Employee employee : organization.getEmployeeDirectory().getEmployeeList()) {
             employeeJComboBox.addItem(employee);
         }
     }
-    
-    private void populateRoleComboBox(Organization organization){
+
+    private void populateRoleComboBox(Organization organization) {
         roleJComboBox.removeAllItems();
-        for (Role role : organization.getSupportedRole()){
+        for (Role role : organization.getSupportedRole()) {
             roleJComboBox.addItem(role);
             //roleJComboBox.
         }
@@ -154,6 +153,7 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
         lblWecomenote = new javax.swing.JLabel();
         lblEnterpriseName = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        DeleteUserJButton = new javax.swing.JButton();
 
         jLabel4.setText("Role");
 
@@ -241,6 +241,13 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         jLabel6.setText("Enterprise :");
 
+        DeleteUserJButton.setText("Delete");
+        DeleteUserJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteUserJButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -280,7 +287,10 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(passwordJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(nameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(createUserJButton)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(DeleteUserJButton)
+                                        .addGap(5, 5, 5)
+                                        .addComponent(createUserJButton))))
                             .addComponent(backjButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1))
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -318,10 +328,9 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(roleJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(createUserJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3)))
+                        .addComponent(createUserJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(DeleteUserJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(backjButton1)
                 .addContainerGap())
@@ -347,20 +356,32 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
         Organization organization = (Organization) organizationJComboBox.getSelectedItem();
         Employee employee = (Employee) employeeJComboBox.getSelectedItem();
         Role role = (Role) roleJComboBox.getSelectedItem();
-        if(system.checkIfUserIsUnique(userName))
-        { for(UserAccount uAccount :organization.getUserAccountDirectory().getUserAccountList() )
-        {
-            if(uAccount.getUsername().equals(userName))
-            {
-                JOptionPane.showMessageDialog(null, "UserName already Exist");
-                return;
+        if (nameJTextField.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Username Cannot be empty.");
+            return;
+        }
+        if (passwordJTextField.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Password Cannot be empty.");
+            return;
+        }
+
+        if (system.checkIfUserIsUnique(userName)) {
+            for (UserAccount uAccount : organization.getUserAccountDirectory().getUserAccountList()) {
+                if (uAccount.getEmployee().getIdStr() != null && employee.getIdStr() != null) {
+                    if (uAccount.getEmployee().getIdStr().equals(employee.getIdStr())) {
+                        JOptionPane.showMessageDialog(null, "Same employee cannot have two account");
+                        return;
+                    }
+                }
+                if (uAccount.getUsername().equals(userName)) {
+                    JOptionPane.showMessageDialog(null, "UserName already Exist");
+                    return;
+                }
             }
-        }
-        organization.getUserAccountDirectory().createUserAccount(userName, password, employee, role);
-        }
-        else {
-        JOptionPane.showMessageDialog(null, "UserName already Exist");
-        return;
+            organization.getUserAccountDirectory().createUserAccount(userName, password, employee, role);
+        } else {
+            JOptionPane.showMessageDialog(null, "UserName already Exist");
+            return;
         }
         popData();
     }//GEN-LAST:event_createUserJButtonActionPerformed
@@ -374,7 +395,7 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
 
     private void organizationJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_organizationJComboBoxActionPerformed
         Organization organization = (Organization) organizationJComboBox.getSelectedItem();
-        if (organization != null){
+        if (organization != null) {
             populateEmployeeComboBox(organization);
             populateRoleComboBox(organization);
         }
@@ -388,7 +409,26 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_employeeJComboBoxActionPerformed
 
+    private void DeleteUserJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteUserJButtonActionPerformed
+        // TODO add your handling code here:
+         int selectedRow = userJTable.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null, "Select a User Account.");
+            return;
+        }
+         UserAccount userAccount = (UserAccount) userJTable.getValueAt(selectedRow, 0);
+         if(userAccount.getWorkQueue().getWorkRequestList().size()>0)
+         {
+            JOptionPane.showMessageDialog(null, "Cannot Delete. User Account has associated data with it.");
+            return; 
+         }
+        // userAccount.
+        // organization.getUserAccountDirectory().createUserAccount(userName, password, employee, role);
+        
+    }//GEN-LAST:event_DeleteUserJButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton DeleteUserJButton;
     private javax.swing.JButton backjButton1;
     private javax.swing.JButton createUserJButton;
     private javax.swing.JComboBox employeeJComboBox;

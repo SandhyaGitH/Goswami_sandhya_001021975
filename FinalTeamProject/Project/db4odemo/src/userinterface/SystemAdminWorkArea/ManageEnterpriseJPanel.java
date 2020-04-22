@@ -35,9 +35,9 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
 
         populateTable();
         populateComboBox();
-        btnUpdateConfirm.setEnabled(false);
+//        btnUpdateConfirm.setEnabled(false);
         // btnUpdateConfirm.setEnabled(true); 
-        btnView.setEnabled(true);
+      //  btnView.setEnabled(true);
         enterpriseTypeJComboBox.setEnabled(true);
     }
 
@@ -96,12 +96,12 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
         DeleteJButton = new javax.swing.JButton();
         backJButton = new javax.swing.JButton();
         submitJButton = new javax.swing.JButton();
-        btnUpdateConfirm = new javax.swing.JButton();
-        btnView = new javax.swing.JButton();
-        btnUpdateConfirm1 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(204, 151, 238));
 
+        enterpriseJTable.setBackground(new java.awt.Color(255, 153, 255));
+        enterpriseJTable.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 0, 51), new java.awt.Color(255, 204, 51)));
         enterpriseJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -121,18 +121,20 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        enterpriseJTable.setGridColor(new java.awt.Color(255, 204, 204));
+        enterpriseJTable.setSelectionBackground(new java.awt.Color(51, 0, 51));
         jScrollPane1.setViewportView(enterpriseJTable);
         if (enterpriseJTable.getColumnModel().getColumnCount() > 0) {
             enterpriseJTable.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        jLabel1.setText("Network");
+        jLabel1.setText(" Network");
 
         networkJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel2.setText("Name");
+        jLabel2.setText(" Name");
 
-        jLabel3.setText("Enterprise Type");
+        jLabel3.setText(" Enterprise Type");
 
         enterpriseTypeJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -157,93 +159,68 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
             }
         });
 
-        btnUpdateConfirm.setText("Confirm Update");
-        btnUpdateConfirm.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateConfirmActionPerformed(evt);
-            }
-        });
-
-        btnView.setText("Update");
-        btnView.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewActionPerformed(evt);
-            }
-        });
-
-        btnUpdateConfirm1.setText("Reset Buttons");
-        btnUpdateConfirm1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateConfirm1ActionPerformed(evt);
-            }
-        });
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel4.setText("Manage Enterprise");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(88, 88, 88)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)))
+                                    .addComponent(backJButton)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(25, 25, 25)
+                                .addComponent(networkJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(61, 61, 61)
-                                .addComponent(backJButton)))
-                        .addGap(52, 52, 52)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(enterpriseTypeJComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(networkJComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(enterpriseTypeJComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(nameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(65, 65, 65)
-                                .addComponent(btnUpdateConfirm1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(submitJButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(DeleteJButton)
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nameJTextField))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnView)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnUpdateConfirm))))
+                                .addComponent(DeleteJButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(submitJButton)))
+                        .addGap(206, 206, 206))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(78, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(63, 63, 63))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(networkJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUpdateConfirm1))
-                .addGap(29, 29, 29)
+                    .addComponent(nameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(enterpriseTypeJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(nameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(backJButton)
+                    .addComponent(enterpriseTypeJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(submitJButton)
-                    .addComponent(DeleteJButton)
-                    .addComponent(btnUpdateConfirm)
-                    .addComponent(btnView))
-                .addContainerGap(66, Short.MAX_VALUE))
+                    .addComponent(DeleteJButton))
+                .addGap(29, 29, 29)
+                .addComponent(backJButton)
+                .addContainerGap(216, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -309,93 +286,8 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
         }
         addEnterprise();
         populateTable();
-        btnView.setEnabled(true);
+//        btnView.setEnabled(true);
     }//GEN-LAST:event_submitJButtonActionPerformed
-
-    private void btnUpdateConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateConfirmActionPerformed
-        // TODO add your handling code here:
-
-        int selectedRow = enterpriseJTable.getSelectedRow();
-        Enterprise oldEnterprise = null;//= new Enterprise();
-        if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(null, "Please select a row from table first to view details.", "Warning", JOptionPane.WARNING_MESSAGE);
-        } else {
-            oldEnterprise = (Enterprise) enterpriseJTable.getValueAt(selectedRow, 1);
-        }
-        //  Enterprise newEnterprise = (Enterprise) enterpriseTypeJComboBox.getSelectedItem();
-        Location oldNetwork = (Location) enterpriseJTable.getValueAt(selectedRow, 0);
-        Location newNetwork = (Location) networkJComboBox.getSelectedItem();
-        boolean flag = true;
-        if (flag) {
-            int index = -1;
-            for (Location loc : system.getNetworkList()) {
-                if (index == -1) {
-                    index = loc.getEnterpriseDirectory().getEnterpriseList().indexOf(oldEnterprise);
-                }
-
-                for (Enterprise enterpriseL : loc.getEnterpriseDirectory().getEnterpriseList()) {
-                    if (loc.equals(newNetwork) && enterpriseL.getName().equals(nameJTextField.getText())) {
-                        JOptionPane.showMessageDialog(null, "Duplicate Enterprise Name in same Network");
-                        btnUpdateConfirm.setEnabled(false);
-                        btnView.setEnabled(true);
-                        submitJButton.setEnabled(true);
-                        enterpriseTypeJComboBox.setEnabled(true);
-                        return;
-                    }
-
-                }
-            }
-            if (index != -1) {
-                oldNetwork.getEnterpriseDirectory().getEnterpriseList().remove(index);
-                // system.getCustomerDirectory().getCustomerList().set(k, customer);
-                addEnterprise();
-                JOptionPane.showMessageDialog(null, "updated successfully!");
-                btnUpdateConfirm.setEnabled(false);
-                btnView.setEnabled(true);
-                submitJButton.setEnabled(true);
-                enterpriseTypeJComboBox.setEnabled(true);
-                nameJTextField.setText("");
-            }
-
-        }
-
-        //Customer customer = new Customer( location,  name,  username,  address,  "5");
-        // system.getNetworkList().get(WIDTH).getEnterpriseDirectory().get
-        populateTable();
-
-    }//GEN-LAST:event_btnUpdateConfirmActionPerformed
-
-    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
-        // TODO add your handling code here:
-        //
-        int selectedRow = enterpriseJTable.getSelectedRow();
-        if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(null, "Please select a row from table first to view details.", "Warning", JOptionPane.WARNING_MESSAGE);
-        } else {
-            Location loc = (Location) enterpriseJTable.getValueAt(selectedRow, 0);
-            networkJComboBox.setSelectedItem(loc);
-            Enterprise enterprise = (Enterprise) enterpriseJTable.getValueAt(selectedRow, 1);
-            enterpriseTypeJComboBox.setSelectedItem(enterprise.getEnterpriseType());
-            nameJTextField.setText(enterprise.getName());
-
-            // AddressTextbox.setText(enterprise.getAddress());
-            // passwordJPasswordField
-            //passwordJPasswordField.setText(cust.g);
-        }
-        btnUpdateConfirm.setEnabled(true);
-        btnView.setEnabled(false);
-        enterpriseTypeJComboBox.setEnabled(false);
-        submitJButton.setEnabled(false);
-    }//GEN-LAST:event_btnViewActionPerformed
-
-    private void btnUpdateConfirm1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateConfirm1ActionPerformed
-        // TODO add your handling code here:
-        nameJTextField.setText("");
-        btnUpdateConfirm.setEnabled(false);
-        btnView.setEnabled(true);
-        submitJButton.setEnabled(true);
-        enterpriseTypeJComboBox.setEnabled(true);
-    }//GEN-LAST:event_btnUpdateConfirm1ActionPerformed
 
     private void addEnterprise() {
         Location network = (Location) networkJComboBox.getSelectedItem();
@@ -425,14 +317,12 @@ public class ManageEnterpriseJPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton DeleteJButton;
     private javax.swing.JButton backJButton;
-    private javax.swing.JButton btnUpdateConfirm;
-    private javax.swing.JButton btnUpdateConfirm1;
-    private javax.swing.JButton btnView;
     private javax.swing.JTable enterpriseJTable;
     private javax.swing.JComboBox enterpriseTypeJComboBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nameJTextField;
     private javax.swing.JComboBox networkJComboBox;
