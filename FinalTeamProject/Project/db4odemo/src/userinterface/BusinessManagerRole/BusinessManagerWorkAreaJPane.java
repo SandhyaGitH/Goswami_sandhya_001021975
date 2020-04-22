@@ -192,7 +192,7 @@ public class BusinessManagerWorkAreaJPane extends javax.swing.JPanel {
                 {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Request Id", "Sender", "Message", "RequestDate", "Product Name", "Description", "Receiver", "Status", "Request Result"
+                "Request Id", "Sender", "Message", "RequestDate", "Product Name", "Description", "Receiver", "Status", "Request "
             }
         ) {
             Class[] types = new Class [] {

@@ -162,6 +162,7 @@ public class ManageProductJPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(233, 255, 101));
 
+        menuListJTable.setAutoCreateRowSorter(true);
         menuListJTable.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, new java.awt.Color(51, 51, 0), new java.awt.Color(255, 255, 51)));
         menuListJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
