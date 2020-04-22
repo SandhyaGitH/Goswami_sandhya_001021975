@@ -7,6 +7,7 @@ package userinterface.CustomerAgentRole;
 import userinterface.UnderwriterRole.*;
 import userinterface.BusinessManagerRole.*;
 import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
 
 import Business.UserAccount.UserAccount;
 //import Business.WorkQueue.LabTestWorkRequest;
@@ -31,21 +32,23 @@ public class CustomerAgentWorkAreaJPane extends javax.swing.JPanel {
     private EcoSystem business;
     private UserAccount userAccount;
     private Organization organization;
+    private Enterprise enterprise;
 
     /**
      * Creates new form LabAssistantWorkAreaJPanel
      */
-    public CustomerAgentWorkAreaJPane(JPanel userProcessContainer, UserAccount account, Organization org, EcoSystem business) {
+    public CustomerAgentWorkAreaJPane(JPanel userProcessContainer, UserAccount account, Organization org, EcoSystem business, Enterprise inEnterprise) {
         initComponents();
 
         this.userProcessContainer = userProcessContainer;
         this.userAccount = account;
         this.business = business;
         this.organization = org;
+        this.enterprise=inEnterprise;
 
         populateTable();
         populateBMTable();
-
+        lblEnterpriseName.setText(inEnterprise.getName());
         // txtSubject.setEnabled(false);
         txtTo.setEnabled(false);
         // txtmessage.setEnabled(false);
@@ -62,19 +65,27 @@ public class CustomerAgentWorkAreaJPane extends javax.swing.JPanel {
         for (WorkRequest request : organization.getWorkQueue().getWorkRequestList()) {
 
             if (request.getClass().equals(Business.WorkQueue.CustomerProductWorkRequest.class)) {
+                
+                CustomerProductWorkRequest custReq = (CustomerProductWorkRequest)request;
+                if(custReq.getApprovalStage().equals("0"))
+                        {
                 Object[] row = new Object[8];
 
-                row[0] = request.getSender();//((LabTestWorkRequest) request).getPatient().getAge();
+                row[0] = custReq.getSender();//((LabTestWorkRequest) request).getPatient().getAge();
                 //row[2] = "";//((LabTestWorkRequest) request).getPatient().getSex();
-                row[1] = request.getMessage();
-                row[2] = request.getReceiver() == null ? "" : request.getReceiver();
-                row[3] = request.getStatus();
-                row[4] = ((CustomerProductWorkRequest) request);
+                
+                row[1] = custReq.getCustomerName();
+                row[2]=custReq.getProductName();
+                row[3] = request.getReceiver() == null ? "" : request.getReceiver();
+                row[4] = request.getStatus();
+                row[5] = custReq;
+                row[6]=custReq.getRequestDate();
                 // row[4] = request.getSender().getUsername();
                 // row[4] = "";//request.getReceiver() == null ? null : request.getReceiver().getEmployee().getName();
 
                 //  row[7] = ((LabTestWorkRequest) request).getPatient().getNewDrug();
                 model.addRow(row);
+                        }
             }
         }
     }
@@ -137,27 +148,30 @@ public class CustomerAgentWorkAreaJPane extends javax.swing.JPanel {
         lblsubject = new javax.swing.JLabel();
         ContactJButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        lblEnterpriseName = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 247, 153));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        workRequestJTable.setAutoCreateRowSorter(true);
         workRequestJTable.setBackground(new java.awt.Color(255, 204, 102));
         workRequestJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Sender", "Message", "Receiver", "Status", "Request Result"
+                "Sender", "Customer Name", "Policy Name", "Receiver", "Status", "Request ID", "Request Date"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -171,15 +185,8 @@ public class CustomerAgentWorkAreaJPane extends javax.swing.JPanel {
         workRequestJTable.setGridColor(new java.awt.Color(255, 255, 102));
         workRequestJTable.setSelectionBackground(new java.awt.Color(102, 51, 0));
         jScrollPane1.setViewportView(workRequestJTable);
-        if (workRequestJTable.getColumnModel().getColumnCount() > 0) {
-            workRequestJTable.getColumnModel().getColumn(0).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(1).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(2).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(3).setResizable(false);
-            workRequestJTable.getColumnModel().getColumn(4).setResizable(false);
-        }
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 870, 96));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 880, 160));
 
         assignJButton.setBackground(new java.awt.Color(102, 51, 0));
         assignJButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -189,7 +196,7 @@ public class CustomerAgentWorkAreaJPane extends javax.swing.JPanel {
                 assignJButtonActionPerformed(evt);
             }
         });
-        add(assignJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 0, -1, -1));
+        add(assignJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 30, -1, -1));
 
         processJButton.setBackground(new java.awt.Color(102, 51, 0));
         processJButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -199,7 +206,7 @@ public class CustomerAgentWorkAreaJPane extends javax.swing.JPanel {
                 processJButtonActionPerformed(evt);
             }
         });
-        add(processJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 140, -1, -1));
+        add(processJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 230, -1, -1));
 
         refreshJButton.setBackground(new java.awt.Color(102, 51, 0));
         refreshJButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -209,8 +216,9 @@ public class CustomerAgentWorkAreaJPane extends javax.swing.JPanel {
                 refreshJButtonActionPerformed(evt);
             }
         });
-        add(refreshJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 0, -1, -1));
+        add(refreshJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 30, -1, -1));
 
+        BMworkRequestJTable1.setAutoCreateRowSorter(true);
         BMworkRequestJTable1.setBackground(new java.awt.Color(255, 204, 102));
         BMworkRequestJTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(102, 51, 0), new java.awt.Color(255, 204, 51)));
         BMworkRequestJTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -246,7 +254,7 @@ public class CustomerAgentWorkAreaJPane extends javax.swing.JPanel {
             BMworkRequestJTable1.getColumnModel().getColumn(9).setResizable(false);
         }
 
-        add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 880, 270));
+        add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 880, 270));
 
         SendMailJButton.setBackground(new java.awt.Color(102, 51, 0));
         SendMailJButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -295,11 +303,19 @@ public class CustomerAgentWorkAreaJPane extends javax.swing.JPanel {
                 ContactJButtonActionPerformed(evt);
             }
         });
-        add(ContactJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(669, 140, 140, -1));
+        add(ContactJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 230, 140, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Mail Portal");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 30, 90, -1));
+
+        lblEnterpriseName.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lblEnterpriseName.setText("jLabel2");
+        add(lblEnterpriseName, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 330, 30));
+
+        jLabel2.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        jLabel2.setText("Enterprise");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 150, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void assignJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignJButtonActionPerformed
@@ -311,7 +327,7 @@ public class CustomerAgentWorkAreaJPane extends javax.swing.JPanel {
             return;
         }
 
-        WorkRequest request = (WorkRequest) workRequestJTable.getValueAt(selectedRow, 4);
+        WorkRequest request = (WorkRequest) workRequestJTable.getValueAt(selectedRow, 5);
         ((CustomerProductWorkRequest) request).getApprovalStage();
         if (request.getClass().equals(CustomerProductWorkRequest.class)) {
             int stage = Integer.parseInt(((CustomerProductWorkRequest) request).getApprovalStage() == null ? "-1" : ((CustomerProductWorkRequest) request).getApprovalStage());
@@ -325,7 +341,7 @@ public class CustomerAgentWorkAreaJPane extends javax.swing.JPanel {
                     break;
                 case 0:
                     request.setReceiver(userAccount);
-                    request.setStatus("Pending under" + userAccount);
+                    request.setStatus("Pending under " + userAccount);
                     ((CustomerProductWorkRequest) request).setApprovalStage("2");
                     userAccount.getWorkQueue().getWorkRequestList().add(request);
                     break;
@@ -334,7 +350,7 @@ public class CustomerAgentWorkAreaJPane extends javax.swing.JPanel {
                     int dialogResult = JOptionPane.showConfirmDialog(null, "Already Pending under a Customer Agent. Do you want to reassign it?", "Warning", dialogButton);
                     if (dialogResult == JOptionPane.YES_OPTION) {
                         request.setReceiver(userAccount);
-                        request.setStatus("Pending under" + userAccount);
+                        request.setStatus("Pending under " + userAccount);
                         ((InsuranceProductWorkRequest) request).setApprovalStage("2");
                         userAccount.getWorkQueue().getWorkRequestList().add(request);
                         // remove queuefrom 
@@ -357,6 +373,7 @@ public class CustomerAgentWorkAreaJPane extends javax.swing.JPanel {
                     break;
                 case 41:
                     JOptionPane.showMessageDialog(null, "Billing Done/Poliy Issued.");
+                    break;
                 case 42:
                     JOptionPane.showMessageDialog(null, "Cancelled by billing Agent");
                     break;
@@ -457,9 +474,11 @@ public class CustomerAgentWorkAreaJPane extends javax.swing.JPanel {
     private javax.swing.JButton SendMailJButton;
     private javax.swing.JButton assignJButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JLabel lblEnterpriseName;
     private javax.swing.JLabel lblTo;
     private javax.swing.JLabel lblmsg;
     private javax.swing.JLabel lblsubject;

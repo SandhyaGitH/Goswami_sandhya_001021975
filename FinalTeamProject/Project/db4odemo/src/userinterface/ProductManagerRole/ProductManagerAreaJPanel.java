@@ -102,6 +102,7 @@ public class ProductManagerAreaJPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(233, 255, 101));
 
+        workRequestJTable.setAutoCreateRowSorter(true);
         workRequestJTable.setBackground(new java.awt.Color(255, 255, 204));
         workRequestJTable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 0)));
         workRequestJTable.setModel(new javax.swing.table.DefaultTableModel(

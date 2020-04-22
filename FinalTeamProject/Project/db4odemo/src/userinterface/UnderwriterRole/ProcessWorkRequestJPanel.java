@@ -56,6 +56,10 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
         backJButton = new javax.swing.JButton();
         rejectJButton = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 247, 153));
+
+        submitJButton.setBackground(new java.awt.Color(102, 51, 0));
+        submitJButton.setForeground(new java.awt.Color(255, 255, 255));
         submitJButton.setText("Approve");
         submitJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -65,6 +69,8 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
 
         jLabel1.setText("Comments");
 
+        backJButton.setBackground(new java.awt.Color(102, 51, 0));
+        backJButton.setForeground(new java.awt.Color(255, 255, 255));
         backJButton.setText("Back");
         backJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,6 +78,8 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
             }
         });
 
+        rejectJButton.setBackground(new java.awt.Color(102, 51, 0));
+        rejectJButton.setForeground(new java.awt.Color(255, 255, 255));
         rejectJButton.setText("Reject");
         rejectJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,17 +96,16 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(backJButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(resultJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(158, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(rejectJButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(submitJButton)
-                        .addGap(73, 73, 73))))
+                        .addGap(61, 61, 61))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(resultJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,12 +114,12 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(resultJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitJButton)
-                    .addComponent(backJButton)
-                    .addComponent(rejectJButton))
-                .addContainerGap(169, Short.MAX_VALUE))
+                    .addComponent(rejectJButton)
+                    .addComponent(backJButton))
+                .addContainerGap(195, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -144,7 +151,7 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                     case 21:
                         break;
                     case 3:
-                         Organization org = null;
+                        Organization org = null;
 
                         for (Location network : system.getNetworkList()) {
                             for (Enterprise entp : network.getEnterpriseDirectory().getEnterpriseList()) {
@@ -165,22 +172,23 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                          */
                         if (org != null) {
                             org.getWorkQueue().getWorkRequestList().add(request);
-                            request.setTestResult(resultJTextField.getText());
+                            // request.setTestResult(resultJTextField.getText());
                             request.setStatus("Approved by Underwriter");
                             ((CustomerProductWorkRequest) request).setApprovalStage("31");
                             JOptionPane.showMessageDialog(null, "Approved.Sent to Billing Agent.");
-                            resultJTextField.setText("");
+                           
+                            request.setMessage(resultJTextField.getText());
+                             resultJTextField.setText("");
                             // userAccount.getWorkQueue().getWorkRequestList().add(request);
                         } else {
                             JOptionPane.showMessageDialog(null, "Contact to admin organization does not exist. ");
                         }
                         resultJTextField.setText("");
 
-                        
                         break;
 
                     case 31:
-                       JOptionPane.showMessageDialog(null, "Already Approved by a Underwriter");
+                        JOptionPane.showMessageDialog(null, "Already Approved by a Underwriter");
                         break;
 
                     case 32:
@@ -234,10 +242,10 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                         request.setTestResult(resultJTextField.getText());
                         request.setStatus("Rejected by underwriter");
                         ((CustomerProductWorkRequest) request).setApprovalStage("32");
-
+                        request.setMessage(resultJTextField.getText());
                         Organization org = null;
 
-                      /*  for (Location network : system.getNetworkList()) {
+                        /*  for (Location network : system.getNetworkList()) {
                             for (Enterprise entp : network.getEnterpriseDirectory().getEnterpriseList()) {
                                 if (entp.getEnterpriseType().equals(Enterprise.EnterpriseType.InsuranceRegulator)) {
                                     entp.getWorkQueue().getWorkRequestList().add(request);
@@ -251,7 +259,6 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                                 }
                             }
                         } */
-                       
                         JOptionPane.showMessageDialog(null, "Rejected");
                         resultJTextField.setText("");
                         break;
@@ -266,6 +273,7 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                         break;
                     case 41:
                         JOptionPane.showMessageDialog(null, "Billing Done/Poliy Issued.");
+                        break;
                     case 42:
                         JOptionPane.showMessageDialog(null, "Cancelled by billing Agent");
                         break;

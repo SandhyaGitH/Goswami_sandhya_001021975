@@ -27,7 +27,7 @@ public class BillingAgentRole extends Role{
     } */
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
-      return new BillingAgentWorkAreaJPane(userProcessContainer, account,(BillingAgentOrganization)organization ,business);
+      return new BillingAgentWorkAreaJPane(userProcessContainer, account,(BillingAgentOrganization)organization ,business, enterprise);
         //return new BusinessManagerWorkAreaJPane(userProcessContainer, account, organization, enterprise);
     }
 

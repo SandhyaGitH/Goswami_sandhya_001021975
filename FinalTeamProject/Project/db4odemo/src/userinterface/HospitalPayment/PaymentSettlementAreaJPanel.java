@@ -50,11 +50,11 @@ public class PaymentSettlementAreaJPanel extends javax.swing.JPanel {
         populateRequestTable();
 
         populatePolicyable();
-        DiagnosisjLabel1.setVisible(false);
-        DaignosisjTextArea1.setVisible(false);
-        TotalamountjLabel2.setVisible(false);
-        AmountjTextField1.setVisible(false);
-        SubmitjButton1.setVisible(false);
+       // DiagnosisjLabel1.setVisible(false);
+       // DaignosisjTextArea1.setVisible(false);
+       // TotalamountjLabel2.setVisible(false);
+       // AmountjTextField1.setVisible(false);
+        SubmitjButton1.setEnabled(false);
     }
 
     private void populatePolicyable() {
@@ -186,6 +186,7 @@ public class PaymentSettlementAreaJPanel extends javax.swing.JPanel {
         workRequestJTable.setSelectionBackground(new java.awt.Color(51, 0, 0));
         jScrollPane2.setViewportView(workRequestJTable);
 
+        PolicyJTable.setAutoCreateRowSorter(true);
         PolicyJTable.setBackground(new java.awt.Color(255, 204, 255));
         PolicyJTable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 0, 0), new java.awt.Color(102, 0, 0), new java.awt.Color(255, 153, 153), new java.awt.Color(255, 153, 153)));
         PolicyJTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -280,18 +281,20 @@ public class PaymentSettlementAreaJPanel extends javax.swing.JPanel {
                     .addComponent(refreshTestJButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(AmountjTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(TotalamountjLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(SubmitjButton1))))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(AmountjTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(requestTestJButton)
-                        .addComponent(TotalamountjLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(SubmitjButton1)))
-                .addGap(56, 56, 56)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addComponent(requestTestJButton)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(42, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -303,11 +306,12 @@ public class PaymentSettlementAreaJPanel extends javax.swing.JPanel {
             return;
         }
         if (selectedRow >= 0) {
-            DiagnosisjLabel1.setVisible(true);
-            DaignosisjTextArea1.setVisible(true);
-            TotalamountjLabel2.setVisible(true);
-            AmountjTextField1.setVisible(true);
-            SubmitjButton1.setVisible(true);
+           // DiagnosisjLabel1.setVisible(true);
+           // DaignosisjTextArea1.setVisible(true);
+           // TotalamountjLabel2.setVisible(true);
+           // AmountjTextField1.setVisible(true);
+           // SubmitjButton1.setVisible(true);
+            SubmitjButton1.setEnabled(true);
         }
 
 
