@@ -5,6 +5,7 @@
 package Business.WorkQueue;
 
 import Business.UserAccount.UserAccount;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -19,10 +20,16 @@ public abstract class WorkRequest {
     private String status;
     private Date requestDate;
     private Date resolveDate;
+    private String requestDateStr;
     
     public WorkRequest(){
         requestDate = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat("MMDDYYYY");
+        requestDateStr = ft.format(requestDate);
+        
     }
+    
+    
 
     public String getMessage() {
         return message;
