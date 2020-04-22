@@ -115,6 +115,7 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
                         organizationJComboBox.addItem(type);// (type);
                     }
                 }
+                break;
                 case Hospitals:
                 for (Type type : Organization.Type.values()) {
                     if (type.getValue().equals(Type.PaymentManagement.getValue())
